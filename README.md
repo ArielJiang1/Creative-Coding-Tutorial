@@ -1,2 +1,3 @@
 # F23-CCLab-Tutorial
- This repo stores my demo code and tutorial for F23 Creative Coding Lab 
+
+Hi all! Welcome to Carrot's Tutorial for p5.js.
