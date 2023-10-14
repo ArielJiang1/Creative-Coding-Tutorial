@@ -4,10 +4,10 @@
     <div style="flex: 1; text-align: center;">
         <img src="assets/blue-dande.png" width="300" height="300" style="display: block; margin-left: auto; margin-right: auto;">
     </div>
-    <div style="flex: 2; text-align: left;">
+    <div style="flex: 2; text-align: right;">
         Welcome and nice to meet you, traveler from Earth!
 
-        I'm Dandie and I'm part of the <font color="red">MagicDande</font> family living on planet B611. Timid and introvert by nature, I shy away from your touch.
+        I'm Dandie and I'm part of the MagicDande family living on planet B611. Timid and introvert by nature, I shy away from your touch.
 
         I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
 
