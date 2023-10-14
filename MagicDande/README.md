@@ -2,7 +2,7 @@
 
 ## F23 Creative Coding Lab Midterm
 
-<img align="right" src="assets/Dande-Gif.gif" width="560" >
+<img align="right" src="assets/Dande-Gif.gif" width="360" >
 
 :wave: Welcome and nice to meet you, traveler from Earth! :wave:
 
@@ -72,7 +72,7 @@ let y1 = cos((PI / 5) * r + i) * (30 + r * 20);
   margin-left: auto;
   margin-right: auto;">
 
-This looks nice! We're getting some spiral effect. Notice that there're always 12 samples on each layer because the increment of `i` is a constant. Let's make it vary for each layer by applying `r` value again:
+This looks nice! We're getting some spiral effect. Notice that there're always 12 samples on each layer because the `increment of `i`is a constant. Let's make it vary for each layer by applying`r` value again:
 
 ```JavaScript
 for (let r = 0; r < 6; r++) {
