@@ -1,23 +1,18 @@
-# MagicDande Tutorial - F23 Creative Coding Lab Midterm
+# :white_flower:MagicDande Tutorial:white_flower: - F23 Creative Coding Lab Midterm
 
-<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-    <div style="flex: 1; text-align: center;">
-        <img src="assets/blue-dande.png" width="300">
-    </div>
-    <div style="flex: 2; text-align: right;">
-        Welcome and nice to meet you, traveler from Earth!
+<img align="right" src="assets/blue-dande.png" width="300" >
 
-        I'm Dandie and I'm part of the MagicDande family living on planet B611. Timid and introvert by nature, I shy away from your touch.
+Welcome and nice to meet you, traveler from Earth!
 
-        I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
+I'm Dandie and I'm part of the MagicDande family living on planet B611.
 
-        My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, and a lot of playfulness!
+Timid and introvert by nature, I shy away from your touch.
 
-        Oh dear traveler from Earth, are you ready to become the Little Prince of your one and only MagicDande?
+I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
 
-</div>
+My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, and a lot of playfulness!
 
-</div>
+Oh dear traveler from Earth, are you ready to become the Little Prince of your one and only MagicDande?
 
 ## Let's Begin!
 
