@@ -33,7 +33,7 @@ let x1 = sin(i) * (30 + r * 20);
 let y1 = cos(i) * (30 + r * 20);
 ```
 
-![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.2.png);
+<img src="assets/mid-1.2.png" width="200" height="100">
 
 ```JavaScript
 let x1 = sin((PI / 5) * r + i) * (30 + r * 20);
