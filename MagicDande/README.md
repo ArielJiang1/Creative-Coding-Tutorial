@@ -27,7 +27,7 @@ Now, instead of applying the indexes directly to the x, y position, let's apply 
 Just to recap, the `freq` affect how many samples you will extract from a certain period of the sin wave. The smaller the increment of `freq`, the more samples you get. `amp` refers to the size each sample is scaled to. The range of `sin(freq) * amp` is (-amp, amp).
 
 If we assign the same `freq` and `amp` to the `sin()` and `cos()`, and apply the values respectively to the x, y position of the circle in nested for loop, we will get a layers of circles concentric circular path.
-<img align="center" src="assets/blue-dande.png" width="500" >
+<img align="center" src="assets/for-loop-compare.png" width="500" >
 
 For example, here we will get `r` layers of circles, and each layer has `2*PI / (2 * PI / 12)` circles:
 
@@ -43,7 +43,7 @@ for (let r = 0; r < 6; r++) {
 }
 ```
 
-<img align = "right" src="assets/mid-1.1.png" width="300" height="300" style="display: block;
+<img align = "center" src="assets/mid-1.1.png" width="300" height="300" style="display: block;
   margin-left: auto;
   margin-right: auto;">
 
@@ -54,7 +54,7 @@ let x1 = sin(i) * (30 + r * 20);
 let y1 = cos(i) * (30 + r * 20);
 ```
 
-<img align="right" src="assets/mid-1.2.png" width="300" height="300" style="display: block;
+<img align="center" src="assets/mid-1.2.png" width="300" height="300" style="display: block;
   margin-left: auto;
   margin-right: auto;">
 
@@ -65,7 +65,7 @@ let x1 = sin((PI / 5) * r + i) * (30 + r * 20);
 let y1 = cos((PI / 5) * r + i) * (30 + r * 20);
 ```
 
-<img align="right" src="assets/mid-1.3.png" width="300" height="300" style="display: block;
+<img src="assets/mid-1.3.png" width="300" height="300" style="display: block;
   margin-left: auto;
   margin-right: auto;">
 <img src="assets/mid-1.3.2.png" width="300" height="300" style="display: block;
@@ -86,7 +86,7 @@ for (let r = 0; r < 6; r++) {
 }
 ```
 
-<img align = "right" src="assets/mid-1.4.png" width="300" height="300" style="display: block;
+<img align = "center" src="assets/mid-1.4.png" width="300" height="300" style="display: block;
   margin-left: auto;
   margin-right: auto;">
 
@@ -96,7 +96,7 @@ Aha! Now we get a much more scattered pattern. It looks a bit boring. The circle
 circle(x1, y1, 6 + r * 3.5);
 ```
 
-<img align = "right" src="assets/mid-1.5.png" width="300" height="300" style="display: block;
+<img align = "center" src="assets/mid-1.5.png" width="300" height="300" style="display: block;
   margin-left: auto;
   margin-right: auto;">
 
@@ -106,7 +106,7 @@ Hmmmm... Better, but too crowded. Let's makes the size of circles in the same la
 circle(x1, y1, map(sin(i + PI / 2), -1, 1, 3, 6 + r * 3.5));
 ```
 
-<img align = "right" src="assets/mid-1.6.png" width="300" height="300" style="display: block;
+<img align = "center" src="assets/mid-1.6.png" width="300" height="300" style="display: block;
   margin-left: auto;
   margin-right: auto;">
 
