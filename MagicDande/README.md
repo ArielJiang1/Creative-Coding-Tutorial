@@ -24,12 +24,12 @@ What should I make? I have no idea at the beginning, so I decide to experiment w
 
 <img align="right" src="assets/for-loop-compare.jpg" width="500" >
 
-[!NOTE]
-Remember the grid system you created in class with nested `for()` loop? The inner `for()` loop will increase the index value in the x direction (horizontally), while the outer `for()` loop will increase it in y direction (vertically).
-The grid system is a result of the increasing indexes being applied to the x, y position of a p5 shape.
+> [!NOTE]
+> Remember the grid system you created in class with nested `for()` loop?The inner `for()` loop will increase the index value in the x direction (horizontally), while the outer `for()` loop will increase it in y direction (vertically).
+> The grid system is a result of the increasing indexes being applied to the x, y position of a p5 shape.
 
-Now, instead of applying the indexes directly to the x, y position, let's apply them to the `sin(freq) * amp` and `cos(freq) * amp`.
-Just to recap, the `freq` affect how many samples you will extract from a certain period of the sin wave. The smaller the increment of `freq`, the more samples you get. `amp` refers to the size each sample is scaled to. The range of `sin(freq) * amp` is (-amp, amp).
+> Now, instead of applying the indexes directly to the x, y position, let's apply them to the `sin(freq) * amp` and `cos(freq) * amp`.
+> Just to recap, the `freq` affect how many samples you will extract from a certain period of the sin wave. The smaller the increment of `freq`, the more samples you get. `amp` refers to the size each sample is scaled to. The range of `sin(freq) * amp` is (-amp, amp).
 
 If we assign the same `freq` and `amp` to the `sin()` and `cos()`, and apply the values respectively to the x, y position of the circle in nested for loop, we will get a layers of circles concentric circular path.
 
