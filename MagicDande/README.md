@@ -2,7 +2,7 @@
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
     <div style="flex: 1; text-align: center;">
-        <img src="assets/blue-dande.png" width="300" height="300" style="display: block; margin-left: auto; margin-right: auto;">
+        <img src="assets/blue-dande.png" width="300">
     </div>
     <div style="flex: 2; text-align: right;">
         Welcome and nice to meet you, traveler from Earth!
@@ -14,7 +14,8 @@
         My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, and a lot of playfulness!
 
         Oh dear traveler from Earth, are you ready to become the Little Prince of your one and only MagicDande?
-    </div>
+
+</div>
 
 </div>
 
