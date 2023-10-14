@@ -2,7 +2,7 @@
 
 ## F23 Creative Coding Lab Midterm
 
-<img align="right" src="assets/Dande-Gif.gif" width="300" >
+<img align="right" src="assets/Dande-Gif.gif" width="560" >
 
 :wave: Welcome and nice to meet you, traveler from Earth! :wave:
 
