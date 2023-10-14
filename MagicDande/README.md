@@ -10,10 +10,11 @@ My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, a
 
 Oh dear traveler from earth, are you ready to become the Little Prince of your one and only MagicDande?
 
-### Let's Begin
+## Let's Begin!
 
-#### Pattern: Play with the For Loops and Create the Pattern!
+### Pattern: Play with the For Loops and Create the Pattern!
 
+<div style="display: block">
 ```JavaScript
 for (let r = 0; r < 6; r++) {
   for (let i = 0; i < 2 * PI; i += (2 * PI) / 12) {
@@ -25,23 +26,31 @@ for (let r = 0; r < 6; r++) {
   }
 }
 ```
-
-<img src="assets/mid-1.1.png" width="300" height="300">
+<img src="assets/mid-1.1.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
+</div>
 
 ```Javascript
 let x1 = sin(i) * (30 + r * 20);
 let y1 = cos(i) * (30 + r * 20);
 ```
 
-<img src="assets/mid-1.2.png" width="300" height="300">
+<img src="assets/mid-1.2.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
 
 ```JavaScript
 let x1 = sin((PI / 5) * r + i) * (30 + r * 20);
 let y1 = cos((PI / 5) * r + i) * (30 + r * 20);
 ```
 
-<img src="assets/mid-1.3.png" width="300" height="300">
-<img src="assets/mid-1.3.2.png" width="300" height="300">
+<img src="assets/mid-1.3.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
+<img src="assets/mid-1.3.2.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
 
 ```JavaScript
 for (let r = 0; r < 6; r++) {
@@ -55,31 +64,37 @@ for (let r = 0; r < 6; r++) {
 }
 ```
 
-<img src="assets/mid-1.4.png" width="300" height="300">
+<img src="assets/mid-1.4.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
 
 ```JavaScript
 circle(x1, y1, 6 + r * 3.5);
 ```
 
-<img src="assets/mid-1.5.png" width="300" height="300">
+<img src="assets/mid-1.5.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
 
 ```JavaScript
 circle(x1, y1, map(sin(i + PI / 2), -1, 1, 3, 6 + r * 3.5));
 ```
 
-<img src="assets/mid-1.6.png" width="300" height="300">
+<img src="assets/mid-1.6.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
 
-#### Motion: Make the Pattern Move!
+### Motion: Make the Pattern Move!
 
-#### Swaying Effect: Sway in the Breeze of Early Autumn!
+### Swaying Effect: Sway in the Breeze of Early Autumn!
 
-#### Interaction: Don't Touch Me!
+### Interaction: Don't Touch Me!
 
-#### Function: Become Elegant and Save Some Labor!
+### Function: Become Elegant and Save Some Labor!
 
-#### Gradient Color: Shine!
+### Gradient Color: Shine!
 
-### Live Site Links
+## Live Site Links
 
 - [Midterm Step1 - pattern](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step1-pattern/).
 - [Midterm Step2 - motion](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step2-motion/).
