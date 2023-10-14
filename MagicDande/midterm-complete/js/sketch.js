@@ -1,9 +1,22 @@
 let colorBase = [
   [56, 130, 60], // green
   [250, 80, 80], //pink
-  [120, 150, 190],//blue
+  [120, 150, 190], //blue
 ];
-let colorRange = [[[56, 142, 60], [255, 245, 157]], [[255, 234, 221], [255, 102, 102]], [[130, 170, 227], [234, 253, 252]]];//[dand1[[rMinValue, gMinValue, bMinValue],[rMaxValue, gMaxValue, bMaxValue]]]
+let colorRange = [
+  [
+    [56, 142, 60],
+    [255, 245, 157],
+  ],
+  [
+    [255, 234, 221],
+    [255, 102, 102],
+  ],
+  [
+    [130, 170, 227],
+    [234, 253, 252],
+  ],
+]; //[dand1[[rMinValue, gMinValue, bMinValue],[rMaxValue, gMaxValue, bMaxValue]]]
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
@@ -14,6 +27,8 @@ function draw() {
   drawDandFlower(5, width / 2, height / 2, 0);
   drawDandFlower(2, width / 2 - 150, height / 2 + 100, 1);
   drawDandFlower(3, width / 2 + 150, height / 2 + 80, 2);
+  drawDandFlower(6, width / 2 + 550, height / 2 + 130, 1);
+  drawDandFlower(4, width / 2 - 500, height / 2 + 50, 2);
 }
 
 function drawDandFlower(layerNum, transX, transY, ci) {
@@ -34,7 +49,7 @@ function drawDandFlower(layerNum, transX, transY, ci) {
   bezier(x1, y1, 0, 150, 0, 500, 0, 500);
   pop();
   for (let r = 0; r < layerNum; r++) {
-    for (let i = 0; i <= 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
       let fly = false;
       let x = x1 + sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
       let y = y1 + cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
@@ -67,6 +82,28 @@ function drawDandFlower(layerNum, transX, transY, ci) {
   pop();
 }
 
-function assignColor(baseColorIndex, fluct){
-  fill(map(fluct, -1, 1, colorRange[baseColorIndex][0][0], colorRange[baseColorIndex][1][0]), map(fluct, -1, 1, colorRange[baseColorIndex][0][1], colorRange[baseColorIndex][1][1]),  map(fluct, -1, 1, colorRange[baseColorIndex][0][2], colorRange[baseColorIndex][1][2]));
+function assignColor(baseColorIndex, fluct) {
+  fill(
+    map(
+      fluct,
+      -1,
+      1,
+      colorRange[baseColorIndex][0][0],
+      colorRange[baseColorIndex][1][0]
+    ),
+    map(
+      fluct,
+      -1,
+      1,
+      colorRange[baseColorIndex][0][1],
+      colorRange[baseColorIndex][1][1]
+    ),
+    map(
+      fluct,
+      -1,
+      1,
+      colorRange[baseColorIndex][0][2],
+      colorRange[baseColorIndex][1][2]
+    )
+  );
 }
