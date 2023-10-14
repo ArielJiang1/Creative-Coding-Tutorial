@@ -4,7 +4,7 @@
 
 <img align="right" src="assets/blue-dande.png" width="300" >
 
-Welcome and nice to meet you, traveler from Earth!
+:wave: Welcome and nice to meet you, traveler from Earth! :wave:
 
 I'm Dandie and I'm part of the MagicDande family living on planet B611.
 
@@ -27,7 +27,7 @@ Now, instead of applying the indexes directly to the x, y position, let's apply 
 Just to recap, the `freq` affect how many samples you will extract from a certain period of the sin wave. The smaller the increment of `freq`, the more samples you get. `amp` refers to the size each sample is scaled to. The range of `sin(freq) * amp` is (-amp, amp).
 
 If we assign the same `freq` and `amp` to the `sin()` and `cos()`, and apply the values respectively to the x, y position of the circle in nested for loop, we will get a layers of circles concentric circular path.
-<img align="center" src="assets/for-loop-compare.png" width="500" >
+<img align="center" src="assets/for-loop-compare.jpg" width="500" >
 
 For example, here we will get `r` layers of circles, and each layer has `2*PI / (2 * PI / 12)` circles:
 
