@@ -1,8 +1,11 @@
 # MagicDande Tutorial - F23 Creative Coding Lab Midterm
 
+<img src="assets/blue-dande.png" width="300" height="300" style="display: block; width: 35%">
+
+<div style="display: block; width: 65%">
 Welcome and nice to meet you, traveler from earth!
 
-I'm Dandie and I'm part of the MagicDande family living on planet B611. Timid and introvert by nature, I shy away from your touch.
+I'm Dandie and I'm part of the <font color="red"> MagicDande </font> family living on planet B611. Timid and introvert by nature, I shy away from your touch.
 
 I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
 
@@ -10,11 +13,12 @@ My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, a
 
 Oh dear traveler from earth, are you ready to become the Little Prince of your one and only MagicDande?
 
+</div>
+
 ## Let's Begin!
 
 ### Pattern: Play with the For Loops and Create the Pattern!
 
-<div style="display: block">
 ```JavaScript
 for (let r = 0; r < 6; r++) {
   for (let i = 0; i < 2 * PI; i += (2 * PI) / 12) {
@@ -26,10 +30,10 @@ for (let r = 0; r < 6; r++) {
   }
 }
 ```
+
 <img src="assets/mid-1.1.png" width="300" height="300" style="display: block;
   margin-left: auto;
   margin-right: auto;">
-</div>
 
 ```Javascript
 let x1 = sin(i) * (30 + r * 20);
