@@ -1,17 +1,20 @@
 # MagicDande Tutorial - F23 Creative Coding Lab Midterm
 
-<img src="assets/blue-dande.png" width="300" height="300" style="display: block; width: 35%">
+<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+    <div style="flex: 1; text-align: center;">
+        <img src="assets/blue-dande.png" width="300" height="300" style="display: block; margin-left: auto; margin-right: auto;">
+    </div>
+    <div style="flex: 2; text-align: left;">
+        Welcome and nice to meet you, traveler from Earth!
 
-<div style="display: block; width: 65%">
-Welcome and nice to meet you, traveler from earth!
+        I'm Dandie and I'm part of the <font color="red">MagicDande</font> family living on planet B611. Timid and introvert by nature, I shy away from your touch.
 
-I'm Dandie and I'm part of the <font color="red"> MagicDande </font> family living on planet B611. Timid and introvert by nature, I shy away from your touch.
+        I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
 
-I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
+        My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, and a lot of playfulness!
 
-My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, and a lot of playfulness!
-
-Oh dear traveler from earth, are you ready to become the Little Prince of your one and only MagicDande?
+        Oh dear traveler from Earth, are you ready to become the Little Prince of your one and only MagicDande?
+    </div>
 
 </div>
 
