@@ -26,22 +26,22 @@ for (let r = 0; r < 6; r++) {
 }
 ```
 
-![image](/assets/mid-1.1.png);
+![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.1.png);
 
 ```Javascript
 let x1 = sin(i) * (30 + r * 20);
 let y1 = cos(i) * (30 + r * 20);
 ```
 
-![image](/assets/mid-1.2.png);
+![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.2.png);
 
 ```JavaScript
 let x1 = sin((PI / 5) * r + i) * (30 + r * 20);
 let y1 = cos((PI / 5) * r + i) * (30 + r * 20);
 ```
 
-![image](/assets/mid-1.3.png);
-![image](/assets/mid-1.3.2.png);
+![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.3.png);
+![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.3.2.png);
 
 ```JavaScript
 for (let r = 0; r < 6; r++) {
@@ -55,19 +55,19 @@ for (let r = 0; r < 6; r++) {
 }
 ```
 
-![image](/assets/mid-1.4.png);
+![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.4.png);
 
 ```JavaScript
 circle(x1, y1, 6 + r * 3.5);
 ```
 
-![image](/assets/mid-1.5.png);
+![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.5.png);
 
 ```JavaScript
 circle(x1, y1, map(sin(i + PI / 2), -1, 1, 3, 6 + r * 3.5));
 ```
 
-![image](/assets/mid-1.6.png);
+![image](https://github.com/CarrotLiu/Creative-Coding-Tutorial/blob/main/MagicDande/assets/mid-1.6.png);
 
 #### Motion: Make the Pattern Move!
 
