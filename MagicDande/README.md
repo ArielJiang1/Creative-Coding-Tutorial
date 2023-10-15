@@ -185,28 +185,113 @@ circle(0, 0, 30);
 Oooops, the wind is blowing! Seeds are flowing!
 
 ```JavaScript
-for (let r = 0; r < 6; r++) {
-    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
-        let x1 = sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
-        let y1 = cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
-        fill(255);
-        stroke(255, 100);
-        strokeWeight(map(sin(i + frameCount * 0.05), -1, 1, 0.01, 2));
-        line(x1, y1, 0, 0);
-        noStroke();
-        circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
-    }
-}
+strokeWeight(map(sin(i + frameCount * 0.05), -1, 1, 0.01, 2));
 ```
 
 <img align = "center" src="assets/mid-2.3.gif" width="300" >
-Cool cool cool. 
+Here I make the strokeWeight fluctuate using the same mapping trick. The seeds' stem are now swaying with the wind.
+Cool cool cool.
 Wait, I think I miss something...
-The stem! The flower it self needs a stem!
+The stem! The flower itself needs a stem!
 
 ### Swaying Effect: Let There Be a Swaying Stem!
 
+Maybe just add a line before the for loop:
+
+```JavaScript
+function draw() {
+  background(0);
+
+  translate(width / 2, height / 2);
+  push();
+  fill(255);
+  stroke(255, 100);
+  strokeWeight(5);
+  line(0, 0, 0, 600);
+  pop();
+  for (let r = 0; r < 6; r++) {
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+      let x1 = sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
+      let y1 = cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
+      fill(255);
+      stroke(255, 100);
+      strokeWeight(map(sin(i + frameCount * 0.05), -1, 1, 0.01, 2));
+      line(x1, y1, 0, 0);
+      noStroke();
+
+      circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
+    }
+  }
+  circle(0, 0, 30);
+}
+```
+
+<img align = "center" src="assets/mid-3.1.gif" width="350" >
+
+And make it sway:
+
+```JavaScript
+let x = map(sin(frameCount * 0.01), -1, 1, -60, 60);
+let y = map(cos(frameCount * 0.01), -1, 1, -10, 0);
+line(x, y, 0, 600);
+```
+
+<img align = "center" src="assets/mid-3.2.gif" width="350" >
+Oooops! Something bad happens! The flower is not following along!
+Let me fix it:
+
+```JavaScript
+for (let r = 0; r < 6; r++) {
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+
+      fill(255);
+      stroke(255, 100);
+      strokeWeight(map(sin(i + frameCount * 0.05), -1, 1, 0.01, 2));
+      line(x1, y1, x, y);
+      noStroke();
+      circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
+    }
+  }
+  circle(x, y, 30);
+```
+
+<img align = "center" src="assets/mid-3.3.gif" width="350" >
+
+Here's some break-down:
+
+The first step is to make the seeds follow. So offset all the seeds' position x1 and y1 by x and y:
+
+```JavaScript
+let x1 = x + sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
+let y1 = y + cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
+```
+
+Then, make the seeds' stems follow by making the line's endpoints (x, y):
+
+```JavaScript
+line(x1, y1, x, y);
+```
+
+Finally, make the core follow by positioning the core circle at (x, y):
+
+```JavaScript
+circle(x, y, 30);
+```
+
+Bug fixed. But it looks very weird. The stem of the dandelion should be bending while swaying. In this case, I would need a `bezier()` function:
+
+```JavaScript
+noFill();
+bezier(x, y, 0, 150, 0, 500, 0, 500);
+```
+
+<img align = "center" src="assets/mid-3.4.gif" width="350" >
+
+Nice! Now let's add some character to my little magic Dandie~
+
 ### Interaction: Don't Touch Me!
+
+Dandie is timid. So it shies away from my touch. The seeds will move away from the hand (or mouse) and reinstate their positions when the hand moves away.
 
 ### Function: Become Elegant and Save Some Labor!
 
