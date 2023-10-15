@@ -30,7 +30,7 @@ What should I make? I have no idea at the beginning, so I decide to experiment w
 Now, instead of applying the indexes directly to the x, y position, let's apply them to the sin(freq) * amp and cos(freq) * amp.
 Just to recap, the `freq` affect how many samples you will extract from a certain period of the sin wave. The smaller the increment of `freq`, the more samples you get. `amp` refers to the size each sample is scaled to. The range of sin(freq) * amp is (-amp, amp).
 
-If we assign the same `freq` and `amp` to the `sin()` and `cos()`, and apply the values respectively to the x, y position of the circle in nested for loop, we will get a layers of circles concentric circular path.
+If we assign the same `freq` and `amp` to the `sin()` and `cos()`, and apply the values respectively to the x, y position of the circle in nested for loop, we will get a pattern of circles arranged in a circular fashion with multiple rings.
 
 For example, here we will get `r` layers of circles, and each layer has _2*PI / (2 * PI / 12)_ circles:
 
@@ -50,7 +50,26 @@ for (let r = 0; r < 6; r++) {
   margin-left: auto;
   margin-right: auto;">
 
-Since the first layer start from `r = 0`, the 12 circles overlap with each other. Let's give it an offset value 30 to start with, so that the first layer of circles are 30 away from the center:
+The outer for loop iterates through different "rings." The variable r is used to represent the current ring, and the loop will run from r = 0 to r = 5, which means it will create a total of 6 rings.
+
+```Javascript
+for (let r = 0; r < 6; r++)
+```
+
+The inner for loop iterates through angles from 0 to 2 \* PI (a full circle) and divides the circle into 12 equal segments. The variable i represents the current angle in radians.
+
+```Javascript
+for (let i = 0; i < 2 * PI; i += (2 * PI) / 12)
+```
+
+The following code calculates the x and y coordinates for the center of each circle within the ring. It maps the angles `i` to the positions on the circle. Making the amplitude `r * 30` makes the radius of circles on one layer is larger than the previous one as the `r` increases.
+
+```Javascript
+let x1 = sin(i) * (r * 20);
+let y1 = cos(i) * (r * 20);
+```
+
+Since the first layer starts from `r = 0`, the 12 circles overlap with each other. Let's offset it by 30 from the center through adding 30 to the amplitude:
 
 ```Javascript
 let x1 = sin(i) * (30 + r * 20);
@@ -116,6 +135,30 @@ circle(x1, y1, map(sin(i + PI / 2), -1, 1, 3, 6 + r * 3.5));
 Cool! Now it's time to make it move!
 
 ### Motion: Make the Pattern Move!
+
+The pattern inspires me to create a spiral motion through changing the radius of each circles rather than their position.
+First, put all the code after the `createCanvas()` into the `draw()` function.
+Then, we can replace the `r` value in the that change the sine wave frequency with the `frameCount`. This creates a dynamic effect where the radius of the circles in each ring fluctuates over time.
+
+```JavaScript
+function draw() {
+  background(0);
+
+  translate(width / 2, height / 2);
+  for (let r = 0; r < 6; r++) {
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+      fill(255);
+      noStroke();
+      let x1 = sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
+      let y1 = cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
+      circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
+    }
+  }
+}
+```
+
+<img src="assets/mid-2.1.gif" width="300" >
+The pattern reminds me of seeds of dandelions swaying in the wind... Aha! What about creating a Magic Dandelion on B611?
 
 ### Swaying Effect: Sway in the Breeze of Early Autumn!
 
