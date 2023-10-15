@@ -68,7 +68,7 @@ function drawDandFlower(layerNum, transX, transY, ci) {
 
       stroke(255, 100);
       strokeWeight(map(sin(i + frameCount * 0.05), -1, 1, 0.01, 2));
-      bezier(x1, y1, x, y, x, y, x, y);
+      line(x1, y1, x, y);
       let fluctation = sin((PI / 2) * (r + 1) + i);
       assignColor(ci, fluctation);
       noStroke();
