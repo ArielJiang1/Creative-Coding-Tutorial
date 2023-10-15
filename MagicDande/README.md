@@ -88,11 +88,9 @@ let y1 = cos((PI / 5) * r + i) * (30 + r * 20);
 ```
 
 <img src="assets/mid-1.3.png" width="300" height="300" style="display: block;
-  margin-left: auto;
-  margin-right: auto;">
+margin: 30px">
 <img src="assets/mid-1.3.2.png" width="300" height="300" style="display: block;
-  margin-left: auto;
-  margin-right: auto;">
+margin: 30px">
 
 This looks nice! We're getting some spiral effect. Notice that there're always 12 samples on each layer because the `increment of `i`is a constant. Let's make it vary for each layer by applying`r` value again:
 
@@ -157,7 +155,7 @@ function draw() {
 }
 ```
 
-<img src="assets/mid-2.1.gif" width="300" >
+<img align = "center" src="assets/mid-2.1.gif" width="300" >
 
 The pattern reminds me of seeds of dandelions swaying in the wind... Aha! What about creating a Magic Dandelion on B611?
 To make a Magic Dande, we need to add a core, stems for the seeds, and a stem for the flower.
@@ -181,7 +179,8 @@ for (let r = 0; r < 6; r++) {
 circle(0, 0, 30);
 ```
 
-<img src="assets/mid-2.2.gif" width="300" >
+<img align = "center" src="assets/mid-2.2.gif" width="300" >
+
 ### Swaying Effect: Sway in the Breeze of Early Autumn!
 
 ### Interaction: Don't Touch Me!
