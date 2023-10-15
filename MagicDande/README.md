@@ -4,35 +4,34 @@
 
 <img align="right" src="assets/Dande-Gif.gif" width="360" >
 
-:wave: Welcome and nice to meet you, traveler from Earth! :wave:
+:wave: Welcome abroad, traveler from Earth! :wave:
 
-I'm Dandie and I'm part of the MagicDande family living on planet B611.
+I'm Dandie and I'm part of [the MagicDande family](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-complete/) living on planet B611.
 
 Timid and introvert by nature, I shy away from your touch.
 
 I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
 
-My Little Prince Carrot grew me using p5.js, a little bit of math, some logic, and a lot of playfulness! She's going to walk you through the her process of bringing me to life.
+My Little Prince grew me using p5.js, a little bit of math, some logic, and a lot of playfulness!
 
-Oh dear traveler from Earth, are you ready to become the Little Prince of your one and only MagicDande on B611?
+Oh dear traveler from Earth, are you ready to become the Little Prince of your one and only MagicDande on B611? Here's a copy of my Little prince's Planting Journal.
 
-## Let's Begin!
+## Planting Journal 2023
 
 ### Pattern: Play with the For Loops and Create the Pattern!
 
 What should I make? I have no idea at the beginning, so I decide to experiment with patterns in the `setup()` function.
 
 > [!NOTE]
-> Remember the grid system you created in class with nested `for()` loop?The inner `for()` loop will increase the index value in the x direction (horizontally), while the outer `for()` loop will increase it in y direction (vertically).
+> In class, professor created a grid system with nested `for()` loop. The inner `for()` loop will increase the index value in the x direction (horizontally), while the outer `for()` loop will increase it in y direction (vertically).
 > The grid system is a result of the increasing indexes being applied to the x, y position of a p5 shape.
 
 <img align="right" src="assets/for-loop-compare.jpg" width="500" >
-Now, instead of applying the indexes directly to the x, y position, let's apply them to the sin(freq) * amp and cos(freq) * amp.
-Just to recap, the `freq` affect how many samples you will extract from a certain period of the sin wave. The smaller the increment of `freq`, the more samples you get. `amp` refers to the size each sample is scaled to. The range of sin(freq) * amp is (-amp, amp).
+Now, instead of applying the indexes directly to the x, y position, I'll apply them to the sin(freq) * amp and cos(freq) * amp.
 
-If we assign the same `freq` and `amp` to the `sin()` and `cos()`, and apply the values respectively to the x, y position of the circle in nested for loop, we will get a pattern of circles arranged in a circular fashion with multiple rings.
+Just to recap, the `freq` affect how many samples will be extracted from a certain period of the sin wave. The smaller the increment of `freq`, the more samples one gets. `amp` refers to the size each sample is scaled to.
 
-For example, here we will get `r` layers of circles, and each layer has _2*PI / (2 * PI / 12)_ circles:
+If I assign the same `freq` and `amp` to the `sin()` and `cos()`, and apply the values to the x, y position of the circle in nested for loop, I will get a pattern of circles arranged in a circular fashion with multiple layers:
 
 ```JavaScript
 for (let r = 0; r < 6; r++) {
@@ -50,26 +49,28 @@ for (let r = 0; r < 6; r++) {
   margin-left: auto;
   margin-right: auto;">
 
-The outer for loop iterates through different "rings." The variable r is used to represent the current ring, and the loop will run from r = 0 to r = 5, which means it will create a total of 6 rings.
+Here, I get `r` layers of circles, and each layer has _2*PI / (2 * PI / 12)_ circles.
+
+The outer for loop iterates through different "layers". The variable `r` represents the current layer, and the loop will run from `r = 0` to `r = 5`, which means it will create 6 layers.
 
 ```Javascript
 for (let r = 0; r < 6; r++)
 ```
 
-The inner for loop iterates through angles from 0 to 2 \* PI (a full circle) and divides the circle into 12 equal segments. The variable i represents the current angle in radians.
+The inner for loop iterates through angles from 0 to `2 * PI` (a full circle) and divides the circle into 12 equal segments. The variable `i` represents the current angle in radians.
 
 ```Javascript
 for (let i = 0; i < 2 * PI; i += (2 * PI) / 12)
 ```
 
-The following code calculates the x and y coordinates for the center of each circle within the ring. It maps the angles `i` to the positions on the circle. Making the amplitude `r * 30` makes the radius of circles on one layer is larger than the previous one as the `r` increases.
+The following code calculates the x and y coordinates for the center of each circle within the layer. It maps the angles `i` to the positions on the circle. Making the amplitude `r * 20` increases the radius of circles layer by layer.
 
 ```Javascript
 let x1 = sin(i) * (r * 20);
 let y1 = cos(i) * (r * 20);
 ```
 
-Since the first layer starts from `r = 0`, the 12 circles overlap with each other. Let's offset it by 30 from the center through adding 30 to the amplitude:
+Since the first layer starts from `r = 0`, the 12 circles overlap with each other. I'll offset them by 30 from the center:
 
 ```Javascript
 let x1 = sin(i) * (30 + r * 20);
@@ -80,7 +81,7 @@ let y1 = cos(i) * (30 + r * 20);
   margin-left: auto;
   margin-right: auto;">
 
-The `freq` for each layer are the same, making the circles stay in lines. Let's make the `freq` different through using the the `r` index value (the outer for loop index):
+The `freq` for each layer are the same, making the circles stay in lines. Too boring. Let me make the `freq` different through using the the `r` index value (the outer for loop index):
 
 ```JavaScript
 let x1 = sin((PI / 5) * r + i) * (30 + r * 20);
@@ -92,7 +93,7 @@ margin: 30px">
 <img src="assets/mid-1.3.2.png" width="300" height="300" style="display: block;
 margin: 30px">
 
-This looks nice! We're getting some spiral effect. Notice that there're always 12 samples on each layer because the `increment of `i`is a constant. Let's make it vary for each layer by applying`r` value again:
+This looks nice! I'm getting some spiral effect. I find that there're always 12 samples on each layer because the `increment of `i`is a constant. Gonna make it vary for each layer by applying`r` value again:
 
 ```JavaScript
 for (let r = 0; r < 6; r++) {
@@ -110,7 +111,7 @@ for (let r = 0; r < 6; r++) {
   margin-left: auto;
   margin-right: auto;">
 
-Aha! Now we get a much more scattered pattern. It looks a bit boring. The circles are of the same size. What about having bigger circles for outer layers?
+Aha! Now I get a much more scattered pattern. It still looks a bit boring though. The circles are of the same size. What about having bigger circles for outer layers?
 
 ```JavaScript
 circle(x1, y1, 6 + r * 3.5);
@@ -120,7 +121,7 @@ circle(x1, y1, 6 + r * 3.5);
   margin-left: auto;
   margin-right: auto;">
 
-Hmmmm... Better, but too crowded. Let's makes the size of circles in the same layer vary by using `sin()` and `i`. We need to map it to a range of positive value as circle radius must be positive:
+Hmmmm... Better, but too crowded. Let me makes the size of circles in the same layer vary by using `sin()` and `i`. I need to map it to a range of positive value as circle radius must be positive:
 
 ```JavaScript
 circle(x1, y1, map(sin(i + PI / 2), -1, 1, 3, 6 + r * 3.5));
@@ -130,13 +131,13 @@ circle(x1, y1, map(sin(i + PI / 2), -1, 1, 3, 6 + r * 3.5));
   margin-left: auto;
   margin-right: auto;">
 
-Cool! Now it's time to make it move!
+Cool! Now it's a perfect time to make it move!
 
 ### Motion: Make the Pattern Move!
 
 The pattern inspires me to create a spiral motion through changing the radius of each circles rather than their position.
-First, put all the code after the `createCanvas()` into the `draw()` function.
-Then, we can replace the `r` value in the that change the sine wave frequency with the `frameCount`. This creates a dynamic effect where the radius of the circles in each ring fluctuates over time.
+I move all the code after the `createCanvas()` into the `draw()` function.
+Then, I replace the `r` value in the that change the sine wave frequency with the `frameCount`. This creates a dynamic effect where the radius of the circles in each layer fluctuates over time.
 
 ```JavaScript
 function draw() {
@@ -157,10 +158,10 @@ function draw() {
 
 <img align = "center" src="assets/mid-2.1.gif" width="300" >
 
-The pattern reminds me of seeds of dandelions swaying in the wind... Aha! What about creating a Magic Dandelion on B611?
-To make a Magic Dande, we need to add a core, stems for the seeds, and a stem for the flower.
-
-Using line and circle, it's easy to draft out the core and stems for the seeds:
+The pattern reminds me of seeds of dandelions swaying in the wind...
+Aha! Let there be a Magic Dandelion on B611!
+Let there be a core in the middle of the flower!
+Let there be stems for the seeds!
 
 ```JavaScript
 translate(width / 2, height / 2);
