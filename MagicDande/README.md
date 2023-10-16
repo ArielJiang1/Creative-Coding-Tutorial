@@ -2,6 +2,16 @@
 
 ## F23 Creative Coding Lab Midterm
 
+> [!NOTE]
+> This tutorial provides a complete walk through from concept development to implementation. In particular, it shows a way of developing a creature from experiments on abstract patterns, which you (or some of you) enjoyed during the Week 4 recitation.
+
+### Knowledge Covered:
+
+- structure: if(), for(), function(), array
+- transform: translate()
+- math: sin(), cos(), map(), dist()
+- shape: circle(), bezier(), line()
+
 <img align="right" src="assets/Dande-Gif.gif" width="360" >
 
 :wave: Welcome abroad, traveler from Earth! :wave:
@@ -398,7 +408,8 @@ function drawDandFlower(layerNum, transX, transY) {
 }
 ```
 
-<img align = "center" src="assets/mid-5.2.gif" width="350" >
+<img align = "center" src="assets/mid-5.1.gif" width="350" >
+
 Now they're scattered. But wait, why they shy together when I'm only touching the middle one?
 That's, again, because the `dist()` accepts position as the actual, absolute pos on canvas and isn't affected by the `translate()` function. Since `(x1 + width / 2, y1 + width / 2)` remains the same for all dandelions, their seeds would shy away together.
 To fix this, we need to apply the translation manually again:
@@ -648,6 +659,14 @@ function draw(){
 
 <img align = "center" src="assets/mid-6.6.gif" width="650" >
 
+## F23 Creative Coding Lab Final
+
+### Knowledge Covered:
+
+- structure: Objected Oriented Programming
+- transform: rotate()
+-
+
 ## Live Site Links
 
 - [Midterm Step1 - pattern](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step1-pattern/).
@@ -657,7 +676,3 @@ function draw(){
 - [Midterm Step5 - function](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step5-function/).
 - [Midterm Step6 - gradient-color](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step6-gradient-color/).
 - [Midterm Complete Demo](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-complete/).
-
-```
-
-```
