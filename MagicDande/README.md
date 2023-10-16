@@ -659,14 +659,6 @@ function draw(){
 
 <img align = "center" src="assets/mid-6.6.gif" width="650" >
 
-## F23 Creative Coding Lab Final
-
-### Knowledge Covered:
-
-- structure: Objected Oriented Programming
-- transform: rotate()
--
-
 ## Live Site Links
 
 - [Midterm Step1 - pattern](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step1-pattern/).
