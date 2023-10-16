@@ -3,7 +3,9 @@
 ## F23 Creative Coding Lab Midterm
 
 > [!NOTE]
-> This tutorial provides a complete walk through from concept development to implementation. In particular, it shows a way of developing a creature from experiments on abstract patterns, which you (or some of you) enjoyed during the Week 4 recitation.
+> This tutorial provides a complete walk-through from concept development to implementation based on the [Project A Prompt](https://docs.google.com/document/d/11haMfqNY1PYHohEQlD3-yF6Mmleu6-2Nn-Ldfb8Hi9I/edit).
+> In particular, it suggests a way of developing a creature from abstract patterns and visuals, which you (or some of you) enjoyed during the Week 4 Recitation: Pattern.
+> Good luck on your midterm, CCLabers!
 
 ### Knowledge Covered:
 
