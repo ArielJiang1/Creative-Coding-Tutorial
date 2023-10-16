@@ -16,7 +16,7 @@
 
 <img align="right" src="assets/Dande-Gif.gif" width="360" >
 
-:wave: Welcome abroad, traveler from Earth! :wave:
+## :wave: Welcome abroad, traveler from Earth! :wave:
 
 I'm Dandie and I'm part of [the MagicDande family](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-complete/) living on planet B611.
 
