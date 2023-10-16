@@ -398,7 +398,7 @@ function drawDandFlower(layerNum, transX, transY) {
 }
 ```
 
-<img align = "center" src="assets/mid-5.1.gif" width="350" >
+<img align = "center" src="assets/mid-5.2.gif" width="350" >
 Now they're scattered. But wait, why they shy together when I'm only touching the middle one?
 That's, again, because the `dist()` accepts position as the actual, absolute pos on canvas and isn't affected by the `translate()` function. Since `(x1 + width / 2, y1 + width / 2)` remains the same for all dandelions, their seeds would shy away together.
 To fix this, we need to apply the translation manually again:
@@ -420,6 +420,234 @@ Great! Now it's a perfect time to add color!
 
 ### Gradient Color: Shine!
 
+<img align = "right" src="assets/green-color-palette.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
+
+I decide to use a [green color palette](https://colorhunt.co/palette/388e3c8bc34adce775fff59d) from the [colorhunt.co](https://colorhunt.co), a nice color palette website. And I apply the some colors to the dandelion stem, core, and seeds:
+
+```JavaScript
+stroke(56, 142, 60);
+bezier(x, y, 0, 150, 0, 500, 0, 500);
+for (let r = 0; r < layerNum; r++) {
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+        fill(220, 231, 117);
+        circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
+    }
+}
+fill(255, 245, 157);
+circle(x, y, 30);
+```
+
+<img align = "center" src="assets/mid-6.1.gif" width="350" >
+
+Why not make the core's and seeds' colors changes as time goes by? After all, it's a MAGIC dandelion.
+
+I notice that the r, g, b value of the gradient color increase or decrease respectively in the same direction. This means that, if I get the min value and max value of the r, g, b respectively, and map them to a fluctuating function like `sin()`, I will get a gradient shifting color based on the color palettes' colors.
+
+So, simple trick with sine function again:
+
+```JavaScript
+let fluctation = sin((PI / 2) * (r + 1) + i);
+let redV = map(fluctation, -1, 1, 56, 255);
+let greenV = map(fluctation, -1, 1, 142, 245);
+let blueV = map(fluctation, -1, 1, 60, 157);
+fill(redV, greenV, blueV);
+```
+
+<img align = "center" src="assets/mid-6.2.gif" width="350" >
+
+But what if I want more gradient colors, like pink and blue? And what if I want to change the color base by sending another parameter when calling the `drawDandFlower()` function?
+
+<img align = "right" src="assets/pink-color-palette.png" width="300" height="300" style="display: block;
+  margin-left: auto;
+  margin-right: auto;">
+<img align = "right" src="assets/blue-color-palette.png" width="300" height="300" style="display: block;
+margin-left: auto;
+margin-right: auto;">
+
+In order to do that, we need an array to store the min and max values of the color palettes.
+
+```JavaScript
+let colorRange = [
+  [
+    [56, 142, 60], // green min
+    [255, 245, 157], // green max
+  ], // green
+  [
+    [255, 234, 221], // pink min
+    [255, 102, 102], // pink max
+  ], // pink
+  [
+    [130, 170, 227], // blue min
+    [234, 253, 252], // blue max
+  ], // blue
+];
+```
+
+This is frightening! A THREE-DIMENSIONAL ARRAY!!!! Let me try to take the value `56` from this array.
+First, we need to access the green palette array. It's at the index `0` of the array `colorRange`:
+
+```JavaScript
+greenArray = colorRange[0]; // [[56, 142, 60], [255, 245, 157]]
+```
+
+Then we need to get the min value array from the greenArray, which is at the index `0` of the array `greenArray`:
+
+```JavaScript
+greenArray = colorRange[0];
+greenMinArray = greenArray[0];
+```
+
+Finally, we can get `56` from the greenMinArray using index `0`:
+
+```JavaScript
+greenArray = colorRange[0]; // [[56, 142, 60], [255, 245, 157]]
+greenMinArray = greenArray[0]; // [56, 142, 60]
+greenMinRedValue = greenMinArray[0]; // 56
+```
+
+Now, instead of using three variables, we can use only one line of code achieve the same thing:
+
+```JavaScript
+let MinR = colorRange[0][0][0]; // 56
+```
+
+And we can get all the min and max for green palette by:
+
+```JavaScript
+let GMinR = colorRange[0][0][0]; // 56
+let GMinG = colorRange[0][0][1]; // 142
+let GMinB = colorRange[0][0][2]; // 60
+let GMaxR = colorRange[0][1][0]; // 255
+let GMaxG = colorRange[0][1][1]; // 245
+let GMaxB = colorRange[0][1][2]; // 157
+```
+
+For pink palette:
+
+```JavaScript
+let PMinR = colorRange[1][0][0]; // 255
+let PMinG = colorRange[1][0][1]; // 234
+let PMinB = colorRange[1][0][2]; // 221
+let PMaxR = colorRange[1][1][0]; // 255
+let PMaxG = colorRange[1][1][1]; // 102
+let PMaxB = colorRange[1][1][2]; // 102
+```
+
+For blue palette:
+
+```JavaScript
+let BMinR = colorRange[2][0][0]; // 130
+let BMinG = colorRange[2][0][1]; // 170
+let BMinB = colorRange[2][0][2]; // 227
+let BMaxR = colorRange[2][1][0]; // 234
+let BMaxG = colorRange[2][1][1]; // 253
+let BMaxB = colorRange[2][1][2]; // 252
+```
+
+I find the rule! We just need to pass the first index (`colorRange[0]`, `colorRange[2]`, `colorRange[0]`) to get the palette we want, and the rest indexes will stay the same.
+
+So, in the `drawDandFlower()` function, let's add one parameter `ci` to indicate the palette indexes, and drwa three dandelions with different color palette passing the indexes:
+
+```JavaScript
+function draw() {
+  drawDandFlower(6, width / 2, height / 2, 0);
+  drawDandFlower(3, width / 2 - 200, height / 2 + 80, 1);
+  drawDandFlower(4, width / 2 + 190, height / 2 + 100, 2);
+}
+function drawDandFlower(layerNum, transX, transY, ci) {
+    let redV = map(fluctation, -1, 1, colorRange[ci][0][0], colorRange[ci][1][0]);
+    let greenV = map(fluctation, -1, 1, colorRange[ci][0][1], colorRange[ci][1][1]);
+    let blueV = map(fluctation, -1, 1, colorRange[ci][0][2], colorRange[ci][1][2]);
+    fill(redV, greenV, blueV);
+}
+```
+
+<img align = "center" src="assets/mid-6.3.gif" width="350" >
+
+Boom! Success! I also want the core to fluctuate with the color palette. But the core is drawn out of the nested for loop and I have to copy the complex color code again... So I make the color code another function:
+
+```JavaScript
+function assignColor(baseColorIndex, fluct) {
+  fill(
+    map(
+      fluct,
+      -1,
+      1,
+      colorRange[baseColorIndex][0][0],
+      colorRange[baseColorIndex][1][0]
+    ),
+    map(
+      fluct,
+      -1,
+      1,
+      colorRange[baseColorIndex][0][1],
+      colorRange[baseColorIndex][1][1]
+    ),
+    map(
+      fluct,
+      -1,
+      1,
+      colorRange[baseColorIndex][0][2],
+      colorRange[baseColorIndex][1][2]
+    )
+  );
+}
+```
+
+And I call this function respectively before drawing the seeds and core:
+
+```JavaScript
+for (let r = 0; r < layerNum; r++) {
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+      let fluctation = sin((PI / 2) * (r + 1) + i);
+      assignColor(ci, fluctation);
+      noStroke();
+      circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
+    }
+  }
+  let fluctuate2 = sin(PI / 2 + frameCount * 0.01);
+  assignColor(ci, fluctuate2);
+  circle(x, y, 30);
+```
+
+<img align = "center" src="assets/mid-6.4.gif" width="350" >
+
+A few more steps to make my MagicDandes more beautiful. I add an array for the stem color. This time it's easier, with a two-dimensional array:
+
+```JavaScript
+// Stem
+let colorBase = [
+  [56, 130, 60], // green
+  [250, 80, 80], //pink
+  [120, 150, 190], //blue
+];
+function drawDandFlower(){
+    stroke(colorStem[ci][0], colorStem[ci][1], colorStem[ci][2]);
+    strokeWeight(5);
+    let x = map(sin(frameCount * 0.01), -1, 1, -60, 60);
+    let y = map(cos(frameCount * 0.01), -1, 1, -10, 0);
+    bezier(x, y, 0, 150, 0, 500, 0, 500);
+}
+```
+
+<img align = "center" src="assets/mid-6.5.gif" width="350" >
+
+Yeah! Let there be more Magic Dande!
+
+```JavaScript
+function draw(){
+    drawDandFlower(5, width / 2, height / 2, 0);
+    drawDandFlower(2, width / 2 - 250, height / 2 + 100, 1);
+    drawDandFlower(3, width / 2 + 300, height / 2 + 80, 2);
+    drawDandFlower(6, width / 2 + 550, height / 2 + 60, 1);
+    drawDandFlower(4, width / 2 - 500, height / 2 + 50, 2);
+}
+```
+
+<img align = "center" src="assets/mid-6.6.gif" width="650" >
+
 ## Live Site Links
 
 - [Midterm Step1 - pattern](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step1-pattern/).
@@ -429,3 +657,7 @@ Great! Now it's a perfect time to add color!
 - [Midterm Step5 - function](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step5-function/).
 - [Midterm Step6 - gradient-color](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step6-gradient-color/).
 - [Midterm Complete Demo](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-complete/).
+
+```
+
+```
