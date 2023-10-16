@@ -559,7 +559,7 @@ let BMaxB = colorRange[2][1][2]; // 252
 
 I find the rule! We just need to pass the first index (`colorRange[0]`, `colorRange[2]`, `colorRange[0]`) to get the palette we want, and the rest indexes will stay the same.
 
-<img align = "center" src="assets/mid-6.3.gif" width="500" >
+<img align = "right" src="assets/mid-6.3.gif" width="500" >
 
 So, in the `drawDandFlower()` function, let's add one parameter `ci` to indicate the palette indexes, and drwa three dandelions with different color palette passing the indexes:
 
