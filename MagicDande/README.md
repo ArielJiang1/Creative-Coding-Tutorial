@@ -30,6 +30,15 @@ Oh dear traveler from Earth, are you ready to become the Little Prince of your o
 
 ## Planting Journal 2023
 
+### Table of Content
+
+- [step1 pattern](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#pattern-play-with-the-for-loops-and-create-the-pattern)
+- [step2 motion](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#motion-make-the-pattern-move)
+- [step3 swaying-effect](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#swaying-effect-let-there-be-a-swaying-stem)
+- [step4 interaction](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#interaction-dont-touch-me)
+- [step5 function](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#function-become-elegant-and-save-some-labor)
+- [step6 gradient color](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#gradient-color-shine)
+
 ### Pattern: Play with the For Loops and Create the Pattern!
 
 What should I make? I have no idea at the beginning, so I decide to experiment with patterns in the `setup()` function.
