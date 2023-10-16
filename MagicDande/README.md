@@ -13,6 +13,7 @@
 - transform: translate()
 - math: sin(), cos(), map(), dist()
 - shape: circle(), bezier(), line()
+- color: gradient color using RGB
 
 <img align="right" src="assets/Dande-Gif.gif" width="360" >
 
