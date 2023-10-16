@@ -319,7 +319,104 @@ let dmouse = dist(x1 + width / 2, y1 + height / 2, mouseX, mouseY);
 
 <img align = "center" src="assets/mid-4.2.gif" width="350" >
 
+Done!
+
 ### Function: Become Elegant and Save Some Labor!
+
+Dandie should have a family. But it's too tedious to copy all the codes several times and change variables for each. Instead, I would pack all the code that draws Magic Dande into a function `drawDandFlower()`.
+
+```JavaScript
+function draw() {
+  background(0);
+  drawDandFlower();
+}
+
+function drawDandFlower() {
+  push();
+  translate(width / 2, height / 2);
+  push();
+  noFill();
+  stroke(255, 100);
+  strokeWeight(5);
+  let x = map(sin(frameCount * 0.01), -1, 1, -60, 60);
+  let y = map(cos(frameCount * 0.01), -1, 1, -10, 0);
+  bezier(x, y, 0, 150, 0, 500, 0, 500);
+  pop();
+  for (let r = 0; r < 6; r++) {
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+      let x1 = x + sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
+      let y1 = y + cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
+      let dmouse = dist(x1 + width / 2, y1 + height / 2, mouseX, mouseY);
+      if (dmouse <= 20) {
+        y1 += map(dmouse, 0, 20, 10, 0);
+        x1 += map(dmouse, 0, 20, 10, 0);
+      }
+      fill(255);
+      stroke(255, 100);
+      strokeWeight(map(sin(i + frameCount * 0.05), -1, 1, 0.01, 2));
+      line(x1, y1, x, y);
+      noStroke();
+      circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
+    }
+  }
+  circle(x, y, 30);
+  pop();
+}
+```
+
+This results in the same visuals as the last step. Now I want to vary the layer number for each Magic Dande. I add a parameter `layerNum` into the function to replace the `r` in the for loop, and when I call the function, I pass in different number to get dandelions with different layers:
+
+```JavaScript
+function draw(){
+    drawDandFlower(6);
+    drawDandFlower(3);
+    drawDandFlower(4);
+}
+
+function drawDandFlower(layerNum) {
+    for (let r = 0; r < layerNum; r++) {
+
+    }
+}
+```
+
+As a result, I get 3 dandelions that respectively has 6, 3, and 4 layers of seeds.
+However, they're now overlapping with each other and I want them to spread across the canvas.
+
+```JavaScript
+function draw(){
+    drawDandFlower(6, width / 2, height / 2);
+    drawDandFlower(3, width / 2 - 200, height / 2 + 80);
+    drawDandFlower(4, width / 2 + 190, height / 2 + 100);
+}
+
+function drawDandFlower(layerNum, transX, transY) {
+    translate(transX, transY);
+    for (let r = 0; r < layerNum; r++) {
+
+    }
+}
+```
+
+<img align = "center" src="assets/mid-5.1.gif" width="350" >
+Now they're scattered. But wait, why they shy together when I'm only touching the middle one?
+That's, again, because the `dist()` accepts position as the actual, absolute pos on canvas and isn't affected by the `translate()` function. Since `(x1 + width / 2, y1 + width / 2)` remains the same for all dandelions, their seeds would shy away together.
+To fix this, we need to apply the translation manually again:
+
+```JavaScript
+let distFromCentX = transX - width / 2;
+let distFromCentY = transY - height / 2;
+let dmouse = dist(
+    x1 + width / 2 + distFromCentX,
+    y1 + height / 2 + distFromCentY,
+    mouseX,
+    mouseY
+);
+```
+
+<img align = "center" src="assets/mid-5.2.gif" width="350" >
+
+Great! Now it's a perfect time to add color!
 
 ### Gradient Color: Shine!
 

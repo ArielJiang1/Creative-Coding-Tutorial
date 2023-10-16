@@ -6,12 +6,12 @@ function draw() {
   background(0);
   translate(width / 2, height / 2);
   push();
-  fill(255);
+  noFill();
   stroke(255, 100);
   strokeWeight(5);
   let x = map(sin(frameCount * 0.01), -1, 1, -60, 60);
   let y = map(cos(frameCount * 0.01), -1, 1, -10, 0);
-  line(x, y, 0, 600);
+  bezier(x, y, 0, 150, 0, 500, 0, 500);
   pop();
   for (let r = 0; r < 6; r++) {
     for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
