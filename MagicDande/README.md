@@ -559,6 +559,8 @@ let BMaxB = colorRange[2][1][2]; // 252
 
 I find the rule! We just need to pass the first index (`colorRange[0]`, `colorRange[2]`, `colorRange[0]`) to get the palette we want, and the rest indexes will stay the same.
 
+<img align = "center" src="assets/mid-6.3.gif" width="500" >
+
 So, in the `drawDandFlower()` function, let's add one parameter `ci` to indicate the palette indexes, and drwa three dandelions with different color palette passing the indexes:
 
 ```JavaScript
@@ -574,8 +576,6 @@ function drawDandFlower(layerNum, transX, transY, ci) {
     fill(redV, greenV, blueV);
 }
 ```
-
-<img align = "center" src="assets/mid-6.3.gif" width="350" >
 
 Boom! Success! I also want the core to fluctuate with the color palette. But the core is drawn out of the nested for loop and I have to copy the complex color code again... So I make the color code another function:
 
@@ -607,6 +607,8 @@ function assignColor(baseColorIndex, fluct) {
 }
 ```
 
+<img align = "right" src="assets/mid-6.4.gif" width="500" >
+
 And I call this function respectively before drawing the seeds and core:
 
 ```JavaScript
@@ -623,7 +625,7 @@ for (let r = 0; r < layerNum; r++) {
   circle(x, y, 30);
 ```
 
-<img align = "center" src="assets/mid-6.4.gif" width="350" >
+<img align = "right" src="assets/mid-6.5.gif" width="500" >
 
 A few more steps to make my MagicDandes more beautiful. I add an array for the stem color. This time it's easier, with a two-dimensional array:
 
@@ -643,8 +645,6 @@ function drawDandFlower(){
 }
 ```
 
-<img align = "center" src="assets/mid-6.5.gif" width="350" >
-
 Yeah! Let there be more Magic Dande!
 
 ```JavaScript
@@ -657,7 +657,7 @@ function draw(){
 }
 ```
 
-<img align = "center" src="assets/mid-6.6.gif" width="650" >
+<img align = "center" src="assets/mid-6.6.gif" width="800" >
 
 ## Live Site Links
 
