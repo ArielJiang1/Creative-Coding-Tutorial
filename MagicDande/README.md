@@ -102,7 +102,7 @@ let y1 = cos((PI / 5) * r + i) * (30 + r * 20);
 margin: 30px">
 <img src="assets/mid-1.3.2.png" width="300" height="300" style="display: block;
 margin: 30px">
-
+<img align = "right" src="assets/mid-1.4.png" width="300" height="300">
 This looks nice! I'm getting some spiral effect. I find that there're always 12 samples on each layer because the `increment of `i`is a constant. Gonna make it vary for each layer by applying`r` value again:
 
 ```JavaScript
@@ -117,9 +117,7 @@ for (let r = 0; r < 6; r++) {
 }
 ```
 
-<img align = "center" src="assets/mid-1.4.png" width="300" height="300" style="display: block;
-  margin-left: auto;
-  margin-right: auto;">
+<img align = "right" src="assets/mid-1.5.png" width="300" height="300">
 
 Aha! Now I get a much more scattered pattern. It still looks a bit boring though. The circles are of the same size. What about having bigger circles for outer layers?
 
@@ -127,19 +125,13 @@ Aha! Now I get a much more scattered pattern. It still looks a bit boring though
 circle(x1, y1, 6 + r * 3.5);
 ```
 
-<img align = "center" src="assets/mid-1.5.png" width="300" height="300" style="display: block;
-  margin-left: auto;
-  margin-right: auto;">
+<img align = "right" src="assets/mid-1.6.png" width="300" height="300">
 
 Hmmmm... Better, but too crowded. Let me makes the size of circles in the same layer vary by using `sin()` and `i`. I need to map it to a range of positive value as circle radius must be positive:
 
 ```JavaScript
 circle(x1, y1, map(sin(i + PI / 2), -1, 1, 3, 6 + r * 3.5));
 ```
-
-<img align = "center" src="assets/mid-1.6.png" width="300" height="300" style="display: block;
-  margin-left: auto;
-  margin-right: auto;">
 
 Cool! Now it's a perfect time to make it move!
 
@@ -148,6 +140,7 @@ Cool! Now it's a perfect time to make it move!
 The pattern inspires me to create a spiral motion through changing the radius of each circles rather than their position.
 I move all the code after the `createCanvas()` into the `draw()` function.
 Then, I replace the `r` value in the that change the sine wave frequency with the `frameCount`. This creates a dynamic effect where the radius of the circles in each layer fluctuates over time.
+<img align = "right" src="assets/mid-2.1.gif" width="300" >
 
 ```JavaScript
 function draw() {
@@ -166,12 +159,11 @@ function draw() {
 }
 ```
 
-<img align = "center" src="assets/mid-2.1.gif" width="300" >
-
 The pattern reminds me of seeds of dandelions swaying in the wind...
 Aha! Let there be a Magic Dandelion on B611!
 Let there be a core in the middle of the flower!
 Let there be stems for the seeds!
+<img align = "right" src="assets/mid-2.2.gif" width="300" >
 
 ```JavaScript
 translate(width / 2, height / 2);
@@ -190,8 +182,6 @@ for (let r = 0; r < 6; r++) {
 circle(0, 0, 30);
 ```
 
-<img align = "center" src="assets/mid-2.2.gif" width="300" >
-
 Oooops, the wind is blowing! Seeds are flowing!
 
 ```JavaScript
@@ -199,6 +189,7 @@ strokeWeight(map(sin(i + frameCount * 0.05), -1, 1, 0.01, 2));
 ```
 
 <img align = "center" src="assets/mid-2.3.gif" width="300" >
+
 Here I make the strokeWeight fluctuate using the same mapping trick. The seeds' stem are now swaying with the wind.
 Cool cool cool.
 Wait, I think I miss something...
@@ -206,6 +197,7 @@ The stem! The flower itself needs a stem!
 
 ### Swaying Effect: Let There Be a Swaying Stem!
 
+<img align = "right" src="assets/mid-3.1.gif" width="350" >
 Maybe just add a line before the for loop:
 
 ```JavaScript
@@ -236,8 +228,6 @@ function draw() {
 }
 ```
 
-<img align = "center" src="assets/mid-3.1.gif" width="350" >
-
 And make it sway:
 
 ```JavaScript
@@ -249,6 +239,7 @@ line(x, y, 0, 600);
 <img align = "center" src="assets/mid-3.2.gif" width="350" >
 Oooops! Something bad happens! The flower is not following along!
 Let me fix it:
+<img align = "right" src="assets/mid-3.3.gif" width="350" >
 
 ```JavaScript
 for (let r = 0; r < 6; r++) {
@@ -261,11 +252,11 @@ for (let r = 0; r < 6; r++) {
       noStroke();
       circle(x1, y1, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
     }
-  }
-  circle(x, y, 30);
-```
 
-<img align = "center" src="assets/mid-3.3.gif" width="350" >
+}
+circle(x, y, 30);
+
+```
 
 Here's some break-down:
 
@@ -302,6 +293,7 @@ Nice! Now let's add some character to my little magic Dandie~
 ### Interaction: Don't Touch Me!
 
 Dandie is timid. So it shies away from my touch. The seeds will move away from the hand (or mouse) and reinstate their positions when the hand moves away.
+<img align = "right" src="assets/mid-4.1.gif" width="350" >
 Since the seeds are drawn at (x1, y1), I'll first get the distance between the (x1, y1) and the (mouseX, mouseY), and when the distance is smaller than, say, 20, map x1, y1 to an opposite range (meaning that the bigger the distance, the smaller the change of seeds' position).
 
 ```JavaScript
@@ -314,20 +306,18 @@ x1 += map(dmouse, 0, 20, 10, 0);
 }
 ```
 
-<img align = "center" src="assets/mid-4.1.gif" width="350" >
-
 Ooooops, the seeds stay still when mouse is hovering. But they shakes when the mouse is on the top left corner of the window. Why?
 
 `(x1, y1)` works for the seeds' (or circles') position because the `translate(width / 2, height / 2)` is applied, and the circles' actual position on canvas is `(x1 + width / 2, y1 + height / 2)`.
 However, the translation is not applied to `dist()` since it doesn't have an origin and isn't doing shape drawing. When I write `dist(x1, y1, mouseX, mouseY)`, the function is just detecting the distance between `(x1, y1)` and `(mouseX, mouseY)`, not `(x1 + width / 2, y1 + height / 2)` and `(mouseX, mouseY)`.
+
+<img align = "right" src="assets/mid-4.2.gif" width="350" >
 
 Let me fix it by adding the `width / 2, height / 2` to the `x1, y1` in `dist()`.
 
 ```JavaScript
 let dmouse = dist(x1 + width / 2, y1 + height / 2, mouseX, mouseY);
 ```
-
-<img align = "center" src="assets/mid-4.2.gif" width="350" >
 
 Done!
 
@@ -392,6 +382,7 @@ function drawDandFlower(layerNum) {
 
 As a result, I get 3 dandelions that respectively has 6, 3, and 4 layers of seeds.
 However, they're now overlapping with each other and I want them to spread across the canvas.
+<img align = "right" src="assets/mid-5.1.gif" width="350" >
 
 ```JavaScript
 function draw(){
@@ -407,8 +398,6 @@ function drawDandFlower(layerNum, transX, transY) {
     }
 }
 ```
-
-<img align = "center" src="assets/mid-5.1.gif" width="350" >
 
 Now they're scattered. But wait, why they shy together when I'm only touching the middle one?
 That's, again, because the `dist()` accepts position as the actual, absolute pos on canvas and isn't affected by the `translate()` function. Since `(x1 + width / 2, y1 + width / 2)` remains the same for all dandelions, their seeds would shy away together.
@@ -456,6 +445,8 @@ Why not make the core's and seeds' colors changes as time goes by? After all, it
 
 I notice that the r, g, b value of the gradient color increase or decrease respectively in the same direction. This means that, if I get the min value and max value of the r, g, b respectively, and map them to a fluctuating function like `sin()`, I will get a gradient shifting color based on the color palettes' colors.
 
+<img align = "right" src="assets/mid-6.2.gif" width="350" >
+
 So, simple trick with sine function again:
 
 ```JavaScript
@@ -465,8 +456,6 @@ let greenV = map(fluctation, -1, 1, 142, 245);
 let blueV = map(fluctation, -1, 1, 60, 157);
 fill(redV, greenV, blueV);
 ```
-
-<img align = "center" src="assets/mid-6.2.gif" width="350" >
 
 But what if I want more gradient colors, like pink and blue? And what if I want to change the color base by sending another parameter when calling the `drawDandFlower()` function?
 
@@ -559,7 +548,7 @@ let BMaxB = colorRange[2][1][2]; // 252
 
 I find the rule! We just need to pass the first index (`colorRange[0]`, `colorRange[2]`, `colorRange[0]`) to get the palette we want, and the rest indexes will stay the same.
 
-<img align = "right" src="assets/mid-6.3.gif" width="500" >
+<img align = "right" src="assets/mid-6.3.gif" width="450" >
 
 So, in the `drawDandFlower()` function, let's add one parameter `ci` to indicate the palette indexes, and drwa three dandelions with different color palette passing the indexes:
 
@@ -607,7 +596,7 @@ function assignColor(baseColorIndex, fluct) {
 }
 ```
 
-<img align = "right" src="assets/mid-6.4.gif" width="500" >
+<img align = "right" src="assets/mid-6.4.gif" width="450" >
 
 And I call this function respectively before drawing the seeds and core:
 
@@ -624,8 +613,6 @@ for (let r = 0; r < layerNum; r++) {
   assignColor(ci, fluctuate2);
   circle(x, y, 30);
 ```
-
-<img align = "right" src="assets/mid-6.5.gif" width="500" >
 
 A few more steps to make my MagicDandes more beautiful. I add an array for the stem color. This time it's easier, with a two-dimensional array:
 
@@ -644,6 +631,8 @@ function drawDandFlower(){
     bezier(x, y, 0, 150, 0, 500, 0, 500);
 }
 ```
+
+<img align = "center" src="assets/mid-6.5.gif" width="450" >
 
 Yeah! Let there be more Magic Dande!
 
