@@ -25,9 +25,9 @@ function draw() {
   background(0);
 
   drawDandFlower(5, width / 2, height / 2, 0);
-  drawDandFlower(2, width / 2 - 150, height / 2 + 100, 1);
-  drawDandFlower(3, width / 2 + 150, height / 2 + 80, 2);
-  drawDandFlower(6, width / 2 + 550, height / 2 + 130, 1);
+  drawDandFlower(2, width / 2 - 250, height / 2 + 100, 1);
+  drawDandFlower(3, width / 2 + 30, height / 2 + 80, 2);
+  drawDandFlower(6, width / 2 + 550, height / 2 + 60, 1);
   drawDandFlower(4, width / 2 - 500, height / 2 + 50, 2);
 }
 

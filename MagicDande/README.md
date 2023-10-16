@@ -292,6 +292,32 @@ Nice! Now let's add some character to my little magic Dandie~
 ### Interaction: Don't Touch Me!
 
 Dandie is timid. So it shies away from my touch. The seeds will move away from the hand (or mouse) and reinstate their positions when the hand moves away.
+Since the seeds are drawn at (x1, y1), I'll first get the distance between the (x1, y1) and the (mouseX, mouseY), and when the distance is smaller than, say, 20, map x1, y1 to an opposite range (meaning that the bigger the distance, the smaller the change of seeds' position).
+
+```JavaScript
+let x1 = x + sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
+let y1 = y + cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
+let dmouse = dist(x1, y1, mouseX, mouseY);
+if (dmouse <= 20) {
+y1 += map(dmouse, 0, 20, 10, 0);
+x1 += map(dmouse, 0, 20, 10, 0);
+}
+```
+
+<img align = "center" src="assets/mid-4.1.gif" width="350" >
+
+Ooooops, the seeds stay still when mouse is hovering. But they shakes when the mouse is on the top left corner of the window. Why?
+
+`(x1, y1)` works for the seeds' (or circles') position because the `translate(width / 2, height / 2)` is applied, and the circles' actual position on canvas is `(x1 + width / 2, y1 + height / 2)`.
+However, the translation is not applied to `dist()` since it doesn't have an origin and isn't doing shape drawing. When I write `dist(x1, y1, mouseX, mouseY)`, the function is just detecting the distance between `(x1, y1)` and `(mouseX, mouseY)`, not `(x1 + width / 2, y1 + height / 2)` and `(mouseX, mouseY)`.
+
+Let me fix it by adding the `width / 2, height / 2` to the `x1, y1` in `dist()`.
+
+```JavaScript
+let dmouse = dist(x1 + width / 2, y1 + height / 2, mouseX, mouseY);
+```
+
+<img align = "center" src="assets/mid-4.2.gif" width="350" >
 
 ### Function: Become Elegant and Save Some Labor!
 
