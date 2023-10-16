@@ -13,7 +13,7 @@
 - transform: translate()
 - math: sin(), cos(), map(), dist()
 - shape: circle(), bezier(), line()
-- color: gradient color using RGB
+- color: gradient color control using RGB, array, and sine waves
 
 <img align="right" src="assets/Dande-Gif.gif" width="360" >
 
@@ -23,7 +23,7 @@ I'm Dandie and I'm part of [the MagicDande family](https://carrotliu.github.io/C
 
 Timid and introvert by nature, I shy away from your touch.
 
-I light up the world with my colorful glow, and I bless the universe with my flying seeds that fly into the endless darkness.
+I light up the world with my colorful glow, and I bless the universe with my flying seeds, traveling into the endless darkness.
 
 My Little Prince grew me using p5.js, a little bit of math, some logic, and a lot of playfulness!
 
@@ -115,7 +115,7 @@ margin: 30px">
 <img src="assets/mid-1.3.2.png" width="300" height="300" style="display: block;
 margin: 30px">
 
-This looks nice! I'm getting some spiral effect. I find that there're always 12 samples on each layer because the `increment of `i`is a constant. Gonna make it vary for each layer by applying`r` value again:
+This looks nice! I'm getting some spiral effect. I find that there're always 12 samples on each layer because the increment of `i`is a constant. Gonna make it vary for each layer by applying `r` value again:
 
 ```JavaScript
 for (let r = 0; r < 6; r++) {
