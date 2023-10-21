@@ -75,6 +75,15 @@ function draw() {
   vertex(75 + floatRate(0.025, 6, -6), 150);
   bezierVertex(70 + floatRate(0.03, 10, -10), 100, 61 + floatRate(0.02, 10, -10), 80, 55,53);
   endShape();
+  
+  //lower edge
+  fill(43, 122, 11);
+  beginShape();
+  vertex(-75 + floatRate(0.025, -6, 6),150);
+  bezierVertex(-35, 120 + floatRate(0.03, -20, 20), 35 , 130+ floatRate(0.025, 20, -20), 75 + floatRate(0.025, 6, -6), 150);
+  vertex(75 + floatRate(0.025, 6, -6), 150);
+  bezierVertex(35, 160 + floatRate(0.02, -10, 10), -35, 170 + floatRate(0.03, 10, -10), -75 + floatRate(0.025, -6, 6),150);
+  endShape();
   pop();
   
   

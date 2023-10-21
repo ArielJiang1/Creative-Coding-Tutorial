@@ -79,7 +79,7 @@ vertex(138, 60+ floatRate(0.02, -50, 48));
 bezierVertex(85, 45 + floatRate(0.03, -50, 40), 85, 45 + floatRate(0.04, -50, 40), 50,45);
 endShape();
 ```
-
+cloth
 ```JavaScript
 push();
 noStroke();
@@ -90,10 +90,24 @@ bezierVertex(-61 + floatRate(0.03, -10, 10), 80, -70 + floatRate(0.02, -10, 10),
 vertex(75 + floatRate(0.025, 6, -6), 150);
 bezierVertex(70 + floatRate(0.03, 10, -10), 100, 61 + floatRate(0.02, 10, -10), 80, 55,53);
 endShape();
-pop();
 
 ```
 
+```JavaScript
+  //lower edge
+  fill(43, 122, 11);
+  beginShape();
+  vertex(-75 + floatRate(0.025, -6, 6),150);
+  bezierVertex(-35, 120 + floatRate(0.03, -20, 20), 35 , 130+ floatRate(0.025, 20, -20), 75 + floatRate(0.025, 6, -6), 150);
+  vertex(75 + floatRate(0.025, 6, -6), 150);
+  bezierVertex(35, 160 + floatRate(0.02, -10, 10), -35, 170 + floatRate(0.03, 10, -10), -75 + floatRate(0.025, -6, 6),150);
+  endShape();
+  pop();
+```
+```JavaScript
+```
+```JavaScript
+```
 ```JavaScript
 ```
 
