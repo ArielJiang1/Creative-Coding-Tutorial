@@ -27,6 +27,45 @@ function draw() {
   }
 }
 ```
+#### Floating Scarf
+The Little Prince has a long, yellow scarf. 
+It wraps around his neck:
+```JavaScript
+noStroke();
+fill(244,206,10);
+beginShape();
+vertex(-55, 28);
+bezierVertex(-15, 40, 15, 40, 55, 28);
+vertex(55, 53);
+bezierVertex(15, 65, -15, 65, -55, 53);
+endShape();
+```
+But it's so long so that it leaves a long tail behind the little Prince:
+```JavaScript
+push();
+noStroke();
+fill(216,180,3); // the color is darker than that of the part around the neck
+beginShape();
+vertex(55, 28);
+bezierVertex(85, 20, 85, 20, 150, 22);
+vertex(138, 60);
+bezierVertex(85, 45, 85, 45, 50, 45);
+endShape();
+pop();
+```
+It's floating in the wind:
+
+```JavaScript
+beginShape();
+vertex(55, 28);
+bezierVertex(85, 20 + scarfFluctY, 85, 20 + scarfFluctY, 150,22+ scarfFluctY);
+vertex(138, 60+ scarfFluctY);
+bezierVertex(85, 45 + scarfFluctY, 85, 45 + scarfFluctY, 50,45);
+endShape();
+```
+It looks unnatural... The frequency of the fluctuation for each control point/anchor point remains the same. It needs more variation. 
+Since the fluctuation is getting more complex, I'll make a function for it.
+
 #### The Little Prince is Winking!
 Let's first try to switch the open and close eye using keyPressed:
 ```JavaScript
