@@ -11,10 +11,6 @@ function draw() {
   //hair
   let hairX = map(sin(frameCount * 0.01), -1, 1, -20, 20);
   let hairY = map(cos(frameCount * 0.01), -1, 1, -100, -90);
-  
-  let scarfFluctY = map(noise(sin(frameCount * 0.03)), 0, 1, -20, 20);
-  
-  
   strokeWeight(2);
   stroke(125, 206, 19);
   noFill();
@@ -62,10 +58,10 @@ function draw() {
   noStroke();
   fill(216,180,3);
   beginShape();
-  vertex(55, 28);
-  bezierVertex(85, 20 + scarfFluctY, 85, 20 + scarfFluctY, 150,22+ scarfFluctY);
-  vertex(138, 60+ scarfFluctY);
-  bezierVertex(85, 45 + scarfFluctY, 85, 45 + scarfFluctY, 50,45);
+  vertex(53, 28);
+  bezierVertex(85, 20 + scarfFloat(0.03, -50, 40), 85, 20 + scarfFloat(0.04, -50, 40), 150,22+ scarfFloat(0.02, -50, 46));
+  vertex(138, 60+ scarfFloat(0.02, -50, 48));
+  bezierVertex(85, 45 + scarfFloat(0.03, -50, 40), 85, 45 + scarfFloat(0.04, -50, 40), 50,45);
   endShape();
   pop();
   
@@ -88,3 +84,7 @@ function keyPressed(){
   }
 }
 
+function scarfFloat(f, min, max){
+  let scarfFluctY = map(sin(frameCount * f), -1.6, 1.6, min, max);
+  return scarfFluctY;
+}
