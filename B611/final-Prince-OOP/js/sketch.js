@@ -59,11 +59,24 @@ function draw() {
   fill(216,180,3);
   beginShape();
   vertex(53, 28);
-  bezierVertex(85, 20 + scarfFloat(0.03, -50, 40), 85, 20 + scarfFloat(0.04, -50, 40), 150,22+ scarfFloat(0.02, -50, 46));
-  vertex(138, 60+ scarfFloat(0.02, -50, 48));
-  bezierVertex(85, 45 + scarfFloat(0.03, -50, 40), 85, 45 + scarfFloat(0.04, -50, 40), 50,45);
+  bezierVertex(85, 20 + floatRate(0.03, -50, 40), 85, 20 + floatRate(0.04, -50, 40), 150,22+ floatRate(0.02, -50, 46));
+  vertex(138, 60+ floatRate(0.02, -50, 48));
+  bezierVertex(85, 45 + floatRate(0.03, -50, 40), 85, 45 + floatRate(0.04, -50, 40), 50,45);
   endShape();
   pop();
+  
+  // cloth
+  push();
+  noStroke();
+  fill(91, 179, 24);
+  beginShape();
+  vertex(-55, 53);
+  bezierVertex(-61 + floatRate(0.03, -10, 10), 80, -70 + floatRate(0.02, -10, 10), 100, -75 + floatRate(0.025, -6, 6),150);
+  vertex(75 + floatRate(0.025, 6, -6), 150);
+  bezierVertex(70 + floatRate(0.03, 10, -10), 100, 61 + floatRate(0.02, 10, -10), 80, 55,53);
+  endShape();
+  pop();
+  
   
   //scarf1
   noStroke();
@@ -84,7 +97,8 @@ function keyPressed(){
   }
 }
 
-function scarfFloat(f, min, max){
+function floatRate(f, min, max){
   let scarfFluctY = map(sin(frameCount * f), -1.6, 1.6, min, max);
   return scarfFluctY;
 }
+

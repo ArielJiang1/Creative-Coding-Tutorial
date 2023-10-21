@@ -44,7 +44,7 @@ But it's so long so that it leaves a long tail behind the little Prince:
 ```JavaScript
 push();
 noStroke();
-fill(216,180,3); // the color is darker than that of the part around the neck
+fill(216,180,3); // make the color darker than that of the part around the neck
 beginShape();
 vertex(55, 28);
 bezierVertex(85, 20, 85, 20, 150, 22);
@@ -54,7 +54,6 @@ endShape();
 pop();
 ```
 It's floating in the wind:
-
 ```JavaScript
 beginShape();
 vertex(55, 28);
@@ -63,8 +62,40 @@ vertex(138, 60+ scarfFluctY);
 bezierVertex(85, 45 + scarfFluctY, 85, 45 + scarfFluctY, 50,45);
 endShape();
 ```
-It looks unnatural... The frequency of the fluctuation for each control point/anchor point remains the same. It needs more variation. 
+Looks unnatural... The frequency of the fluctuation for each control point/anchor point remains the same. It needs more variation. 
 Since the fluctuation is getting more complex, I'll make a function for it.
+
+```JavaScript
+function floatRate(f, min, max){
+  let scarfFluctY = map(sin(frameCount * f), -1.6, 1.6, min, max);
+  return scarfFluctY;
+}
+```
+```JavaScript
+beginShape();
+vertex(53, 28);
+bezierVertex(85, 20 + floatRate(0.03, -50, 40), 85, 20 + floatRate(0.04, -50, 40), 150,22+ floatRate(0.02, -50, 46));
+vertex(138, 60+ floatRate(0.02, -50, 48));
+bezierVertex(85, 45 + floatRate(0.03, -50, 40), 85, 45 + floatRate(0.04, -50, 40), 50,45);
+endShape();
+```
+
+```JavaScript
+push();
+noStroke();
+fill(91, 179, 24);
+beginShape();
+vertex(-55, 53);
+bezierVertex(-61 + floatRate(0.03, -10, 10), 80, -70 + floatRate(0.02, -10, 10), 100, -75 + floatRate(0.025, -6, 6),150);
+vertex(75 + floatRate(0.025, 6, -6), 150);
+bezierVertex(70 + floatRate(0.03, 10, -10), 100, 61 + floatRate(0.02, 10, -10), 80, 55,53);
+endShape();
+pop();
+
+```
+
+```JavaScript
+```
 
 #### The Little Prince is Winking!
 Let's first try to switch the open and close eye using keyPressed:
