@@ -52,6 +52,7 @@ class Prince {
     this.eyeX = 0;
     this.eyeY = 0;
     this.blinkInterval = 360;
+    this.blinkCount = 0;
     this.ifBlink = false;
     this.finishBlink = false;
     this.ifIdle = true;
@@ -95,7 +96,6 @@ class Prince {
       } else {
         this.blinkInterval = floor(random(360, 720));
         this.ifBlink = false;
-        this.finishBlink = false;
       }
     }
 
@@ -240,10 +240,21 @@ class Prince {
   }
 
   blink() {
-    let amt = map(sin(frameCount * 0.5), -1, 1, 0, 1);
-    if (amt <= 0.6) {
-      this.eyeY = lerp(this.eyeY, 0, amt);
-    } else {
+    let amtV = map(sin(frameCount * 0.25), -1, 1, 0, 1);
+    let amtH = map(sin(frameCount * 0.25), -1, 1, 0, 1);
+    if (amtV <= 0.6) {
+      this.eyeVY = lerp(this.eyeVY, 0, amtV);
+    } else if (amtH <= 1) {
+      this.eyeHX = lerp(this.eyeHX, 2.5, amtH);
+      this.eyeVY = lerp(this.eyeVY, 0, amtV);
+    } 
+    if(amtV == 1){
+      this.blinkCount += 1;
+      console.log(this.blinkCount);
+    }
+    if(this.blinkCount >= 2){
+      this.finishBlink = true;
+      this.blinkCount = 0;
     }
   }
 
