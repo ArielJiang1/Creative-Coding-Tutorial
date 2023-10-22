@@ -21,6 +21,7 @@ function draw() {
     prince.ifWalk = false;
     prince.ifIdle = true;
     prince.walkCount = 0;
+    // prince.scarfDir = 1;
   }
   prince.update();
   prince.display();
@@ -62,6 +63,7 @@ class Prince {
     this.ifWalk = false;
     this.walkDir = 1;
     this.walkCount = 720;
+    this.scarfDir = 1;
     this.ifSit = false;
   }
 
@@ -98,8 +100,10 @@ class Prince {
     } else if (this.ifWalk) {
       if(keyCode == 39){ //ArrowRight 
         this.walkDir = 1;
+        this.scarfDir = -1;
       }else if (keyCode == 37){ // ArrowLeft
         this.walkDir = -1;
+        this.scarfDir = 1;
       }
 
       if(this.walkDir == 1){
@@ -180,6 +184,7 @@ class Prince {
   drawCloth() {
     //scarf float
     push();
+    scale(this.scarfDir, 1);
     noStroke();
     fill(216, 180, 3);
     beginShape();
