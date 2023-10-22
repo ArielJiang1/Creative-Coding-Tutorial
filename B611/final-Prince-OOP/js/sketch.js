@@ -5,16 +5,13 @@ let prince;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  prince = new Prince(width / 2, height / 2, 0, -90);
+  prince = new Prince(width / 2, height / 2);
 }
 
 function draw() {
   background(0);
 
-  let eyeOffsetX = map(mouseX, 0, width, -20, 20);
-  let eyeOffsetY = map(mouseY, 0, height, -26, 10);
-
-  prince.update(eyeOffsetX, eyeOffsetY);
+  prince.update();
   prince.display();
   // if (openEye == 1) {
   //   if (mouseX > 200) {
@@ -47,14 +44,16 @@ function closeEye(start, end) {
 }
 
 class Prince {
-  constructor(x, y, hairX, hairY) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.hairX = hairX;
-    this.hairY = hairY;
+    this.hairX = 0;
+    this.hairY = -90;
     this.eyeX = 0;
     this.eyeY = 0;
+    this.blinkInterval = 360;
     this.ifBlink = false;
+    this.finishBlink = false;
     this.ifIdle = true;
     this.ifTalk = false;
     this.ifWalk = false;
@@ -68,22 +67,40 @@ class Prince {
   }
 
   update(eyeX, eyeY) {
+    if (this.blinkInterval <= 0) {
+      this.ifBlink = true;
+    }
+
     push();
     if (this.ifIdle) {
       let hairX = map(sin(frameCount * 0.01), -1, 1, -20, 20);
       let hairY = map(cos(frameCount * 0.01), -1, 1, -100, -90);
+      let eyeOffsetX = map(mouseX, 0, width, -20, 20);
+      let eyeOffsetY = map(mouseY, 0, height, -26, 10);
       let yFloat = sin(frameCount * 0.008) * 0.3;
-      this.eyeX = eyeX;
-      this.eyeY = eyeY;
+      this.eyeX = eyeOffsetX;
+      this.eyeY = eyeOffsetY;
+      this.eyeHX = 0;
+      this.eyeHY = 0;
+      this.eyeVX = 16;
+      this.eyeVY = 3;
       this.hairX = hairX;
       this.hairY = hairY;
       this.y += yFloat;
     } else if (this.ifWalk) {
     }
     if (this.ifBlink) {
+      if (!this.finishBlink) {
+        this.blink();
+      } else {
+        this.blinkInterval = floor(random(360, 720));
+        this.ifBlink = false;
+        this.finishBlink = false;
+      }
     }
 
     pop();
+    this.blinkInterval--;
   }
 
   drawHead() {
@@ -111,8 +128,20 @@ class Prince {
     stroke(0);
     strokeWeight(5);
     translate(this.eyeX, this.eyeY);
-    line(-16, -3, -16, 3);
-    line(16, -3, 16, 3);
+    //vertical eye
+    line(-this.eyeVX, -this.eyeVY, -this.eyeVX, this.eyeVY);
+    line(this.eyeVX, -this.eyeVY, this.eyeVX, this.eyeVY);
+    //horizontal eye
+    //right
+    push();
+    translate(this.eyeVX, 0);
+    line(this.eyeHX, this.eyeHY, -this.eyeHX, this.eyeHY);
+    pop();
+    //left
+    push();
+    translate(-this.eyeVX, 0);
+    line(this.eyeHX, this.eyeHY, -this.eyeHX, this.eyeHY);
+    pop();
     pop();
   }
 
@@ -210,7 +239,13 @@ class Prince {
     return scarfFluctY;
   }
 
-  blink() {}
+  blink() {
+    let amt = map(sin(frameCount * 0.5), -1, 1, 0, 1);
+    if (amt <= 0.6) {
+      this.eyeY = lerp(this.eyeY, 0, amt);
+    } else {
+    }
+  }
 
   walkLeft() {}
   walkRight() {}
