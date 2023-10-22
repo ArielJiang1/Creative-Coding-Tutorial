@@ -70,6 +70,7 @@ class Prince {
   update(eyeX, eyeY) {
     if (this.blinkInterval <= 0) {
       this.ifBlink = true;
+      // console.log("start blinking!");
     }
 
     push();
@@ -96,6 +97,8 @@ class Prince {
       } else {
         this.blinkInterval = floor(random(360, 720));
         this.ifBlink = false;
+        this.finishBlink = false;
+        // console.log(this.blinkInterval);
       }
     }
 
@@ -248,13 +251,14 @@ class Prince {
       this.eyeHX = lerp(this.eyeHX, 2.5, amtH);
       this.eyeVY = lerp(this.eyeVY, 0, amtV);
     } 
-    if(amtV == 1){
+    if(amtH >= 0.99){
       this.blinkCount += 1;
       console.log(this.blinkCount);
     }
     if(this.blinkCount >= 2){
       this.finishBlink = true;
       this.blinkCount = 0;
+      console.log(this.blinkCount, this.finishBlink);
     }
   }
 
