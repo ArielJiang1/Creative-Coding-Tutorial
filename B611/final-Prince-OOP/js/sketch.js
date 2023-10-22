@@ -7,17 +7,18 @@ function setup() {
 
 function draw() {
   background(0);
-  if(keyIsPressed){
-    if(keyCode == 39 || keyCode == 37){ //ArrowRight / ArrowLeft
+  if (keyIsPressed) {
+    if (keyCode == 39 || keyCode == 37) {
+      //ArrowRight / ArrowLeft
       prince.ifIdle = false;
       prince.ifWalk = true;
-      if(prince.walkCount <=120){
-        prince.walkCount ++;
-      } 
-      
+      if (prince.walkCount <= 120) {
+        prince.walkCount++;
+      }
+
       console.log(prince.ifWalk);
     }
-  } else{
+  } else {
     prince.ifWalk = false;
     prince.ifIdle = true;
     prince.walkCount = 0;
@@ -28,19 +29,17 @@ function draw() {
 }
 
 function keyPressed() {
-  
-  if(keyCode == 38){ //ArrowUp
-
+  if (keyCode == 38) {
+    //ArrowUp
   }
-  if(keyCode == 40){ //ArrowDown
-
+  if (keyCode == 40) {
+    //ArrowDown
   }
 
   if (key === "s") {
     saveGif("prince-1.1", 3);
   }
 }
-
 
 class Prince {
   constructor(x, y) {
@@ -54,15 +53,21 @@ class Prince {
     this.hairY = -90;
     this.eyeX = 0;
     this.eyeY = 0;
+    this.eyeHX = 0;
+    this.eyeHY = 0;
+    this.eyeVX = 16;
+    this.eyeVY = 3;
     this.blinkInterval = 360;
     this.blinkCount = 0;
     this.ifBlink = false;
     this.finishBlink = false;
+    this.clothX = 0;
+    this.clothY = 0;
     this.ifIdle = true;
     this.ifTalk = false;
     this.ifWalk = false;
     this.walkDir = 1;
-    this.walkCount = 720;
+    this.walkCount = 60;
     this.scarfDir = 1;
     this.ifSit = false;
   }
@@ -77,65 +82,36 @@ class Prince {
   update(eyeX, eyeY) {
     if (this.blinkInterval <= 0) {
       this.ifBlink = true;
-      // console.log("start blinking!");
     }
-    let hairX = map(sin(frameCount * 0.01), -1, 1, -20, 20);
-    let hairY = map(cos(frameCount * 0.01), -1, 1, -100, -90);
+    let hairx = map(sin(frameCount * 0.01), -1, 1, -20, 20);
+    let hairy = map(cos(frameCount * 0.01), -1, 1, -100, -90);
     let eyeOffsetX = map(mouseX, 0, width, -20, 20);
     let eyeOffsetY = map(mouseY, 0, height, -26, 10);
     let yFloat = sin(frameCount * 0.008) * 0.3;
+    this.eyeHX = 0;
+    this.eyeHY = 0;
+    this.eyeVX = 16;
+    this.eyeVY = 3;
+
     push();
     if (this.ifIdle) {
-      
-      this.eyeX = eyeOffsetX;
-      this.eyeY = eyeOffsetY;
-      this.eyeHX = 0;
-      this.eyeHY = 0;
-      this.eyeVX = 16;
-      this.eyeVY = 3;
-      this.hairX = hairX;
-      this.hairY = hairY;
-      this.y += yFloat;
-      
+      this.idle(eyeOffsetX, eyeOffsetY, hairx, hairy, yFloat);
     } else if (this.ifWalk) {
-      if(keyCode == 39){ //ArrowRight 
-        this.walkDir = 1;
-        this.scarfDir = -1;
-      }else if (keyCode == 37){ // ArrowLeft
-        this.walkDir = -1;
-        this.scarfDir = 1;
-      }
-
-      if(this.walkDir == 1){
-        this.eyeX = lerp(this.eyeX, 52, map(this.walkCount, 0, 120, 0, 1));
-        this.eyeY = -5;
-      } else{
-        this.eyeX = lerp(this.eyeX, -52, map(this.walkCount, 0, 120, 0, 1));
-        this.eyeY = -5;
-      }
-      this.eyeHX = 0;
-      this.eyeHY = 0;
-      this.eyeVX = 16;
-      this.eyeVY = 3;
-      this.hairX = hairX;
-      this.hairY = hairY;
-      
-      this.walk(); 
-      this.y += yFloat * 0.1;
-      console.log(this.x);
+      this.walk(hairx, hairy, yFloat);
     }
+
     if (this.ifBlink) {
       if (!this.finishBlink) {
         this.blink();
       } else {
-        this.blinkInterval = floor(random(360, 720));
+        this.blinkInterval = floor(random(180, 660));
         this.ifBlink = false;
         this.finishBlink = false;
         // console.log(this.blinkInterval);
       }
     }
-
     pop();
+
     this.blinkInterval--;
   }
 
@@ -181,8 +157,27 @@ class Prince {
     pop();
   }
 
-  drawCloth() {
-    //scarf float
+  blink() {
+    let amtV = map(sin(frameCount * 0.25), -1, 1, 0, 1);
+    let amtH = map(sin(frameCount * 0.25), -1, 1, 0, 1);
+    if (amtV <= 0.6) {
+      this.eyeVY = lerp(this.eyeVY, 0, amtV);
+    } else if (amtH <= 1) {
+      this.eyeHX = lerp(this.eyeHX, 2.5, amtH);
+      this.eyeVY = lerp(this.eyeVY, 0, amtV);
+    }
+    if (amtH >= 0.99) {
+      this.blinkCount += 1;
+      // console.log(this.blinkCount);
+    }
+    if (this.blinkCount >= 2) {
+      this.finishBlink = true;
+      this.blinkCount = 0;
+      // console.log(this.blinkCount, this.finishBlink);
+    }
+  }
+
+  scarfFloat() {
     push();
     scale(this.scarfDir, 1);
     noStroke();
@@ -208,7 +203,22 @@ class Prince {
     );
     endShape();
     pop();
+  }
 
+  scarfNeck() {
+    push();
+    noStroke();
+    fill(244, 206, 10);
+    beginShape();
+    vertex(-54, 28);
+    bezierVertex(-15, 40, 15, 40, 54, 28);
+    vertex(55, 53);
+    bezierVertex(15, 65, -15, 65, -55, 53);
+    endShape();
+    pop();
+  }
+
+  cloth() {
     // cloth
     push();
     noStroke();
@@ -257,18 +267,12 @@ class Prince {
     );
     endShape();
     pop();
+  }
 
-    //scarf
-    push();
-    noStroke();
-    fill(244, 206, 10);
-    beginShape();
-    vertex(-54, 28);
-    bezierVertex(-15, 40, 15, 40, 54, 28);
-    vertex(55, 53);
-    bezierVertex(15, 65, -15, 65, -55, 53);
-    endShape();
-    pop();
+  drawCloth() {
+    this.scarfFloat();
+    this.cloth();
+    this.scarfNeck();
   }
 
   floatRate(f, min, max) {
@@ -276,27 +280,35 @@ class Prince {
     return scarfFluctY;
   }
 
-  blink() {
-    let amtV = map(sin(frameCount * 0.25), -1, 1, 0, 1);
-    let amtH = map(sin(frameCount * 0.25), -1, 1, 0, 1);
-    if (amtV <= 0.6) {
-      this.eyeVY = lerp(this.eyeVY, 0, amtV);
-    } else if (amtH <= 1) {
-      this.eyeHX = lerp(this.eyeHX, 2.5, amtH);
-      this.eyeVY = lerp(this.eyeVY, 0, amtV);
-    } 
-    if(amtH >= 0.99){
-      this.blinkCount += 1;
-      // console.log(this.blinkCount);
-    }
-    if(this.blinkCount >= 2){
-      this.finishBlink = true;
-      this.blinkCount = 0;
-      // console.log(this.blinkCount, this.finishBlink);
-    }
+  idle(eyeOffsetX, eyeOffsetY, hairx, hairy, yFloat) {
+    this.eyeX = eyeOffsetX;
+    this.eyeY = eyeOffsetY;
+    this.hairX = hairx;
+    this.hairY = hairy;
+    this.y += yFloat;
   }
 
-  walk() {
+  walk(hairx, hairy, yFloat) {
+    if (keyCode == 39) {
+      //ArrowRight
+      this.walkDir = 1;
+      this.scarfDir = -1;
+    } else if (keyCode == 37) {
+      // ArrowLeft
+      this.walkDir = -1;
+      this.scarfDir = 1;
+    }
+    if (this.walkDir == 1) {
+      this.eyeX = lerp(this.eyeX, 52, map(this.walkCount, 0, 60, 0, 1));
+      this.eyeY = -5;
+    } else {
+      this.eyeX = lerp(this.eyeX, -52, map(this.walkCount, 0, 60, 0, 1));
+      this.eyeY = -5;
+    }
+
+    this.hairX = hairx;
+    this.hairY = hairy;
+    this.y += yFloat * 0.1;
     this.x += this.walkDir * this.spdX;
   }
 }
