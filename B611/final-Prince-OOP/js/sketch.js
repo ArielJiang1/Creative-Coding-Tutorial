@@ -1,6 +1,3 @@
-let openEye = 1;
-let eyeCount = 0;
-
 let prince;
 
 function setup() {
@@ -10,43 +7,48 @@ function setup() {
 
 function draw() {
   background(0);
-
+  if(keyIsPressed){
+    if(keyCode == 39 || keyCode == 37){ //ArrowRight / ArrowLeft
+      prince.ifIdle = false;
+      prince.ifWalk = true;
+      if(prince.walkCount <=120){
+        prince.walkCount ++;
+      } 
+      
+      console.log(prince.ifWalk);
+    }
+  } else{
+    prince.ifWalk = false;
+    prince.ifIdle = true;
+    prince.walkCount = 0;
+  }
   prince.update();
   prince.display();
-  // if (openEye == 1) {
-  //   if (mouseX > 200) {
-  //     line(-16 + rightOffsetX, -3, -16 + rightOffsetX, 3);
-  //     line(16 + rightOffsetX, -3, 16 + rightOffsetX, 3);
-  //   } else {
-  //     line(-16 + leftOffsetX, -3, -16 + leftOffsetX, 3);
-  //     line(16 + leftOffsetX, -3, 16 + leftOffsetX, 3);
-  //   }
-  // } else {
-  //   if (mouseX > 200) {
-  //     line(-18 + rightOffsetX, -1.5, -13 + rightOffsetX, -1.5);
-  //     line(18 + rightOffsetX, -1.5, 13 + rightOffsetX, -1.5);
-  //   } else {
-  //     line(-18 + leftOffsetX, -1.5, -13 + leftOffsetX, -1.5);
-  //     line(18 + leftOffsetX, -1.5, 13 + leftOffsetX, -1.5);
-  //   }
-  // }
 }
+
 function keyPressed() {
-  openEye *= -1;
+  
+  if(keyCode == 38){ //ArrowUp
+
+  }
+  if(keyCode == 40){ //ArrowDown
+
+  }
+
   if (key === "s") {
     saveGif("prince-1.1", 3);
   }
 }
 
-function closeEye(start, end) {
-  let amt = map(sin(frameCount * 0.1), -1, 1, 0, 1);
-  return lerp(start, end, amt);
-}
 
 class Prince {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.spdX = 1;
+    this.spdY = 0;
+    this.accX = 0;
+    this.accY = 0;
     this.hairX = 0;
     this.hairY = -90;
     this.eyeX = 0;
@@ -58,6 +60,9 @@ class Prince {
     this.ifIdle = true;
     this.ifTalk = false;
     this.ifWalk = false;
+    this.walkDir = 1;
+    this.walkCount = 720;
+    this.ifSit = false;
   }
 
   display() {
@@ -72,14 +77,14 @@ class Prince {
       this.ifBlink = true;
       // console.log("start blinking!");
     }
-
+    let hairX = map(sin(frameCount * 0.01), -1, 1, -20, 20);
+    let hairY = map(cos(frameCount * 0.01), -1, 1, -100, -90);
+    let eyeOffsetX = map(mouseX, 0, width, -20, 20);
+    let eyeOffsetY = map(mouseY, 0, height, -26, 10);
+    let yFloat = sin(frameCount * 0.008) * 0.3;
     push();
     if (this.ifIdle) {
-      let hairX = map(sin(frameCount * 0.01), -1, 1, -20, 20);
-      let hairY = map(cos(frameCount * 0.01), -1, 1, -100, -90);
-      let eyeOffsetX = map(mouseX, 0, width, -20, 20);
-      let eyeOffsetY = map(mouseY, 0, height, -26, 10);
-      let yFloat = sin(frameCount * 0.008) * 0.3;
+      
       this.eyeX = eyeOffsetX;
       this.eyeY = eyeOffsetY;
       this.eyeHX = 0;
@@ -89,7 +94,31 @@ class Prince {
       this.hairX = hairX;
       this.hairY = hairY;
       this.y += yFloat;
+      
     } else if (this.ifWalk) {
+      if(keyCode == 39){ //ArrowRight 
+        this.walkDir = 1;
+      }else if (keyCode == 37){ // ArrowLeft
+        this.walkDir = -1;
+      }
+
+      if(this.walkDir == 1){
+        this.eyeX = lerp(this.eyeX, 52, map(this.walkCount, 0, 120, 0, 1));
+        this.eyeY = -5;
+      } else{
+        this.eyeX = lerp(this.eyeX, -52, map(this.walkCount, 0, 120, 0, 1));
+        this.eyeY = -5;
+      }
+      this.eyeHX = 0;
+      this.eyeHY = 0;
+      this.eyeVX = 16;
+      this.eyeVY = 3;
+      this.hairX = hairX;
+      this.hairY = hairY;
+      
+      this.walk(); 
+      this.y += yFloat * 0.1;
+      console.log(this.x);
     }
     if (this.ifBlink) {
       if (!this.finishBlink) {
@@ -253,15 +282,16 @@ class Prince {
     } 
     if(amtH >= 0.99){
       this.blinkCount += 1;
-      console.log(this.blinkCount);
+      // console.log(this.blinkCount);
     }
     if(this.blinkCount >= 2){
       this.finishBlink = true;
       this.blinkCount = 0;
-      console.log(this.blinkCount, this.finishBlink);
+      // console.log(this.blinkCount, this.finishBlink);
     }
   }
 
-  walkLeft() {}
-  walkRight() {}
+  walk() {
+    this.x += this.walkDir * this.spdX;
+  }
 }
