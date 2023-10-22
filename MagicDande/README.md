@@ -669,7 +669,7 @@ function draw(){
 }
 ```
 
-<img align = "center" src="assets/mid-6.6.gif" width="800" >
+<img align = "center" src="assets/mid-6.6.gif"  >
 
 ## Live Site Links
 

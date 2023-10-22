@@ -10,13 +10,11 @@ function setup() {
 
 function draw() {
   background(0);
-  let hairX = map(sin(frameCount * 0.01), -1, 1, -20, 20);
-  let hairY = map(cos(frameCount * 0.01), -1, 1, -100, -90);
-  
+
   let eyeOffsetX = map(mouseX, 0, width, -20, 20);
   let eyeOffsetY = map(mouseY, 0, height, -26, 10);
-  
-  prince.update(hairX, hairY,eyeOffsetX, eyeOffsetY);
+
+  prince.update(eyeOffsetX, eyeOffsetY);
   prince.display();
   // if (openEye == 1) {
   //   if (mouseX > 200) {
@@ -57,6 +55,9 @@ class Prince {
     this.eyeX = 0;
     this.eyeY = 0;
     this.ifBlink = false;
+    this.ifIdle = true;
+    this.ifTalk = false;
+    this.ifWalk = false;
   }
 
   display() {
@@ -64,15 +65,24 @@ class Prince {
     this.drawHead();
     this.drawEye();
     this.drawCloth();
-    
   }
 
-  update(hairx, hairy, eyeX, eyeY) {
+  update(eyeX, eyeY) {
     push();
-    this.hairX = hairx;
-    this.hairY = hairy;
-    this.eyeX = eyeX;
-    this.eyeY = eyeY;
+    if (this.ifIdle) {
+      let hairX = map(sin(frameCount * 0.01), -1, 1, -20, 20);
+      let hairY = map(cos(frameCount * 0.01), -1, 1, -100, -90);
+      let yFloat = sin(frameCount * 0.008) * 0.3;
+      this.eyeX = eyeX;
+      this.eyeY = eyeY;
+      this.hairX = hairX;
+      this.hairY = hairY;
+      this.y += yFloat;
+    } else if (this.ifWalk) {
+    }
+    if (this.ifBlink) {
+    }
+
     pop();
   }
 
