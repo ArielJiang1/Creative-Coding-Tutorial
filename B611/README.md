@@ -104,11 +104,36 @@ endShape();
   endShape();
   pop();
 ```
+Seems good. Now let's think about how to animate the eyes. 
+
 ```JavaScript
 ```
 ```JavaScript
 ```
 ```JavaScript
+fill(255, 0, 0);
+    stroke(255, 0, 0);
+    strokeWeight(1);
+    circle(-61 + this.floatRate(0.03, -15, 5) - this.clothX * this.walkDir * 0.5,
+    80 - this.clothX * this.walkDir * 1.2, 6);
+    circle(-70 + this.floatRate(0.02, -15, 6) - this.clothX * this.walkDir * 0.3,
+    100 + this.clothX * this.walkDir  * 0.5, 6);
+    circle(70 + this.floatRate(0.03, 15, -6)  + this.floatRate(0.02, -15, 6) + this.clothX * this.walkDir * 0.3,
+    100 - this.clothX * this.walkDir  * 0.5, 6);
+    circle(61 + this.floatRate(0.02, 15, -5)  - this.clothX * this.walkDir * 0.5,
+    80 + this.clothX * this.walkDir * 1.2, 6);
+    line(-55, 53, -61 + this.floatRate(0.03, -15, 5) - this.clothX * this.walkDir * 0.5,
+    80 - this.clothX * this.walkDir * 1.2);
+    line(-75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir *1.5,
+    150,-70 + this.floatRate(0.02, -15, 6) - this.clothX * this.walkDir * 0.3,
+    100 + this.clothX * this.walkDir  * 0.5);
+    line(75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 1.5,
+    150, 70 + this.floatRate(0.03, 15, -6)  + this.floatRate(0.02, -15, 6) + this.clothX * this.walkDir * 0.3,
+    100 - this.clothX * this.walkDir  * 0.5);
+    line(61 + this.floatRate(0.02, 15, -5)  - this.clothX * this.walkDir * 0.5,
+    80 + this.clothX * this.walkDir * 1.2,
+    55,
+    53);
 ```
 
 #### The Little Prince is Winking!
@@ -127,7 +152,10 @@ function keyPressed(){
     openEye *= -1;
 }
 ```
-Seems good. Now let's think about how to animate the eyes. 
+
+
+```JavaScript
+```
 
 ### HTML + Javascript?
 

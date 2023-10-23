@@ -12,7 +12,7 @@ function draw() {
       //ArrowRight / ArrowLeft
       prince.ifIdle = false;
       prince.ifWalk = true;
-      if (prince.walkCount <= 120) {
+      if (prince.walkCount <= 60) {
         prince.walkCount++;
       }
     }
@@ -21,7 +21,6 @@ function draw() {
     prince.ifIdle = true;
     prince.walkCount = 0;
     prince.clothX = 0;
-    // prince.scarfDir = 1;
   }
   prince.update();
   prince.display();
@@ -65,7 +64,7 @@ class Prince {
     this.ifTalk = false;
     this.ifWalk = false;
     this.walkDir = 1;
-    this.walkCount = 60;
+    this.walkCount = 0;
     this.scarfDir = 1;
     this.ifSit = false;
   }
@@ -96,7 +95,7 @@ class Prince {
       this.idle(eyeOffsetX, eyeOffsetY, hairx, hairy, yFloat);
     } else if (this.ifWalk) {
       this.walk(hairx, hairy, yFloat);
-      this.clothX = lerp(0, 5, map(this.walkCount, 0, 10, 0, 1));
+      this.clothX = 20;
     }
 
     if (this.ifBlink) {
@@ -217,30 +216,58 @@ class Prince {
 
   cloth() {
     // cloth
+    let anchorULX = -61 + this.floatRate(0.03, -15, 5) - this.clothX * this.walkDir * 0.5;
+    let anchorULY = 80 - this.clothX * this.walkDir * 1.2;
+    let anchorDLX = -70 + this.floatRate(0.02, -15, 6) - this.clothX * this.walkDir * 0.8;
+    let anchorDLY = 100 + this.clothX * this.walkDir  * 0.5;
+    let anchorDRX = 70 + this.floatRate(0.03, 15, -6)  - this.clothX * this.walkDir * 0.8;
+    let anchorDRY = 100 - this.clothX * this.walkDir  * 0.5;
+    let anchorURX = 61 + this.floatRate(0.02, 15, -5)  - this.clothX * this.walkDir * 0.5;
+    let anchorURY = 80 + this.clothX * this.walkDir * 1.2;
+    let controlULX = -55;
+    let controlULY = 53;
+    let controlDLX = -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir *1.8;
+    let controlDLY = 150;
+    let controlDRX = 75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 1.8;
+    let controlDRY = 150;
+    let controlURX = 55;
+    let controlURY = 53;
+
+    push();
+    fill(255, 0, 0);
+    stroke(255, 0, 0);
+    strokeWeight(1);
+    circle(anchorULX, anchorULY, 6);
+    circle(anchorDLX, anchorDLY, 6);
+    circle(anchorDRX, anchorDRY, 6);
+    circle(anchorURX, anchorURY, 6);
+    line(controlULX, controlULY, anchorULX, anchorULY);
+    line(controlDLX, controlDLY, anchorDLX, anchorDLY);
+    line(controlDRX, controlDRY, anchorDRX, anchorDRY);
+    line(anchorURX, anchorURY, controlURX, controlURY);
+    pop();
+
     push();
     noStroke();
     fill(91, 179, 24);
     beginShape();
-    vertex(-55, 53);
+    vertex(controlULX, controlULY);
     bezierVertex(
-      -61 + this.floatRate(0.03, -15, 5) - this.clothX * this.walkDir * 0.1,
-      80 + this.clothX * this.walkDir * 0.5,
-      -70 + this.floatRate(0.02, -15, 6) + this.clothX * this.walkDir * 0.3,
-      100,
-      -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir * 0.5,
-      150
+      anchorULX,
+      anchorULY,
+      anchorDLX,
+      anchorDLY,
+      controlDLX,
+      controlDLY
     );
-    vertex(
-      75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 0.5,
-      150
-    );
+    vertex(controlDRX, controlDRY);
     bezierVertex(
-      70 + this.floatRate(0.03, 15, -6),
-      100,
-      61 + this.floatRate(0.02, 15, -5),
-      80,
-      55,
-      53
+      anchorDRX,
+      anchorDRY,
+      anchorURX,
+      anchorURY,
+      controlURX,
+      controlURY
     );
     endShape();
 
@@ -248,7 +275,7 @@ class Prince {
     fill(43, 122, 11);
     beginShape();
     vertex(
-      -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir,
+      -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir * 1.5,
       150
     );
     bezierVertex(
@@ -256,11 +283,11 @@ class Prince {
       120 + this.floatRate(0.03, -16, 30),
       35,
       130 + this.floatRate(0.025, 30, -16),
-      75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 0.5,
+      75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 1.5,
       150
     );
     vertex(
-      75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 0.5,
+      75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 1.5,
       150
     );
     bezierVertex(
@@ -268,7 +295,7 @@ class Prince {
       160 + this.floatRate(0.02, -10, 10),
       -35,
       170 + this.floatRate(0.03, 10, -10),
-      -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir * 0.5,
+      -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir * 1.5,
       150
     );
     endShape();
