@@ -248,19 +248,19 @@ class Prince {
     let anchorULEX = -35;
     let anchorULEY = 120 + this.floatRate(0.03, -16, 30);
 
-    push();
-    fill(255, 0, 0);
-    stroke(255, 0, 0);
-    strokeWeight(1);
-    circle(anchorULX, anchorULY, 6);
-    circle(anchorDLX, anchorDLY, 6);
-    circle(anchorDRX, anchorDRY, 6);
-    circle(anchorURX, anchorURY, 6);
-    line(controlULX, controlULY, anchorULX, anchorULY);
-    line(controlDLX, controlDLY, anchorDLX, anchorDLY);
-    line(controlDRX, controlDRY, anchorDRX, anchorDRY);
-    line(anchorURX, anchorURY, controlURX, controlURY);
-    pop();
+    // push();
+    // fill(255, 0, 0);
+    // stroke(255, 0, 0);
+    // strokeWeight(1);
+    // circle(anchorULX, anchorULY, 6);
+    // circle(anchorDLX, anchorDLY, 6);
+    // circle(anchorDRX, anchorDRY, 6);
+    // circle(anchorURX, anchorURY, 6);
+    // line(controlULX, controlULY, anchorULX, anchorULY);
+    // line(controlDLX, controlDLY, anchorDLX, anchorDLY);
+    // line(controlDRX, controlDRY, anchorDRX, anchorDRY);
+    // line(anchorURX, anchorURY, controlURX, controlURY);
+    // pop();
 
     //upper cloth
     push();
