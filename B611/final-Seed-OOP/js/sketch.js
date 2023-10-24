@@ -38,18 +38,17 @@ function draw() {
 }
 
 class Seed {
-  constructor(x, y, layer, sdPos, l, dirx, diry, ci) {
+  constructor(x, y, layer, sdPos, dirx, diry, ci) {
     this.x = x;
     this.y = y;
+
     this.layer = layer;
     this.seedPos = sdPos;
+
     this.xSpd = 0;
     this.ySpd = 0;
-    this.angle = i;
-    this.l = l;
     this.dirx = dirx;
     this.diry = diry;
-    this.dia = dia;
 
     this.ifFly = false;
 
@@ -73,13 +72,13 @@ class Seed {
       this.ifFly = true;
     }
     if (this.iffly == true) {
-      this.fly(this.dirx, this.diry);
+      this.fly();
     }
   }
 
-  fly(dirx, diry) {
-    this.xSpd += random(-0.01, 0.01) + random(0, dirx);
-    this.ySpd += random(-0.01, 0.01) - random(0, diry);
+  fly() {
+    this.xSpd += random(-0.01, 0.01) + random(0, this.dirx);
+    this.ySpd += random(-0.01, 0.01) - random(0, this.diry);
   }
 
   drawSeed() {
