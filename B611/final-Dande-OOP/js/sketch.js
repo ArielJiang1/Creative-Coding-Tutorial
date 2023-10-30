@@ -83,6 +83,8 @@ class Seed {
     this.ySpd = 0;
     this.dirx = dirx;
     this.diry = diry;
+    this.angle = 0;
+    this.flyAngle = 0;
 
     this.dmouse = dist(
       this.x + this.seedX,
@@ -109,9 +111,10 @@ class Seed {
       mouseX,
       mouseY
     );
+    this.checkFly();
     if (this.ifFly) {
-      this.coreX += this.xSpd;
-      this.coreY += this.ySpd;
+      this.seedX += this.xSpd;
+      this.seedY += this.ySpd;
     } else {
       if (this.ifFriend) {
         this.checkHover();
@@ -185,24 +188,25 @@ class Seed {
   }
 
   drawSeedStem() {
-    if (!this.ifFly) {
+      if(this.seedX > 0){
+        this.angle = PI / 2 + atan(this.seedY/this.seedX);
+      } else{
+        this.angle = -PI / 2 + atan(this.seedY/this.seedX);
+      }
+      
       push();
+      translate(this.coreX + this.seedX, this.coreY + this.seedY);
       stroke(255, 100);
       strokeWeight(map(sin(this.seedPos + frameCount * 0.05), -1, 1, 0.01, 2));
-      line(
-        this.coreX,
+      rotate(this.angle + this.flyAngle);
+      line(0, 0, 0, dist(this.coreX,
         this.coreY,
         this.seedX + this.coreX,
-        this.seedY + this.coreY
-      );
+        this.seedY + this.coreY));
       pop();
-    }
   }
 
   assignColor(fluct) {
-    if (this.ifHovered) {
-    } else if (this.ifClicked) {
-    } else {
       fill(
         map(
           fluct,
@@ -226,7 +230,6 @@ class Seed {
           colorRange[this.colorIndex][1][2]
         )
       );
-    }
   }
 
   checkHide() {
@@ -241,7 +244,6 @@ class Seed {
   hide() {
     this.hideX = map(this.dmouse, 0, 20, 10, 0);
     this.hideY = map(this.dmouse, 0, 20, 10, 0);
-
   }
 
   checkHover() {
@@ -257,7 +259,26 @@ class Seed {
 
   }
 
-  checkClick() {}
+  checkClick() {
+
+  }
+
+  writeText(){
+
+  }
+
+  readText(){
+
+  }
+
+  checkFly(){
+    if(this.layerNum == 5 && (this.seedPos + (2 * PI) / (11 + this.layerNum * 3) >= 2*PI)){//check the last seed of the 5th layer of dandelion
+      if(this.ifData){//if it contains data, then all the seeds of the dandelion contain data
+        this.ifFly = true;
+        this.fly();
+      }
+    }
+  }
 
   fly() {
     if (this.ifFly == true) {
@@ -339,53 +360,39 @@ class Core {
   }
 
   assignColor(fluct) {
-    if (this.ifHovered) {
-    } else if (this.ifClicked) {
-    } else {
-      fill(
-        map(
-          fluct,
-          -1,
-          1,
-          colorRange[this.colorIndex][0][0],
-          colorRange[this.colorIndex][1][0]
-        ),
-        map(
-          fluct,
-          -1,
-          1,
-          colorRange[this.colorIndex][0][1],
-          colorRange[this.colorIndex][1][1]
-        ),
-        map(
-          fluct,
-          -1,
-          1,
-          colorRange[this.colorIndex][0][2],
-          colorRange[this.colorIndex][1][2]
-        )
-      );
-    }
+    fill(
+      map(
+        fluct,
+        -1,
+        1,
+        colorRange[this.colorIndex][0][0],
+        colorRange[this.colorIndex][1][0]
+      ),
+      map(
+        fluct,
+        -1,
+        1,
+        colorRange[this.colorIndex][0][1],
+        colorRange[this.colorIndex][1][1]
+      ),
+      map(
+        fluct,
+        -1,
+        1,
+        colorRange[this.colorIndex][0][2],
+        colorRange[this.colorIndex][1][2]
+      )
+    );
   }
 }
 
-//     let distFromCentX = transX - width / 2;
-//     let distFromCentY = transY - height / 2;
-//     let dmouse = dist(
-//       x + width / 2 + distFromCentX,
-//       y + height / 2 + distFromCentY,
-//       mouseX,
-//       mouseY
-//     );
-//     // if (dmouse <= 20) {
-//     //   y += map(dmouse, 0, 20, 10, 0);
-//     //   x += map(dmouse, 0, 20, 10, 0);
-//     // }
+
 
 //http://127.0.0.1:5501/B611/final-Dande-OOP/
 function keyPressed() {
   if (keyCode == 38) {
     //ArrowUp
+    seeds[i].ifFly = true;
   }
   if (keyCode == 40) {
     //ArrowDown

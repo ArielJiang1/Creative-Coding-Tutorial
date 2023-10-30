@@ -115,6 +115,9 @@ Seems good. Now let's think about how to animate the eyes.
 ```JavaScript
 ```
 ```JavaScript
+```
+
+```JavaScript
 fill(255, 0, 0);
     stroke(255, 0, 0);
     strokeWeight(1);
@@ -157,10 +160,37 @@ function keyPressed(){
 }
 ```
 
+### Making the seeds fly
 
 ```JavaScript
+push();
+stroke(255, 100);
+strokeWeight(map(sin(this.seedPos + frameCount * 0.05), -1, 1, 0.01, 2));
+line(
+  this.coreX,
+  this.coreY,
+  this.seedX + this.coreX,
+  this.seedY + this.coreY
+);
+pop();
 ```
 
+```JavaScript
+this.angle = PI * 2 + atan(this.coreY + this.seedY/this.coreX + this.seedX);
+```
+
+```JavaScript
+this.angle = PI / 2 + atan(this.seedY/this.seedX);
+```
+
+fly
+```JavaScript
+if(this.seedX > 0){
+  this.angle = PI / 2 + atan(this.seedY/this.seedX);
+} else{
+  this.angle = -PI / 2 + atan(this.seedY/this.seedX);
+}
+```
 ### HTML + Javascript?
 
 ### Text Input
