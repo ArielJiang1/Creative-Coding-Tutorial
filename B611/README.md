@@ -3,6 +3,10 @@
 
 ### MagicDande in OOP
 #### Basic OOP Structure
+There are three basic methods inside a class: 
+1. the constructor, which only runs for once (similar to our setup
+ function) when a new instance of the class is constructed. In the constructor, we define all the variables that we want to use globally in all the methods. We write this.variableName omit the let when defining in the constructor.
+2. the display ()
 ```JavaScript
 class Seed {
     constructor() {

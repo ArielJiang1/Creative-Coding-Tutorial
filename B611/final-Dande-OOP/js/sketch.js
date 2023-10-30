@@ -90,6 +90,8 @@ class Seed {
       mouseX,
       mouseY
     );
+    this.hideX = 0;
+    this.hideY = 0;
     this.ifFriend = false;
     this.ifClose = false;
     this.ifHovered = false;
@@ -114,10 +116,10 @@ class Seed {
       this.coreY = map(cos(frameCount * 0.01), -1, 1, -10, 0);
       this.seedX =
         sin((PI / 2) * (this.layerNum + 1) + this.seedPos) *
-        (40 + this.layerNum * 20);
+        (40 + this.layerNum * 20) + this.hideX;
       this.seedY =
         cos((PI / 2) * (this.layerNum + 1) + this.seedPos) *
-        (40 + this.layerNum * 20);
+        (40 + this.layerNum * 20) + this.hideY;
     }
   }
 
@@ -196,18 +198,22 @@ class Seed {
 
   checkHide() {
     this.dmouse = dist(
-      this.x + this.seedX,
-      this.y + this.seedY,
+      this.x + this.seedX + this.coreX,
+      this.y + this.seedY + this.coreY,
       mouseX,
       mouseY
     );
     if (this.dmouse <= 20) {
       this.hide();
+    } else{
+      this.hideX = 0;
+      this.hideY = 0;
     }
   }
   hide() {
-    this.seedY += map(this.dmouse, 0, 20, 10, 0);
-    this.seedX += map(this.dmouse, 0, 20, 10, 0);
+    this.hideX = map(this.dmouse, 0, 20, 10, 0);
+    this.hideY = map(this.dmouse, 0, 20, 10, 0);
+
   }
 
   checkHover() {}
