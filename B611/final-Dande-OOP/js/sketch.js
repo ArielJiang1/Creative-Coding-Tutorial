@@ -332,9 +332,21 @@ class Seed {
     this.ifHovered = true;
   }
 
-  checkClick() {}
+  checkClick() {
+    if (this.ifClicked) {
+      if (this.dmouse <= 10) {
+        if (this.ifData) {
+          this.readText();
+        } else {
+          this.writeText();
+        }
+      }
+    }
+  }
 
-  writeText() {}
+  writeText() {
+    this.ifData = true;
+  }
 
   readText() {}
 
@@ -520,5 +532,14 @@ function keyPressed() {
   }
   if (key === "s") {
     saveGif("prince-1.1", 3);
+  }
+}
+
+function mousePressed() {
+  for (let i = 0; i < seeds.length; i++) {
+    seeds[i].ifClicked = true;
+  }
+  for (let i = 0; i < cores.length; i++) {
+    cores[i].ifClicked = true;
   }
 }
