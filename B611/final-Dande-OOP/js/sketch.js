@@ -102,10 +102,15 @@ class Seed {
   }
 
   update() {
+    this.dmouse = dist(
+      this.x + this.seedX + this.coreX,
+      this.y + this.seedY + this.coreY,
+      mouseX,
+      mouseY
+    );
     if (this.ifFly) {
       this.coreX += this.xSpd;
       this.y1 += this.ySpd;
-    } else if (this.ifHovered) {
     } else {
       if (this.ifFriend) {
         this.checkHover();
@@ -135,22 +140,37 @@ class Seed {
     push();
     translate(this.coreX + this.seedX, this.coreY + this.seedY);
     let fluct1 = sin((PI / 2) * (this.layerNum + 1) + this.seedPos);
-
-    this.assignColor(fluct1);
-    noStroke();
-    circle(
-      0,
-      0,
-      map(
-        sin(this.seedPos + frameCount * 0.05),
-        -1,
-        1,
-        3,
-        6 + this.layerNum * 3.5
-      )
-    );
+    if(this.ifHovered){
+      push();
+      noStroke();
+      for (let i = 0; i < 100; i++) {
+        fill(255, 30, 20, floor(map(i, 0, 99, 0, 5)));
+        circle(0, 0, floor(i * 0.5 + this.layerNum));
+        fill(255, 30, 20);
+        circle(0, 0, 20);
+      }
+      pop();
+    }else{
+      push();
+      this.assignColor(fluct1);
+      noStroke();
+      circle(
+        0,
+        0,
+        map(
+          sin(this.seedPos + frameCount * 0.05),
+          -1,
+          1,
+          3,
+          6 + this.layerNum * 3.5
+        )
+      );
+      pop();
+    }
+    
     pop();
   }
+
   drawSeedStem() {
     if (!this.ifFly) {
       push();
@@ -197,12 +217,6 @@ class Seed {
   }
 
   checkHide() {
-    this.dmouse = dist(
-      this.x + this.seedX + this.coreX,
-      this.y + this.seedY + this.coreY,
-      mouseX,
-      mouseY
-    );
     if (this.dmouse <= 20) {
       this.hide();
     } else{
@@ -210,13 +224,25 @@ class Seed {
       this.hideY = 0;
     }
   }
+
   hide() {
     this.hideX = map(this.dmouse, 0, 20, 10, 0);
     this.hideY = map(this.dmouse, 0, 20, 10, 0);
 
   }
 
-  checkHover() {}
+  checkHover() {
+    if (this.dmouse <= 10) {
+      this.hover();
+    } else{
+      this.ifHovered = false;
+    }
+  }
+
+  hover() {
+    this.ifHovered = true;
+
+  }
 
   checkClick() {}
 
@@ -236,6 +262,13 @@ class Core {
     this.coreX = 0;
     this.coreY = 0;
 
+    this.dmouse = dist(
+      this.x + this.seedX,
+      this.y + this.seedY,
+      mouseX,
+      mouseY
+    );
+    this.ifFriend = false;
     this.ifHovered = false;
     this.ifClicked = false;
 
@@ -250,16 +283,46 @@ class Core {
   }
 
   update() {
+    this.dmouse = dist(
+      this.x + this.coreX,
+      this.y + this.coreY,
+      mouseX,
+      mouseY
+    );
+    if(this.ifFriend){
+      this.checkHover();
+    }
     this.coreX = map(sin(frameCount * 0.01), -1, 1, -60, 60);
     this.coreY = map(cos(frameCount * 0.01), -1, 1, -10, 0);
   }
   drawCore() {
     push();
     noStroke();
-    let fluct2 = sin(PI / 2 + frameCount * 0.01);
-    this.assignColor(fluct2);
-    circle(this.coreX, this.coreY, map(this.layerNum, 1, 8, 16, 38));
+    if(this.ifHovered){
+      for (let i = 0; i < 100; i++) {
+        fill(255, 30, 20, floor(map(i, 0, 99, 0, 5)));
+        circle(this.coreX, this.coreY, floor(i * 0.5 + map(this.layerNum, 1, 8, 25, 38)));
+        fill(255, 30, 20);
+      }
+    }else{
+      let fluct2 = sin(PI / 2 + frameCount * 0.01);
+      this.assignColor(fluct2);
+    }
+    circle(this.coreX, this.coreY, map(this.layerNum, 1, 8, 25, 38));
+    
     pop();
+  }
+  
+  checkHover() {
+    if (this.dmouse <= 20) {
+      this.hover();  
+    } else{
+      this.ifHovered = false;
+    }
+  }
+
+  hover() {
+    this.ifHovered = true;
   }
 
   assignColor(fluct) {
@@ -314,7 +377,26 @@ function keyPressed() {
   if (keyCode == 40) {
     //ArrowDown
   }
-
+  if(keyCode == 70){
+    //f
+    for (let i = 0; i < seeds.length; i++) {
+      seeds[i].ifFriend = true;
+    }
+    for (let i = 0; i < cores.length; i++) {
+      cores[i].ifFriend = true;
+    }
+  }
+  if(keyCode == 66){
+    //b
+    for (let i = 0; i < seeds.length; i++) {
+      seeds[i].ifFriend = false;
+      seeds[i].ifHovered = false;
+    }
+    for (let i = 0; i < cores.length; i++) {
+      cores[i].ifFriend = false;
+      cores[i].ifHovered = false;
+    }
+  }
   if (key === "s") {
     saveGif("prince-1.1", 3);
   }
