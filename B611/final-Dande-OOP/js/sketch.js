@@ -54,12 +54,33 @@ function draw() {
     height / 2,
     1
   );
+  if (seeds.length == 0) {
+    layerNum = 1;
+    for (let r = layerNum; r > 0; r--) {
+      for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
+        seeds.push(
+          new Seed(
+            width / 2,
+            height / 2,
+            r,
+            i,
+            random(0, 0.003),
+            random(0.001, 0.002),
+            1
+          )
+        );
+      }
+    }
+  }
   for (let i = 0; i < seeds.length; i++) {
     seeds[i].update();
     seeds[i].display();
     if (!seeds[i].ifFly) {
       seeds[i].lastCoreX = seeds[i].coreX;
       seeds[i].lastCoreY = seeds[i].coreY;
+    }
+    if (seeds[i].flyDone) {
+      seeds.splice(i, 1);
     }
   }
   for (let i = 0; i < cores.length; i++) {
@@ -115,6 +136,7 @@ class Seed {
     this.ifHovered = false;
     this.ifClicked = false;
     this.ifFly = false;
+    this.flyDone = false;
     this.ifData = false;
 
     this.colorIndex = ci;
@@ -326,6 +348,14 @@ class Seed {
         //if it contains data, then all the seeds of the dandelion contain data
         this.ifFly = true;
       }
+    }
+    if (
+      this.x + this.seedX + this.lastCoreX > windowWidth ||
+      this.x + this.seedX + this.lastCoreX < 0 ||
+      this.y + this.seedY + this.lastCoreY > windowHeight ||
+      this.y + this.seedY + this.lastCoreY < 0
+    ) {
+      this.flyDone = true;
     }
   }
 
