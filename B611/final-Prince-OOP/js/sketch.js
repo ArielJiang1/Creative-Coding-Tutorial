@@ -3,6 +3,7 @@ let prince;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   prince = new Prince(width / 2, height / 2);
+  prince2 = new Prince(width / 2, height / 2);
 }
 
 function draw() {
@@ -11,7 +12,8 @@ function draw() {
     if (keyCode == 39 || keyCode == 37) {
       //ArrowRight / ArrowLeft
       prince.ifIdle = false;
-      prince.ifWalk = true;
+      prince.ifWalk = true; // => this.ifWalk
+
       if (prince.walkCount <= 60) {
         prince.walkCount++;
       }
@@ -22,7 +24,7 @@ function draw() {
     prince.walkCount = 0;
     prince.clothX = 0;
   }
-  prince.update();
+  prince.update(2, 6);
   prince.display();
 }
 
@@ -216,27 +218,33 @@ class Prince {
 
   cloth() {
     // cloth
-    let anchorULX = -61 + this.floatRate(0.03, -15, 5) - this.clothX * this.walkDir * 0.3;
+    let anchorULX =
+      -61 + this.floatRate(0.03, -15, 5) - this.clothX * this.walkDir * 0.3;
     let anchorULY = 80 - this.clothX * this.walkDir * 1.2;
-    let anchorDLX = -70 + this.floatRate(0.02, -15, 6) - this.clothX * this.walkDir * 0.8;
-    let anchorDLY = 100 + this.clothX * this.walkDir  * 0.6;
-    let anchorDRX = 70 + this.floatRate(0.03, 15, -6)  - this.clothX * this.walkDir * 0.8;
-    let anchorDRY = 100 - this.clothX * this.walkDir  * 0.6;
-    let anchorURX = 61 + this.floatRate(0.02, 15, -5)  - this.clothX * this.walkDir * 0.3;
+    let anchorDLX =
+      -70 + this.floatRate(0.02, -15, 6) - this.clothX * this.walkDir * 0.8;
+    let anchorDLY = 100 + this.clothX * this.walkDir * 0.6;
+    let anchorDRX =
+      70 + this.floatRate(0.03, 15, -6) - this.clothX * this.walkDir * 0.8;
+    let anchorDRY = 100 - this.clothX * this.walkDir * 0.6;
+    let anchorURX =
+      61 + this.floatRate(0.02, 15, -5) - this.clothX * this.walkDir * 0.3;
     let anchorURY = 80 + this.clothX * this.walkDir * 1.2;
     let controlULX = -55;
     let controlULY = 53;
-    let controlDLX = -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir *1.6;
+    let controlDLX =
+      -75 + this.floatRate(0.025, -6, 6) - this.clothX * this.walkDir * 1.6;
     let controlDLY = 150;
     let controlDRY = 150;
-    if(this.walkDir == -1){
+    if (this.walkDir == -1) {
       controlDLY = 150 + this.clothX * this.walkDir * 0.1;
       controlDRY = 150 + this.clothX * this.walkDir;
-    }else{
+    } else {
       controlDLY = 150 - this.clothX * this.walkDir;
       controlDRY = 150 - this.clothX * this.walkDir * 0.1;
     }
-    let controlDRX = 75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 1.6;
+    let controlDRX =
+      75 + this.floatRate(0.025, 6, -6) - this.clothX * this.walkDir * 1.6;
     let controlURX = 55;
     let controlURY = 53;
     let anchorDLEX = -35;
@@ -268,9 +276,23 @@ class Prince {
     fill(91, 179, 24);
     beginShape();
     vertex(controlULX, controlULY);
-    bezierVertex(anchorULX, anchorULY, anchorDLX, anchorDLY, controlDLX, controlDLY);
+    bezierVertex(
+      anchorULX,
+      anchorULY,
+      anchorDLX,
+      anchorDLY,
+      controlDLX,
+      controlDLY
+    );
     vertex(controlDRX, controlDRY);
-    bezierVertex(anchorDRX, anchorDRY, anchorURX, anchorURY, controlURX, controlURY);
+    bezierVertex(
+      anchorDRX,
+      anchorDRY,
+      anchorURX,
+      anchorURY,
+      controlURX,
+      controlURY
+    );
     endShape();
 
     //lower edge
@@ -278,7 +300,14 @@ class Prince {
     fill(91, 179, 24);
     beginShape();
     vertex(controlDLX, controlDLY);
-    bezierVertex(anchorULEX, anchorULEY, anchorUREX, anchorUREY, controlDRX, controlDRY);
+    bezierVertex(
+      anchorULEX,
+      anchorULEY,
+      anchorUREX,
+      anchorUREY,
+      controlDRX,
+      controlDRY
+    );
     vertex(controlDRX, controlDRY);
     vertex(controlDLX, controlDLY);
     endShape();
@@ -287,9 +316,23 @@ class Prince {
     fill(43, 122, 11);
     beginShape();
     vertex(controlDLX, controlDLY);
-    bezierVertex(anchorULEX, anchorULEY, anchorUREX, anchorUREY, controlDRX, controlDRY);
+    bezierVertex(
+      anchorULEX,
+      anchorULEY,
+      anchorUREX,
+      anchorUREY,
+      controlDRX,
+      controlDRY
+    );
     vertex(controlDRX, controlDRY);
-    bezierVertex(anchorDREX, anchorDREY, anchorDLEX, anchorDLEY, controlDLX, controlDLY);
+    bezierVertex(
+      anchorDREX,
+      anchorDREY,
+      anchorDLEX,
+      anchorDLEY,
+      controlDLX,
+      controlDLY
+    );
     endShape();
     pop();
   }

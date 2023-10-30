@@ -29,7 +29,17 @@ function setup() {
   layerNum = floor(random(2, 6));
   for (let r = layerNum; r > 0; r--) {
     for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
-      seeds.push(new Seed(width / 2, height / 2, r, i, 1, 1, 1));
+      seeds.push(
+        new Seed(
+          width / 2,
+          height / 2,
+          r,
+          i,
+          random(0, 0.003),
+          random(0.001, 0.002),
+          1
+        )
+      );
     }
   }
   cores.push(new Core(width / 2, height / 2, layerNum, 1));
@@ -47,6 +57,10 @@ function draw() {
   for (let i = 0; i < seeds.length; i++) {
     seeds[i].update();
     seeds[i].display();
+    if (!seeds[i].ifFly) {
+      seeds[i].lastCoreX = seeds[i].coreX;
+      seeds[i].lastCoreY = seeds[i].coreY;
+    }
   }
   for (let i = 0; i < cores.length; i++) {
     cores[i].update();
@@ -75,6 +89,8 @@ class Seed {
     this.coreY = 0;
     this.seedX = 0;
     this.seedY = 0;
+    this.lastCoreX = 0;
+    this.lastCoreY = 0;
 
     this.layerNum = layer;
     this.seedPos = sdPos;
@@ -112,6 +128,7 @@ class Seed {
       mouseY
     );
     this.checkFly();
+    this.fly();
     if (this.ifFly) {
       this.seedX += this.xSpd;
       this.seedY += this.ySpd;
@@ -125,10 +142,12 @@ class Seed {
       this.coreY = map(cos(frameCount * 0.01), -1, 1, -10, 0);
       this.seedX =
         sin((PI / 2) * (this.layerNum + 1) + this.seedPos) *
-        (40 + this.layerNum * 20) + this.hideX;
+          (40 + this.layerNum * 20) +
+        this.hideX;
       this.seedY =
         cos((PI / 2) * (this.layerNum + 1) + this.seedPos) *
-        (40 + this.layerNum * 20) + this.hideY;
+          (40 + this.layerNum * 20) +
+        this.hideY;
     }
   }
 
@@ -142,9 +161,13 @@ class Seed {
 
   drawSeed() {
     push();
-    translate(this.coreX + this.seedX, this.coreY + this.seedY);
+    if (this.ifFly) {
+      translate(this.lastCoreX + this.seedX, this.lastCoreY + this.seedY);
+    } else {
+      translate(this.coreX + this.seedX, this.coreY + this.seedY);
+    }
     let fluct1 = sin((PI / 2) * (this.layerNum + 1) + this.seedPos);
-    if(this.ifHovered){
+    if (this.ifHovered) {
       push();
       noStroke();
       for (let i = 0; i < 100; i++) {
@@ -154,20 +177,25 @@ class Seed {
         circle(0, 0, 20);
       }
       pop();
-    } else{
+    } else {
       push();
       this.assignColor(fluct1);
       noStroke();
-      if(this.ifData){
+      if (this.ifData) {
         push();
-        fill(255, 255, 255, 60);       
-        circle(0, 0, 5 + map(
-          sin(this.seedPos + frameCount * 0.05),
-          -1,
-          1,
-          3,
-          6 + this.layerNum * 3.5
-        ));
+        fill(255, 255, 255, 60);
+        circle(
+          0,
+          0,
+          5 +
+            map(
+              sin(this.seedPos + frameCount * 0.05),
+              -1,
+              1,
+              3,
+              6 + this.layerNum * 3.5
+            )
+        );
         pop();
       }
       circle(
@@ -183,59 +211,83 @@ class Seed {
       );
       pop();
     }
-    
+
     pop();
   }
 
   drawSeedStem() {
-      if(this.seedX > 0){
-        this.angle = PI / 2 + atan(this.seedY/this.seedX);
-      } else{
-        this.angle = -PI / 2 + atan(this.seedY/this.seedX);
-      }
-      
-      push();
+    if (this.seedX > 0) {
+      this.angle = PI / 2 + atan(this.seedY / this.seedX);
+    } else {
+      this.angle = -PI / 2 + atan(this.seedY / this.seedX);
+    }
+
+    push();
+    if (this.ifFly) {
+      translate(this.lastCoreX + this.seedX, this.lastCoreY + this.seedY);
+    } else {
       translate(this.coreX + this.seedX, this.coreY + this.seedY);
-      stroke(255, 100);
-      strokeWeight(map(sin(this.seedPos + frameCount * 0.05), -1, 1, 0.01, 2));
-      rotate(this.angle + this.flyAngle);
-      line(0, 0, 0, dist(this.coreX,
-        this.coreY,
-        this.seedX + this.coreX,
-        this.seedY + this.coreY));
-      pop();
+    }
+
+    stroke(255, 100);
+    strokeWeight(map(sin(this.seedPos + frameCount * 0.05), -1, 1, 0.01, 2));
+    rotate(this.angle + this.flyAngle);
+    if (this.ifFly) {
+      line(
+        0,
+        0,
+        0,
+        this.lastCoreX,
+        this.lastCoreY,
+        this.seedX + this.lastCoreX,
+        this.seedY + this.lastCoreY
+      );
+    } else {
+      line(
+        0,
+        0,
+        0,
+        dist(
+          this.coreX,
+          this.coreY,
+          this.seedX + this.coreX,
+          this.seedY + this.coreY
+        )
+      );
+    }
+    pop();
   }
 
   assignColor(fluct) {
-      fill(
-        map(
-          fluct,
-          -1,
-          1,
-          colorRange[this.colorIndex][0][0],
-          colorRange[this.colorIndex][1][0]
-        ),
-        map(
-          fluct,
-          -1,
-          1,
-          colorRange[this.colorIndex][0][1],
-          colorRange[this.colorIndex][1][1]
-        ),
-        map(
-          fluct,
-          -1,
-          1,
-          colorRange[this.colorIndex][0][2],
-          colorRange[this.colorIndex][1][2]
-        )
-      );
+    fill(
+      map(
+        fluct,
+        -1,
+        1,
+        colorRange[this.colorIndex][0][0],
+        colorRange[this.colorIndex][1][0]
+      ),
+      map(
+        fluct,
+        -1,
+        1,
+        colorRange[this.colorIndex][0][1],
+        colorRange[this.colorIndex][1][1]
+      ),
+      map(
+        fluct,
+        -1,
+        1,
+        colorRange[this.colorIndex][0][2],
+        colorRange[this.colorIndex][1][2]
+      )
+    );
   }
 
   checkHide() {
     if (this.dmouse <= 20) {
       this.hide();
-    } else{
+    } else {
       this.hideX = 0;
       this.hideY = 0;
     }
@@ -249,41 +301,45 @@ class Seed {
   checkHover() {
     if (this.dmouse <= 10) {
       this.hover();
-    } else{
+    } else {
       this.ifHovered = false;
     }
   }
 
   hover() {
     this.ifHovered = true;
-
   }
 
-  checkClick() {
+  checkClick() {}
 
-  }
+  writeText() {}
 
-  writeText(){
+  readText() {}
 
-  }
-
-  readText(){
-
-  }
-
-  checkFly(){
-    if(this.layerNum == 5 && (this.seedPos + (2 * PI) / (11 + this.layerNum * 3) >= 2*PI)){//check the last seed of the 5th layer of dandelion
-      if(this.ifData){//if it contains data, then all the seeds of the dandelion contain data
+  checkFly() {
+    if (
+      this.layerNum == 5 &&
+      this.seedPos + (2 * PI) / (11 + this.layerNum * 3) >= 2 * PI
+    ) {
+      //check the last seed of the 5th layer of dandelion
+      if (this.ifData) {
+        //if it contains data, then all the seeds of the dandelion contain data
         this.ifFly = true;
-        this.fly();
       }
     }
   }
 
   fly() {
-    if (this.ifFly == true) {
+    if (this.ifFly) {
       this.xSpd += random(-0.01, 0.01) + random(0, this.dirx);
       this.ySpd += random(-0.01, 0.01) - random(0, this.diry);
+      this.flyAngle = map(
+        noise(sin(frameCount * 0.01)),
+        0,
+        1,
+        -PI / 30,
+        PI / 30
+      );
     }
   }
 }
@@ -323,7 +379,7 @@ class Core {
       mouseX,
       mouseY
     );
-    if(this.ifFriend){
+    if (this.ifFriend) {
       this.checkHover();
     }
     this.coreX = map(sin(frameCount * 0.01), -1, 1, -60, 60);
@@ -332,25 +388,29 @@ class Core {
   drawCore() {
     push();
     noStroke();
-    if(this.ifHovered){
+    if (this.ifHovered) {
       for (let i = 0; i < 100; i++) {
         fill(250, 30, 20, floor(map(i, 0, 99, 0, 5)));
-        circle(this.coreX, this.coreY, floor(i * 0.5 + map(this.layerNum, 1, 8, 30, 45)));
+        circle(
+          this.coreX,
+          this.coreY,
+          floor(i * 0.5 + map(this.layerNum, 1, 8, 30, 45))
+        );
         fill(250, 30, 20);
       }
-    }else{
+    } else {
       let fluct2 = sin(PI / 2 + frameCount * 0.01);
       this.assignColor(fluct2);
     }
     circle(this.coreX, this.coreY, map(this.layerNum, 1, 8, 30, 45));
-    
+
     pop();
   }
-  
+
   checkHover() {
     if (this.dmouse <= 20) {
-      this.hover();  
-    } else{
+      this.hover();
+    } else {
       this.ifHovered = false;
     }
   }
@@ -386,18 +446,18 @@ class Core {
   }
 }
 
-
-
 //http://127.0.0.1:5501/B611/final-Dande-OOP/
 function keyPressed() {
   if (keyCode == 38) {
     //ArrowUp
-    seeds[i].ifFly = true;
+    for (let i = 0; i < seeds.length; i++) {
+      seeds[i].ifFly = true;
+    }
   }
   if (keyCode == 40) {
     //ArrowDown
   }
-  if(keyCode == 70){
+  if (keyCode == 70) {
     //f
     for (let i = 0; i < seeds.length; i++) {
       seeds[i].ifFriend = true;
@@ -406,7 +466,7 @@ function keyPressed() {
       cores[i].ifFriend = true;
     }
   }
-  if(keyCode == 68){
+  if (keyCode == 68) {
     //d
     for (let i = 0; i < seeds.length; i++) {
       seeds[i].ifData = true;
@@ -415,7 +475,7 @@ function keyPressed() {
       cores[i].ifData = true;
     }
   }
-  if(keyCode == 66){
+  if (keyCode == 66) {
     //b
     for (let i = 0; i < seeds.length; i++) {
       seeds[i].ifFriend = false;
