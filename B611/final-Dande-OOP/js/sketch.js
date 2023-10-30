@@ -97,6 +97,7 @@ class Seed {
     this.ifHovered = false;
     this.ifClicked = false;
     this.ifFly = false;
+    this.ifData = false;
 
     this.colorIndex = ci;
   }
@@ -110,7 +111,7 @@ class Seed {
     );
     if (this.ifFly) {
       this.coreX += this.xSpd;
-      this.y1 += this.ySpd;
+      this.coreY += this.ySpd;
     } else {
       if (this.ifFriend) {
         this.checkHover();
@@ -144,16 +145,28 @@ class Seed {
       push();
       noStroke();
       for (let i = 0; i < 100; i++) {
-        fill(255, 30, 20, floor(map(i, 0, 99, 0, 5)));
+        fill(250, 30, 20, floor(map(i, 0, 99, 0, 5)));
         circle(0, 0, floor(i * 0.5 + this.layerNum));
-        fill(255, 30, 20);
+        fill(250, 30, 20);
         circle(0, 0, 20);
       }
       pop();
-    }else{
+    } else{
       push();
       this.assignColor(fluct1);
       noStroke();
+      if(this.ifData){
+        push();
+        fill(255, 255, 255, 60);       
+        circle(0, 0, 5 + map(
+          sin(this.seedPos + frameCount * 0.05),
+          -1,
+          1,
+          3,
+          6 + this.layerNum * 3.5
+        ));
+        pop();
+      }
       circle(
         0,
         0,
@@ -300,15 +313,15 @@ class Core {
     noStroke();
     if(this.ifHovered){
       for (let i = 0; i < 100; i++) {
-        fill(255, 30, 20, floor(map(i, 0, 99, 0, 5)));
-        circle(this.coreX, this.coreY, floor(i * 0.5 + map(this.layerNum, 1, 8, 25, 38)));
-        fill(255, 30, 20);
+        fill(250, 30, 20, floor(map(i, 0, 99, 0, 5)));
+        circle(this.coreX, this.coreY, floor(i * 0.5 + map(this.layerNum, 1, 8, 30, 45)));
+        fill(250, 30, 20);
       }
     }else{
       let fluct2 = sin(PI / 2 + frameCount * 0.01);
       this.assignColor(fluct2);
     }
-    circle(this.coreX, this.coreY, map(this.layerNum, 1, 8, 25, 38));
+    circle(this.coreX, this.coreY, map(this.layerNum, 1, 8, 30, 45));
     
     pop();
   }
@@ -386,15 +399,26 @@ function keyPressed() {
       cores[i].ifFriend = true;
     }
   }
+  if(keyCode == 68){
+    //d
+    for (let i = 0; i < seeds.length; i++) {
+      seeds[i].ifData = true;
+    }
+    for (let i = 0; i < cores.length; i++) {
+      cores[i].ifData = true;
+    }
+  }
   if(keyCode == 66){
     //b
     for (let i = 0; i < seeds.length; i++) {
       seeds[i].ifFriend = false;
       seeds[i].ifHovered = false;
+      seeds[i].ifData = false;
     }
     for (let i = 0; i < cores.length; i++) {
       cores[i].ifFriend = false;
       cores[i].ifHovered = false;
+      cores[i].ifData = false;
     }
   }
   if (key === "s") {
