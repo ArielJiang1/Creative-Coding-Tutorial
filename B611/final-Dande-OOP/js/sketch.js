@@ -26,13 +26,13 @@ let cores = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  layerNum = floor(random(1, 6));
-  for (let r = 0; r <= layerNum; r++) {
+  layerNum = floor(random(2, 6));
+  for (let r = layerNum; r > 0; r--) {
     for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
-      seeds.push(new Seed(width / 2, height / 2, r, i, 1, 1, 0));
+      seeds.push(new Seed(width / 2, height / 2, r, i, 1, 1, 1));
     }
   }
-  cores.push(new Core(width / 2, height / 2, layerNum, 0));
+  cores.push(new Core(width / 2, height / 2, layerNum, 1));
 }
 
 function draw() {
@@ -42,7 +42,7 @@ function draw() {
     map(cos(frameCount * 0.01), -1, 1, -10, 0),
     width / 2,
     height / 2,
-    0
+    1
   );
   for (let i = 0; i < seeds.length; i++) {
     seeds[i].update();
@@ -84,12 +84,14 @@ class Seed {
     this.dirx = dirx;
     this.diry = diry;
 
-    // this.dmouse = dist(
-    //   x + width / 2 + distFromCentX,
-    //   y + height / 2 + distFromCentY,
-    //   mouseX,
-    //   mouseY
-    // );
+    this.dmouse = dist(
+      this.x + this.seedX,
+      this.y + this.seedY,
+      mouseX,
+      mouseY
+    );
+    this.ifFriend = false;
+    this.ifClose = false;
     this.ifHovered = false;
     this.ifClicked = false;
     this.ifFly = false;
@@ -98,7 +100,16 @@ class Seed {
   }
 
   update() {
-    if (!this.ifFly) {
+    if (this.ifFly) {
+      this.coreX += this.xSpd;
+      this.y1 += this.ySpd;
+    } else if (this.ifHovered) {
+    } else {
+      if (this.ifFriend) {
+        this.checkHover();
+      } else {
+        this.checkHide();
+      }
       this.coreX = map(sin(frameCount * 0.01), -1, 1, -60, 60);
       this.coreY = map(cos(frameCount * 0.01), -1, 1, -10, 0);
       this.seedX =
@@ -107,9 +118,6 @@ class Seed {
       this.seedY =
         cos((PI / 2) * (this.layerNum + 1) + this.seedPos) *
         (40 + this.layerNum * 20);
-    } else {
-      this.coreX += this.xSpd;
-      this.y1 += this.ySpd;
     }
   }
 
@@ -119,17 +127,6 @@ class Seed {
     this.drawSeedStem();
     this.drawSeed();
     pop();
-  }
-
-  hovered() {}
-
-  clicked() {}
-
-  fly() {
-    if (this.ifFly == true) {
-      this.xSpd += random(-0.01, 0.01) + random(0, this.dirx);
-      this.ySpd += random(-0.01, 0.01) - random(0, this.diry);
-    }
   }
 
   drawSeed() {
@@ -194,6 +191,33 @@ class Seed {
           colorRange[this.colorIndex][1][2]
         )
       );
+    }
+  }
+
+  checkHide() {
+    this.dmouse = dist(
+      this.x + this.seedX,
+      this.y + this.seedY,
+      mouseX,
+      mouseY
+    );
+    if (this.dmouse <= 20) {
+      this.hide();
+    }
+  }
+  hide() {
+    this.seedY += map(this.dmouse, 0, 20, 10, 0);
+    this.seedX += map(this.dmouse, 0, 20, 10, 0);
+  }
+
+  checkHover() {}
+
+  checkClick() {}
+
+  fly() {
+    if (this.ifFly == true) {
+      this.xSpd += random(-0.01, 0.01) + random(0, this.dirx);
+      this.ySpd += random(-0.01, 0.01) - random(0, this.diry);
     }
   }
 }
@@ -263,24 +287,6 @@ class Core {
   }
 }
 
-// push();
-// translate(transX, transY);
-// stroke(rV, gV, bV);
-// strokeWeight(5);
-// push();
-// translate(0, 300);
-// let x1 = map(sin(frameCount * 0.01), -1, 1, -60, 60);
-// let y1 = map(cos(frameCount * 0.01), -1, 1, -10, 0);
-// pop();
-// push();
-// noFill();
-// bezier(x1, y1, 0, 150, 0, 500, 0, 500);
-// pop();
-// for (let r = 0; r < layerNum; r++) {
-//   for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
-//     let fly = false;
-//     let x = x1 + sin((PI / 2) * (r + 1) + i) * (40 + r * 20);
-//     let y = y1 + cos((PI / 2) * (r + 1) + i) * (40 + r * 20);
 //     let distFromCentX = transX - width / 2;
 //     let distFromCentY = transY - height / 2;
 //     let dmouse = dist(
@@ -294,19 +300,7 @@ class Core {
 //     //   x += map(dmouse, 0, 20, 10, 0);
 //     // }
 
-//     let fluctation = sin((PI / 2) * (r + 1) + i);
-//     assignColor(ci, fluctation);
-//     noStroke();
-//     circle(x, y, map(sin(i + frameCount * 0.05), -1, 1, 3, 6 + r * 3.5));
-//   }
-// }
-// let fluctation2 = sin(PI / 2 + frameCount * 0.01);
-// assignColor(ci, fluctation2);
-// // fill(map(sin(PI / 2 + frameCount * 0.01), -1, 1, 10, 230), 215, 80);
-// circle(x1, y1, map(layerNum, 1, 8, 16, 38));
-// pop();
-
-//http://127.0.0.1:5501/
+//http://127.0.0.1:5501/B611/final-Dande-OOP/
 function keyPressed() {
   if (keyCode == 38) {
     //ArrowUp
