@@ -241,7 +241,23 @@ class Seed {
   }
 
   writeText() {
-    this.ifData = true;
+    let textAreaContainer = document.getElementById("textAreaContainer");
+    let textArea = document.createElement("textarea");
+    textArea.id = "textInputArea";
+    textArea.placeholder = "Enter your text here";
+    textArea.style.width = "300px";
+    textArea.style.height = "150px";
+    // Create a submit button
+    let submitButton = document.createElement("button");
+    submitButton.textContent = "Submit";
+    submitButton.addEventListener("click", function () {
+      let userInput = textArea.value;
+      alert("User input: " + userInput);
+      this.ifData = true;
+    });
+    textAreaContainer.innerHTML = "";
+    textAreaContainer.appendChild(textArea);
+    textAreaContainer.appendChild(submitButton);
   }
 
   readText() {}
