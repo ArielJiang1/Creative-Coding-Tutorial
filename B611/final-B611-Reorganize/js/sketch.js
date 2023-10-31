@@ -6,8 +6,8 @@ let colorStem = [
 
 let colorRange = [
   [
-    [56, 142, 60],
-    [255, 245, 157],
+    [91, 179, 24],
+    [244, 206, 10],
   ],
   [
     [255, 234, 221],
@@ -26,24 +26,25 @@ let cores = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  prince = new Prince(width / 2 + 250, height / 2 + 120);
+
+  prince = new Prince(width / 2 + 150, height / 2 + 120);
   layerNum = floor(random(2, 6));
   for (let r = layerNum; r > 0; r--) {
     for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
       seeds.push(
         new Seed(
-          width / 2,
+          width / 2 - 100,
           height / 2,
           r,
           i,
           random(0, 0.003),
           random(0.001, 0.002),
-          1
+          0
         )
       );
     }
   }
-  cores.push(new Core(width / 2, height / 2, layerNum, 1));
+  cores.push(new Core(width / 2 - 100, height / 2, layerNum, 0));
 }
 
 function draw() {
@@ -51,9 +52,9 @@ function draw() {
   drawStem(
     map(sin(frameCount * 0.01), -1, 1, -60, 60),
     map(cos(frameCount * 0.01), -1, 1, -10, 0),
-    width / 2,
+    width / 2 - 100,
     height / 2,
-    1
+    0
   );
   if (keyIsPressed) {
     if (keyCode == 39 || keyCode == 37) {
@@ -81,13 +82,13 @@ function draw() {
       for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
         seeds.push(
           new Seed(
-            width / 2,
+            width / 2 - 100,
             height / 2,
             r,
             i,
             random(0, 0.003),
             random(0.001, 0.002),
-            1
+            0
           )
         );
       }

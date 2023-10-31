@@ -255,15 +255,15 @@ class Seed {
       if (this.ifData) {
         //if it contains data, then all the seeds of the dandelion contain data
         this.ifFly = true;
+        if (
+          this.x + this.seedX + this.lastCoreX > windowWidth + 50 ||
+          this.x + this.seedX + this.lastCoreX < -50 ||
+          this.y + this.seedY + this.lastCoreY > windowHeight + 50 ||
+          this.y + this.seedY + this.lastCoreY < -50
+        ) {
+          this.flyDone = true;
+        }
       }
-    }
-    if (
-      this.x + this.seedX + this.lastCoreX > windowWidth ||
-      this.x + this.seedX + this.lastCoreX < 0 ||
-      this.y + this.seedY + this.lastCoreY > windowHeight ||
-      this.y + this.seedY + this.lastCoreY < 0
-    ) {
-      this.flyDone = true;
     }
   }
 
