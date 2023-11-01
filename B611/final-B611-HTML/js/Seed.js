@@ -28,26 +28,31 @@ class Seed {
     this.hideX = 0;
     this.hideY = 0;
     this.ifFriend = false;
+    this.ifSelf = true;
     this.ifClose = false;
     this.ifHovered = false;
-    this.ifClicked = false;
+    this.ifWrite = false;
+    this.ifRead = false;
     this.ifFly = false;
     this.flyDone = false;
     this.ifData = false;
+    this.data = [];
 
     this.colorIndex = ci;
   }
 
   update() {
+    //get mouse pos
     this.dmouse = dist(
       this.x + this.seedX + this.coreX,
       this.y + this.seedY + this.coreY,
       mouseX,
       mouseY
     );
+    //fly
     this.checkFly();
-    this.fly();
     if (this.ifFly) {
+      this.fly();
       this.seedX += this.xSpd;
       this.seedY += this.ySpd;
     } else {
@@ -67,6 +72,8 @@ class Seed {
           (40 + this.layerNum * 20) +
         this.hideY;
     }
+    //write or read
+    this.checkClick();
   }
 
   display() {
@@ -230,37 +237,64 @@ class Seed {
 
   checkClick() {
     if (this.ifClicked) {
-      if (this.dmouse <= 10) {
-        if (this.ifData) {
-          this.readText();
-        } else {
-          this.writeText();
-        }
+      if (this.ifData) {
+        this.readText();
+      } else if (this.ifSelf) {
+        this.writeText();
       }
     }
   }
 
   writeText() {
-    let textAreaContainer = document.getElementById("textAreaContainer");
-    let textArea = document.createElement("textarea");
-    textArea.id = "textInputArea";
-    textArea.placeholder = "Enter your text here";
-    textArea.style.width = "300px";
-    textArea.style.height = "150px";
-    // Create a submit button
-    let submitButton = document.createElement("button");
-    submitButton.textContent = "Submit";
-    submitButton.addEventListener("click", function () {
-      let userInput = textArea.value;
-      alert("User input: " + userInput);
-      this.ifData = true;
-    });
-    textAreaContainer.innerHTML = "";
-    textAreaContainer.appendChild(textArea);
-    textAreaContainer.appendChild(submitButton);
+    if (!this.ifWrite) {
+      let textAreaContainer = document.createElement("div");
+      textAreaContainer.id = "textAreaContainer";
+      let textArea = document.createElement("textarea");
+      textArea.id = "textInputArea";
+      textArea.placeholder =
+        "Write about the characteristics you hope to possess";
+      textArea.style.width = "500px";
+      textArea.style.height = "550px";
+      // Create a submit button
+      let submitButton = document.createElement("button");
+      submitButton.textContent = "Submit";
+      submitButton.addEventListener(
+        "click",
+        function () {
+          let userInput = textArea.value;
+
+          this.data.push(userInput);
+          alert("Your texts: " + userInput);
+          console.log(this.data, this.ifData);
+          this.ifData = true;
+          this.ifClicked = false;
+          this.ifWrite = false;
+          document.getElementById("textAreaContainer").remove();
+        }.bind(this)
+      );
+      textAreaContainer.innerHTML = "";
+      document.body.appendChild(textAreaContainer);
+      textAreaContainer.appendChild(textArea);
+      textAreaContainer.appendChild(submitButton);
+      this.ifWrite = true;
+    }
   }
 
-  readText() {}
+  readText() {
+    if (!this.ifRead) {
+      let textAreaContainer = document.createElement("div");
+      textAreaContainer.id = "textAreaContainer";
+      let newContent = document.createTextNode(this.data);
+      textAreaContainer.appendChild(newContent);
+      let submitButton = document.createElement("button");
+      submitButton.textContent = "Back";
+      submitButton.addEventListener("click", function () {
+        this.ifClicked = false;
+        this.ifRead = false;
+      });
+      this.ifRead = true;
+    }
+  }
 
   checkFly() {
     if (
@@ -284,16 +318,8 @@ class Seed {
   }
 
   fly() {
-    if (this.ifFly) {
-      this.xSpd += random(-0.01, 0.01) + random(0, this.dirx);
-      this.ySpd += random(-0.01, 0.01) - random(0, this.diry);
-      this.flyAngle = map(
-        noise(sin(frameCount * 0.01)),
-        0,
-        1,
-        -PI / 30,
-        PI / 30
-      );
-    }
+    this.xSpd += random(-0.01, 0.01) + random(0, this.dirx);
+    this.ySpd += random(-0.01, 0.01) - random(0, this.diry);
+    this.flyAngle = map(noise(sin(frameCount * 0.01)), 0, 1, -PI / 30, PI / 30);
   }
 }

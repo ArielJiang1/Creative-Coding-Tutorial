@@ -176,11 +176,15 @@ function keyPressed() {
   }
 }
 
-// function mousePressed() {
-//   for (let i = 0; i < seeds.length; i++) {
-//     seeds[i].ifClicked = true;
-//   }
-//   for (let i = 0; i < cores.length; i++) {
-//     cores[i].ifClicked = true;
-//   }
-// }
+function mousePressed() {
+  for (let i = 0; i < seeds.length; i++) {
+    if (seeds[i].ifHovered && !seeds[i].ifWrite) {
+      seeds[i].ifClicked = true;
+    }
+  }
+  for (let i = 0; i < cores.length; i++) {
+    if (cores[i].ifHovered && !cores[i].ifWrite) {
+      cores[i].ifClicked = true;
+    }
+  }
+}
