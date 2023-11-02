@@ -27,16 +27,19 @@ class Seed {
     );
     this.hideX = 0;
     this.hideY = 0;
+
     this.ifFriend = false;
     this.ifSelf = true;
-    this.ifClose = false;
+
     this.ifHovered = false;
-    this.ifWrite = false;
-    this.ifRead = false;
+    this.isWriting = false;
+    this.isReading = false;
+    this.data = [];
+
     this.ifFly = false;
     this.flyDone = false;
-    this.ifData = false;
-    this.data = [];
+
+    
 
     this.colorIndex = ci;
   }
@@ -106,7 +109,7 @@ class Seed {
       push();
       this.assignColor(fluct1);
       noStroke();
-      if (this.ifData) {
+      if (this.data.length != 0) {
         push();
         fill(255, 255, 255, 60);
         circle(
@@ -237,7 +240,7 @@ class Seed {
 
   checkClick() {
     if (this.ifClicked) {
-      if (this.ifData) {
+      if (this.data.length != 0) {
         this.readText();
       } else if (this.ifSelf) {
         this.writeText();
@@ -246,7 +249,7 @@ class Seed {
   }
 
   writeText() {
-    if (!this.ifWrite) {
+    if (!this.isWriting) {
       let textAreaContainer = document.createElement("div");
       textAreaContainer.id = "textAreaContainer";
       let textArea = document.createElement("textarea");
@@ -265,10 +268,8 @@ class Seed {
 
           this.data.push(userInput);
           alert("Your texts: " + userInput);
-          console.log(this.data, this.ifData);
-          this.ifData = true;
           this.ifClicked = false;
-          this.ifWrite = false;
+          this.isWriting = false;
           document.getElementById("textAreaContainer").remove();
         }.bind(this)
       );
@@ -276,12 +277,12 @@ class Seed {
       document.body.appendChild(textAreaContainer);
       textAreaContainer.appendChild(textArea);
       textAreaContainer.appendChild(submitButton);
-      this.ifWrite = true;
+      this.isWriting = true;
     }
   }
 
   readText() {
-    if (!this.ifRead) {
+    if (!this.isReading) {
       let textAreaContainer = document.createElement("div");
       textAreaContainer.id = "textAreaContainer";
       let newContent = document.createTextNode(this.data);
@@ -290,9 +291,9 @@ class Seed {
       submitButton.textContent = "Back";
       submitButton.addEventListener("click", function () {
         this.ifClicked = false;
-        this.ifRead = false;
+        this.isReading = false;
       });
-      this.ifRead = true;
+      this.isReading = true;
     }
   }
 
@@ -302,7 +303,7 @@ class Seed {
       this.seedPos + (2 * PI) / (11 + this.layerNum * 3) >= 2 * PI
     ) {
       //check the last seed of the 5th layer of dandelion
-      if (this.ifData) {
+      if (this.data.length != 0) {
         //if it contains data, then all the seeds of the dandelion contain data
         this.ifFly = true;
         if (

@@ -149,26 +149,26 @@ function keyPressed() {
       cores[i].ifFriend = true;
     }
   }
-  if (keyCode == 68) {
-    //d
-    for (let i = 0; i < seeds.length; i++) {
-      seeds[i].ifData = true;
-    }
-    for (let i = 0; i < cores.length; i++) {
-      cores[i].ifData = true;
-    }
-  }
+  // if (keyCode == 68) {
+  //   //d
+  //   for (let i = 0; i < seeds.length; i++) {
+  //     seeds[i].ifData = true;
+  //   }
+  //   for (let i = 0; i < cores.length; i++) {
+  //     cores[i].ifData = true;
+  //   }
+  // }
   if (keyCode == 66) {
     //b
     for (let i = 0; i < seeds.length; i++) {
       seeds[i].ifFriend = false;
       seeds[i].ifHovered = false;
-      seeds[i].ifData = false;
+      // seeds[i].ifData = false;
     }
     for (let i = 0; i < cores.length; i++) {
       cores[i].ifFriend = false;
       cores[i].ifHovered = false;
-      cores[i].ifData = false;
+      // cores[i].ifData = false;
     }
   }
   if (key === "s") {
@@ -178,12 +178,12 @@ function keyPressed() {
 
 function mousePressed() {
   for (let i = 0; i < seeds.length; i++) {
-    if (seeds[i].ifHovered && !seeds[i].ifWrite) {
+    if (seeds[i].ifHovered && !seeds[i].isWriting) {
       seeds[i].ifClicked = true;
     }
   }
   for (let i = 0; i < cores.length; i++) {
-    if (cores[i].ifHovered && !cores[i].ifWrite) {
+    if (cores[i].ifHovered && !cores[i].isWriting) {
       cores[i].ifClicked = true;
     }
   }
