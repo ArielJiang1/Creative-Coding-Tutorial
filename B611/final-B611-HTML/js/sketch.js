@@ -19,18 +19,22 @@ let colorRange = [
   ],
 ];
 let canvas;
-let layerNum = 5;
+let currentLayer = 1;
+let maxLayerNum = 1;
+
 let prince;
 let seeds = [];
 let cores = [];
+
+let dataNum = 0;
+
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);
   canvas.style("z-index", "-1");
   prince = new Prince(width / 2 + 150, height / 2 + 120);
-  layerNum = floor(random(2, 6));
-  for (let r = layerNum; r > 0; r--) {
+  for (let r = currentLayer; r > 0; r--) {
     for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
       seeds.push(
         new Seed(
@@ -45,7 +49,7 @@ function setup() {
       );
     }
   }
-  cores.push(new Core(width / 2 - 100, height / 2, layerNum, 0));
+  cores.push(new Core(width / 2 - 100, height / 2, currentLayer, 0));
 }
 
 function draw() {
@@ -78,24 +82,50 @@ function draw() {
   prince.display();
   
   if (seeds.length == 0) {
-    
-    layerNum = 1;
-    for (let r = layerNum; r > 0; r--) {
-      for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
-        seeds.push(
-          new Seed(
-            width / 2 - 100,
-            height / 2,
-            r,
-            i,
-            random(0, 0.003),
-            random(0.001, 0.002),
-            0
-          )
-        );
+    currentLayer = 1;
+    dataNum = 0;
+    for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + currentLayer * 3)) {
+      seeds.push(
+        new Seed(
+          width / 2 - 100,
+          height / 2,
+          currentLayer,
+          i,
+          random(0, 0.003),
+          random(0.001, 0.002),
+          0
+        )
+      );
+    }
+  } else {
+    for(let i = 0; i < seeds.length; i ++){
+      dataNum += seeds[i].data.length;
+    }
+  
+    if(dataNum == seeds.length){
+      if(currentLayer == maxLayerNum){
+        for (let i = 0; i < seeds.length; i++) {
+          seeds[i].ifFly = true;
+        }
+        
+      } else{
+        currentLayer ++;
+        for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + currentLayer * 3)) {
+          seeds.push(
+            new Seed(
+              width / 2 - 100,
+              height / 2,
+              currentLayer,
+              i,
+              random(0, 0.003),
+              random(0.001, 0.002),
+              0
+            )
+          );
+        }
       }
     }
-    console.log(seeds.length);
+    dataNum= 0;
   }
   for (let i = 0; i < seeds.length; i++) {
     seeds[i].update();
@@ -108,7 +138,6 @@ function draw() {
     }
     if (seeds[i].flyDone) {
       seeds.splice(i, 1);
-      console.log(seeds.length);
     }
   }
   for (let i = 0; i < cores.length; i++) {
@@ -141,9 +170,7 @@ function keyPressed() {
   }
   if (keyCode == 75) {
     //k
-    for (let i = 0; i < seeds.length; i++) {
-      seeds[i].ifFly = true;
-    }
+   
   }
   if (keyCode == 70) {
     //f

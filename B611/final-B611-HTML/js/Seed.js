@@ -344,16 +344,6 @@ class Seed {
 
   checkFly() {
     if (
-      this.layerNum == 5 &&
-      this.seedPos + (2 * PI) / (11 + this.layerNum * 3) >= 2 * PI
-    ) {
-      //check the last seed of the 5th layer of dandelion
-      if (this.data.length != 0) {
-        //if it contains data, then all the seeds of the dandelion contain data
-        this.ifFly = true;
-      }
-    }
-    if (
       this.x + this.seedX + this.lastCoreX > windowWidth + 50 ||
       this.x + this.seedX + this.lastCoreX < -50 ||
       this.y + this.seedY + this.lastCoreY > windowHeight + 50 ||
