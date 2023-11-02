@@ -8,6 +8,8 @@ class Seed {
     this.seedY = 0;
     this.lastCoreX = 0;
     this.lastCoreY = 0;
+    this.lastSeedX = 0;
+    this.lastSeedY = 0;
 
     this.layerNum = layer;
     this.seedPos = sdPos;
@@ -27,19 +29,18 @@ class Seed {
     );
     this.hideX = 0;
     this.hideY = 0;
-
+    
     this.ifFriend = false;
     this.ifSelf = true;
 
-    this.ifHovered = false;
+    this.isHovering = false;
+    this.ifClicked = false;
     this.isWriting = false;
     this.isReading = false;
     this.data = [];
 
     this.ifFly = false;
     this.flyDone = false;
-
-    
 
     this.colorIndex = ci;
   }
@@ -59,7 +60,7 @@ class Seed {
       this.seedX += this.xSpd;
       this.seedY += this.ySpd;
     } else {
-      if (this.ifFriend) {
+      if (this.ifFriend || this.ifSelf) {
         this.checkHover();
       } else {
         this.checkHide();
@@ -95,7 +96,7 @@ class Seed {
       translate(this.coreX + this.seedX, this.coreY + this.seedY);
     }
     let fluct1 = sin((PI / 2) * (this.layerNum + 1) + this.seedPos);
-    if (this.ifHovered) {
+    if (this.isHovering) {
       push();
       noStroke();
       for (let i = 0; i < 100; i++) {
@@ -165,10 +166,10 @@ class Seed {
         0,
         0,
         0,
-        this.lastCoreX,
-        this.lastCoreY,
-        this.seedX + this.lastCoreX,
-        this.seedY + this.lastCoreY
+        dist(this.lastCoreX,
+          this.lastCoreY,
+          this.lastSeedX + this.lastCoreX,
+          this.lastSeedY + this.lastCoreY)
       );
     } else {
       line(
@@ -230,16 +231,17 @@ class Seed {
     if (this.dmouse <= 10) {
       this.hover();
     } else {
-      this.ifHovered = false;
+      this.isHovering = false;
     }
   }
 
   hover() {
-    this.ifHovered = true;
+    this.isHovering = true;
   }
 
   checkClick() {
     if (this.ifClicked) {
+      
       if (this.data.length != 0) {
         this.readText();
       } else if (this.ifSelf) {
@@ -250,6 +252,7 @@ class Seed {
 
   writeText() {
     if (!this.isWriting) {
+     
       let textAreaContainer = document.createElement("div");
       textAreaContainer.id = "textAreaContainer";
       let textArea = document.createElement("textarea");
@@ -268,8 +271,9 @@ class Seed {
 
           this.data.push(userInput);
           alert("Your texts: " + userInput);
-          this.ifClicked = false;
+          
           this.isWriting = false;
+          this.ifClicked = false;
           document.getElementById("textAreaContainer").remove();
         }.bind(this)
       );
@@ -277,6 +281,7 @@ class Seed {
       document.body.appendChild(textAreaContainer);
       textAreaContainer.appendChild(textArea);
       textAreaContainer.appendChild(submitButton);
+      
       this.isWriting = true;
     }
   }
@@ -290,10 +295,11 @@ class Seed {
       let submitButton = document.createElement("button");
       submitButton.textContent = "Back";
       submitButton.addEventListener("click", function () {
-        this.ifClicked = false;
         this.isReading = false;
+        this.ifClicked = false;
       });
       this.isReading = true;
+      
     }
   }
 
@@ -306,15 +312,17 @@ class Seed {
       if (this.data.length != 0) {
         //if it contains data, then all the seeds of the dandelion contain data
         this.ifFly = true;
-        if (
-          this.x + this.seedX + this.lastCoreX > windowWidth + 50 ||
-          this.x + this.seedX + this.lastCoreX < -50 ||
-          this.y + this.seedY + this.lastCoreY > windowHeight + 50 ||
-          this.y + this.seedY + this.lastCoreY < -50
-        ) {
-          this.flyDone = true;
-        }
       }
+    }
+    if (
+      this.x + this.seedX + this.lastCoreX > windowWidth + 50 ||
+      this.x + this.seedX + this.lastCoreX < -50 ||
+      this.y + this.seedY + this.lastCoreY > windowHeight + 50 ||
+      this.y + this.seedY + this.lastCoreY < -50
+    ) {
+      if(this.ifFly){
+        this.flyDone = true;
+      } 
     }
   }
 

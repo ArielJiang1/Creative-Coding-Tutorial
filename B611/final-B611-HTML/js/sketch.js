@@ -76,8 +76,9 @@ function draw() {
 
   prince.update();
   prince.display();
-
+  
   if (seeds.length == 0) {
+    
     layerNum = 1;
     for (let r = layerNum; r > 0; r--) {
       for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
@@ -94,6 +95,7 @@ function draw() {
         );
       }
     }
+    console.log(seeds.length);
   }
   for (let i = 0; i < seeds.length; i++) {
     seeds[i].update();
@@ -101,9 +103,12 @@ function draw() {
     if (!seeds[i].ifFly) {
       seeds[i].lastCoreX = seeds[i].coreX;
       seeds[i].lastCoreY = seeds[i].coreY;
+      seeds[i].lastSeedX = seeds[i].seedX;
+      seeds[i].lastSeedY = seeds[i].seedY;
     }
     if (seeds[i].flyDone) {
       seeds.splice(i, 1);
+      console.log(seeds.length);
     }
   }
   for (let i = 0; i < cores.length; i++) {
@@ -149,26 +154,16 @@ function keyPressed() {
       cores[i].ifFriend = true;
     }
   }
-  // if (keyCode == 68) {
-  //   //d
-  //   for (let i = 0; i < seeds.length; i++) {
-  //     seeds[i].ifData = true;
-  //   }
-  //   for (let i = 0; i < cores.length; i++) {
-  //     cores[i].ifData = true;
-  //   }
-  // }
+  
   if (keyCode == 66) {
     //b
     for (let i = 0; i < seeds.length; i++) {
       seeds[i].ifFriend = false;
-      seeds[i].ifHovered = false;
-      // seeds[i].ifData = false;
+      seeds[i].isHovering = false;
     }
     for (let i = 0; i < cores.length; i++) {
       cores[i].ifFriend = false;
-      cores[i].ifHovered = false;
-      // cores[i].ifData = false;
+      cores[i].isHovering = false;
     }
   }
   if (key === "s") {
@@ -178,12 +173,12 @@ function keyPressed() {
 
 function mousePressed() {
   for (let i = 0; i < seeds.length; i++) {
-    if (seeds[i].ifHovered && !seeds[i].isWriting) {
+    if (seeds[i].isHovering && !seeds[i].isWriting) {
       seeds[i].ifClicked = true;
     }
   }
   for (let i = 0; i < cores.length; i++) {
-    if (cores[i].ifHovered && !cores[i].isWriting) {
+    if (cores[i].isHovering && !cores[i].isWriting) {
       cores[i].ifClicked = true;
     }
   }
