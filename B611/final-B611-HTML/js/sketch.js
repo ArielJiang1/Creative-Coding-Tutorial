@@ -27,6 +27,7 @@ let seeds = [];
 let cores = [];
 
 let dataNum = 0;
+let stopHover = false;
 
 
 function setup() {
@@ -100,6 +101,7 @@ function draw() {
   } else {
     for(let i = 0; i < seeds.length; i ++){
       dataNum += seeds[i].data.length;
+      stopHover = seeds[i].isWriting || seeds[i].isReading;
     }
   
     if(dataNum == seeds.length){
@@ -128,7 +130,7 @@ function draw() {
     dataNum= 0;
   }
   for (let i = 0; i < seeds.length; i++) {
-    seeds[i].update();
+    seeds[i].update(stopHover);
     seeds[i].display();
     if (!seeds[i].ifFly) {
       seeds[i].lastCoreX = seeds[i].coreX;
@@ -168,10 +170,12 @@ function keyPressed() {
   if (keyCode == 40) {
     //ArrowDown
   }
-  if (keyCode == 75) {
-    //k
-   
-  }
+  // if (keyCode == 75) {
+  //   //k
+  //   for (let i = 0; i < seeds.length; i++) {
+  //     seeds[i].ifFly = true;
+  //   }
+  // }
   if (keyCode == 70) {
     //f
     for (let i = 0; i < seeds.length; i++) {
@@ -193,9 +197,9 @@ function keyPressed() {
       cores[i].isHovering = false;
     }
   }
-  if (key === "s") {
-    saveGif("prince-1.1", 3);
-  }
+  // if (key === "s") {
+    // saveGif("prince-1.1", 3);
+  // }
 }
 
 function mousePressed() {

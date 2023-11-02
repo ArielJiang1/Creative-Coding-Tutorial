@@ -10,11 +10,11 @@ h1{
   text-align: center;
 }
 
-#textAreaContainer{
+#writeAreaContainer{
   text-align: center;
   /* width: 600;
   height: 550px; */
-  margin-top: 10%;
+  margin-top: 2%;
   padding: 20px;
   /* border: 1px solid #cccccc66;
   background-color: #f0f0f08a; */
@@ -35,5 +35,12 @@ h1{
 }
 
 #textInputArea{
-  color:black;
+  padding: 5%;
+  background-color: #cccccc66;
+  border:white;
+  border-radius: 20px;
+  outline: none;
+  color:white;
+  font-size: 18px;
+  font-family: 'IM Fell DW Pica', serif;
 }

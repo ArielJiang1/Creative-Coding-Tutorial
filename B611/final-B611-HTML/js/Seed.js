@@ -47,7 +47,7 @@ class Seed {
     this.colorIndex = ci;
   }
 
-  update() {
+  update(stopHover) {
     //get mouse pos
     this.dmouse = dist(
       this.x + this.seedX + this.coreX,
@@ -63,7 +63,7 @@ class Seed {
       this.seedY += this.ySpd;
     } else {
       if (this.ifFriend || this.ifSelf) {
-        this.checkHover();
+        this.checkHover(stopHover);
       } else {
         this.checkHide();
       }
@@ -229,16 +229,12 @@ class Seed {
     this.hideY = map(this.dmouse, 0, 20, 10, 0);
   }
 
-  checkHover() {
-    if (this.dmouse <= 10 && !this.isWriting && !this.isReading) {
-      this.hover();
+  checkHover(stopHover) {
+    if (this.dmouse <= 10 && !stopHover) {
+      this.isHovering = true;
     } else {
       this.isHovering = false;
     }
-  }
-
-  hover() {
-    this.isHovering = true;
   }
 
   checkClick() {
@@ -255,8 +251,8 @@ class Seed {
 
   writeText() {
     if (!this.isWriting) {
-      let textAreaContainer = document.createElement("div");
-      textAreaContainer.id = "textAreaContainer";
+      let writeAreaContainer = document.createElement("div");
+      writeAreaContainer.id = "writeAreaContainer";
       let textArea = document.createElement("textarea");
       textArea.id = "textInputArea";
       textArea.placeholder =
@@ -275,7 +271,7 @@ class Seed {
           this.isWriting = false;
           this.ifClicked = false;
 
-          let divToRemove = document.getElementById("textAreaContainer");
+          let divToRemove = document.getElementById("writeAreaContainer");
           if (divToRemove) {
             
             this.removedWriteDiv = divToRemove;
@@ -291,10 +287,10 @@ class Seed {
         document.body.appendChild(this.removedWriteDiv);
         this.removedWriteDiv = null;
       }else{
-        textAreaContainer.innerHTML = "";
-        textAreaContainer.appendChild(textArea);
-        textAreaContainer.appendChild(submitButton);
-        document.body.appendChild(textAreaContainer);
+        writeAreaContainer.innerHTML = "";
+        writeAreaContainer.appendChild(textArea);
+        writeAreaContainer.appendChild(submitButton);
+        document.body.appendChild(writeAreaContainer);
       }
       
       
