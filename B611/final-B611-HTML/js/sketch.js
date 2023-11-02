@@ -20,7 +20,7 @@ let colorRange = [
 ];
 let canvas;
 let currentLayer = 1;
-let maxLayerNum = 1;
+let maxLayerNum = 2;
 
 let prince;
 let seeds = [];
