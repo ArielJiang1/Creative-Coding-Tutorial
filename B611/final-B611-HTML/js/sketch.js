@@ -178,7 +178,7 @@ function mousePressed() {
     }
   }
   for (let i = 0; i < cores.length; i++) {
-    if (cores[i].isHovering && !cores[i].isWriting) {
+    if (cores[i].isHovering && !cores[i].isReading) {
       cores[i].ifClicked = true;
     }
   }

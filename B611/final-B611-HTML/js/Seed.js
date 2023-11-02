@@ -38,6 +38,8 @@ class Seed {
     this.isWriting = false;
     this.isReading = false;
     this.data = [];
+    this.removedWriteDiv = null;
+    this.removedReadDiv = null;
 
     this.ifFly = false;
     this.flyDone = false;
@@ -228,7 +230,7 @@ class Seed {
   }
 
   checkHover() {
-    if (this.dmouse <= 10) {
+    if (this.dmouse <= 10 && !this.isWriting && !this.isReading) {
       this.hover();
     } else {
       this.isHovering = false;
@@ -241,9 +243,10 @@ class Seed {
 
   checkClick() {
     if (this.ifClicked) {
-      
+    console.log("1");
       if (this.data.length != 0) {
         this.readText();
+        console.log(this.isReading);
       } else if (this.ifSelf) {
         this.writeText();
       }
@@ -252,7 +255,6 @@ class Seed {
 
   writeText() {
     if (!this.isWriting) {
-     
       let textAreaContainer = document.createElement("div");
       textAreaContainer.id = "textAreaContainer";
       let textArea = document.createElement("textarea");
@@ -268,19 +270,33 @@ class Seed {
         "click",
         function () {
           let userInput = textArea.value;
-
           this.data.push(userInput);
-          alert("Your texts: " + userInput);
           
           this.isWriting = false;
           this.ifClicked = false;
-          document.getElementById("textAreaContainer").remove();
+
+          let divToRemove = document.getElementById("textAreaContainer");
+          if (divToRemove) {
+            
+            this.removedWriteDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
         }.bind(this)
       );
-      textAreaContainer.innerHTML = "";
-      document.body.appendChild(textAreaContainer);
-      textAreaContainer.appendChild(textArea);
-      textAreaContainer.appendChild(submitButton);
+      
+      if (this.removedWriteDiv) {
+        this.removedWriteDiv.innerHTML = "";
+        this.removedWriteDiv.appendChild(textArea);
+        this.removedWriteDiv.appendChild(submitButton);
+        document.body.appendChild(this.removedWriteDiv);
+        this.removedWriteDiv = null;
+      }else{
+        textAreaContainer.innerHTML = "";
+        textAreaContainer.appendChild(textArea);
+        textAreaContainer.appendChild(submitButton);
+        document.body.appendChild(textAreaContainer);
+      }
+      
       
       this.isWriting = true;
     }
@@ -288,16 +304,39 @@ class Seed {
 
   readText() {
     if (!this.isReading) {
-      let textAreaContainer = document.createElement("div");
-      textAreaContainer.id = "textAreaContainer";
-      let newContent = document.createTextNode(this.data);
-      textAreaContainer.appendChild(newContent);
-      let submitButton = document.createElement("button");
-      submitButton.textContent = "Back";
-      submitButton.addEventListener("click", function () {
+      console.log(this.removedReadDiv);
+      let readAreaContainer = document.createElement("div");
+      readAreaContainer.id = "readAreaContainer";
+      let userInputContent = document.createTextNode(this.data[0]);
+      userInputContent.id = "userInput";
+      let backButton = document.createElement("button");
+      backButton.textContent = "Back";
+      backButton.addEventListener("click", function () {
         this.isReading = false;
         this.ifClicked = false;
-      });
+        let divToRemove = document.getElementById("readAreaContainer");
+        if (divToRemove) {
+          
+          this.removedReadDiv = divToRemove;
+          divToRemove.parentNode.removeChild(divToRemove);
+        }
+        console.log(this.ifClicked);
+
+      }.bind(this));
+      
+      if (this.removedReadDiv) {
+        this.removedReadDiv.innerHTML = "";
+        this.removedReadDiv.appendChild(userInputContent);
+        this.removedReadDiv.appendChild(backButton);
+        document.body.appendChild(this.removedReadDiv);
+        this.removedReadDiv = null;
+      }else{
+        readAreaContainer.innerHTML = "";
+      document.body.appendChild(readAreaContainer);
+      readAreaContainer.appendChild(userInputContent);
+      readAreaContainer.appendChild(backButton);
+      }
+      
       this.isReading = true;
       
     }
@@ -332,3 +371,6 @@ class Seed {
     this.flyAngle = map(noise(sin(frameCount * 0.01)), 0, 1, -PI / 30, PI / 30);
   }
 }
+
+
+
