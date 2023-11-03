@@ -13,6 +13,7 @@ class Core {
       mouseY
     );
     this.ifFriend = false;
+    this.ifSelf = true;
     this.ifHovered = false;
     this.ifClicked = false;
 
@@ -33,7 +34,7 @@ class Core {
       mouseX,
       mouseY
     );
-    if (this.ifFriend) {
+    if (this.ifFriend || this.ifSelf) {
       this.checkHover();
     }
     this.coreX = map(sin(frameCount * 0.01), -1, 1, -60, 60);
