@@ -243,10 +243,10 @@ class Seed {
     if (this.ifClicked) {
       if (this.data.length != 0) {
         this.readText();
-        console.log(this.isReading);
+        // console.log(this.isReading);
       } else if (this.ifSelf) {
         this.writeText();
-        console.log(this.isWriting);
+        // console.log(this.isWriting);
       }
     }
   }
@@ -257,12 +257,14 @@ class Seed {
       writeAreaContainer.id = "writeAreaContainer";
       let textArea = document.createElement("textarea");
       textArea.id = "textInputArea";
+      let br = document.createElement("br");
       textArea.placeholder =
         "Write about the characteristics you hope to possess";
       textArea.style.width = "500px";
       textArea.style.height = "550px";
       // Create a submit button
       let submitButton = document.createElement("button");
+      submitButton.id = "button-submit";
       submitButton.textContent = "Submit";
       submitButton.addEventListener(
         "click",
@@ -291,6 +293,7 @@ class Seed {
       } else {
         writeAreaContainer.innerHTML = "";
         writeAreaContainer.appendChild(textArea);
+        writeAreaContainer.appendChild(br);
         writeAreaContainer.appendChild(submitButton);
         document.body.appendChild(writeAreaContainer);
       }
@@ -301,13 +304,14 @@ class Seed {
 
   readText() {
     if (!this.isReading) {
-      console.log(this.removedReadDiv);
+      // console.log(this.removedReadDiv);
       let readAreaContainer = document.createElement("div");
       readAreaContainer.id = "readAreaContainer";
       let userInputContent = document.createTextNode(this.data[0]);
       userInputContent.id = "userInput";
       let backButton = document.createElement("button");
       backButton.textContent = "Back";
+      backButton.id = "button-back";
       backButton.addEventListener(
         "click",
         function () {
@@ -318,14 +322,45 @@ class Seed {
             this.removedReadDiv = divToRemove;
             divToRemove.parentNode.removeChild(divToRemove);
           }
-          console.log(this.ifClicked);
         }.bind(this)
       );
-
+      let reviseButton = document.createElement("button");
+      reviseButton.textContent = "Revise";
+      reviseButton.id = "button-revise";
+      reviseButton.addEventListener(
+        "click",
+        function () {
+          this.isReading = false;
+          this.ifClicked = false;
+          let divToRemove = document.getElementById("readAreaContainer");
+          if (divToRemove) {
+            this.removedReadDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
+        }.bind(this)
+      );
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.id = "button-delete";
+      deleteButton.addEventListener(
+        "click",
+        function () {
+          this.isReading = false;
+          this.ifClicked = false;
+          this.data.splice(0, 1);
+          let divToRemove = document.getElementById("readAreaContainer");
+          if (divToRemove) {
+            this.removedReadDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
+        }.bind(this)
+      );
       if (this.removedReadDiv) {
         this.removedReadDiv.innerHTML = "";
         this.removedReadDiv.appendChild(userInputContent);
         this.removedReadDiv.appendChild(backButton);
+        this.removedReadDiv.appendChild(reviseButton);
+        this.removedReadDiv.appendChild(deleteButton);
         document.body.appendChild(this.removedReadDiv);
         this.removedReadDiv = null;
       } else {
@@ -333,6 +368,8 @@ class Seed {
         document.body.appendChild(readAreaContainer);
         readAreaContainer.appendChild(userInputContent);
         readAreaContainer.appendChild(backButton);
+        readAreaContainer.appendChild(reviseButton);
+        readAreaContainer.appendChild(deleteButton);
       }
 
       this.isReading = true;

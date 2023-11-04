@@ -100,12 +100,31 @@ function draw() {
   } else {
     for (let i = 0; i < seeds.length; i++) {
       dataNum += seeds[i].data.length;
+      console.log(seeds[i].isReading);
       if (!stopHover) {
         if (seeds[i].isWriting || seeds[i].isReading) {
           stopHover = true;
+          console.log("stop!");
         }
       } else {
-        console.log(document.getElementById("writeAreaContainer"));
+        // console.log(document.getElementById("writeAreaContainer"));
+        if (
+          document.getElementById("writeAreaContainer") == null &&
+          document.getElementById("readAreaContainer") == null
+        ) {
+          stopHover = false;
+        }
+      }
+    }
+
+    for (let i = 0; i < cores.length; i++) {
+      // console.log(cores[i].isWriting);
+      if (!stopHover) {
+        if (cores[i].isWriting || cores[i].isReading) {
+          stopHover = true;
+        }
+      } else {
+        // console.log(document.getElementById("writeAreaContainer"));
         if (document.getElementById("writeAreaContainer") == null) {
           stopHover = false;
         }

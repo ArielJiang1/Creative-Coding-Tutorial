@@ -14,9 +14,13 @@ class Core {
     );
     this.ifFriend = false;
     this.ifSelf = true;
-    this.ifHovered = false;
+    this.isHovering = false;
     this.ifClicked = false;
-    this.ifData = false;
+    this.isWriting = false;
+    this.isReading = false;
+    this.data = [];
+    this.removedWriteDiv = null;
+    this.removedReadDiv = null;
 
     this.colorIndex = ci;
   }
@@ -28,7 +32,7 @@ class Core {
     pop();
   }
 
-  update() {
+  update(stopHover) {
     this.dmouse = dist(
       this.x + this.coreX,
       this.y + this.coreY,
@@ -36,15 +40,16 @@ class Core {
       mouseY
     );
     if (this.ifFriend || this.ifSelf) {
-      this.checkHover();
+      this.checkHover(stopHover);
     }
     this.coreX = map(sin(frameCount * 0.01), -1, 1, -60, 60);
     this.coreY = map(cos(frameCount * 0.01), -1, 1, -10, 0);
+    this.checkClick();
   }
   drawCore() {
     push();
     noStroke();
-    if (this.ifHovered) {
+    if (this.isHovering) {
       for (let i = 0; i < 100; i++) {
         fill(250, 30, 20, floor(map(i, 0, 99, 0, 5)));
         circle(
@@ -63,21 +68,17 @@ class Core {
     pop();
   }
 
-  checkHover() {
-    if (this.dmouse <= 20) {
-      this.hover();
+  checkHover(stopHover) {
+    if (this.dmouse <= 10 && !stopHover) {
+      this.isHovering = true;
     } else {
-      this.ifHovered = false;
+      this.isHovering = false;
     }
-  }
-
-  hover() {
-    this.ifHovered = true;
   }
 
   checkClick() {
     if (this.ifClicked) {
-      if (this.ifData) {
+      if (this.data.length != 0) {
         this.readText();
       } else if (this.ifSelf) {
         this.writeText();
@@ -86,11 +87,12 @@ class Core {
   }
 
   writeText() {
-    if (!this.ifWrite) {
-      let textAreaContainer = document.createElement("div");
-      textAreaContainer.id = "textAreaContainer";
+    if (!this.isWriting) {
+      let writeAreaContainer = document.createElement("div");
+      writeAreaContainer.id = "writeAreaContainer";
       let textArea = document.createElement("textarea");
       textArea.id = "textInputArea";
+      // console.log(textArea);
       textArea.placeholder =
         "Write about the characteristics you hope to possess";
       textArea.style.width = "500px";
@@ -98,41 +100,80 @@ class Core {
       // Create a submit button
       let submitButton = document.createElement("button");
       submitButton.textContent = "Submit";
+      submitButton.id = "button-submit";
       submitButton.addEventListener(
         "click",
         function () {
           let userInput = textArea.value;
-
           this.data.push(userInput);
-          alert("Your texts: " + userInput);
-          console.log(this.data, this.ifData);
-          this.ifData = true;
+
+          this.isWriting = false;
+
           this.ifClicked = false;
-          this.ifWrite = false;
-          document.getElementById("textAreaContainer").remove();
+
+          let divToRemove = document.getElementById("writeAreaContainer");
+          if (divToRemove) {
+            this.removedWriteDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
         }.bind(this)
       );
-      textAreaContainer.innerHTML = "";
-      document.body.appendChild(textAreaContainer);
-      textAreaContainer.appendChild(textArea);
-      textAreaContainer.appendChild(submitButton);
-      this.ifWrite = true;
+
+      if (this.removedWriteDiv) {
+        this.removedWriteDiv.innerHTML = "";
+        this.removedWriteDiv.appendChild(textArea);
+        this.removedWriteDiv.appendChild(submitButton);
+        document.body.appendChild(this.removedWriteDiv);
+        this.removedWriteDiv = null;
+      } else {
+        writeAreaContainer.innerHTML = "";
+        writeAreaContainer.appendChild(textArea);
+        writeAreaContainer.appendChild(submitButton);
+        document.body.appendChild(writeAreaContainer);
+      }
+
+      this.isWriting = true;
     }
   }
 
   readText() {
-    if (!this.ifRead) {
-      let textAreaContainer = document.createElement("div");
-      textAreaContainer.id = "textAreaContainer";
-      let newContent = document.createTextNode(this.data);
-      textAreaContainer.appendChild(newContent);
-      let submitButton = document.createElement("button");
-      submitButton.textContent = "Back";
-      submitButton.addEventListener("click", function () {
-        this.ifClicked = false;
-        this.ifRead = false;
-      });
-      this.ifRead = true;
+    if (!this.isReading) {
+      // console.log(this.removedReadDiv);
+      let readAreaContainer = document.createElement("div");
+      readAreaContainer.id = "readAreaContainer";
+      let userInputContent = document.createTextNode(this.data[0]);
+      userInputContent.id = "userInput";
+      let backButton = document.createElement("button");
+      backButton.textContent = "Back";
+      backButton.id = "button-submit";
+      backButton.addEventListener(
+        "click",
+        function () {
+          this.isReading = false;
+          this.ifClicked = false;
+          let divToRemove = document.getElementById("readAreaContainer");
+          if (divToRemove) {
+            this.removedReadDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
+          // console.log(this.ifClicked);
+        }.bind(this)
+      );
+
+      if (this.removedReadDiv) {
+        this.removedReadDiv.innerHTML = "";
+        this.removedReadDiv.appendChild(userInputContent);
+        this.removedReadDiv.appendChild(backButton);
+        document.body.appendChild(this.removedReadDiv);
+        this.removedReadDiv = null;
+      } else {
+        readAreaContainer.innerHTML = "";
+        document.body.appendChild(readAreaContainer);
+        readAreaContainer.appendChild(userInputContent);
+        document.body.appendChild(backButton);
+      }
+
+      this.isReading = true;
     }
   }
 
