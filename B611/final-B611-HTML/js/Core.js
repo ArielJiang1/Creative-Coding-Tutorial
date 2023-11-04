@@ -16,6 +16,7 @@ class Core {
     this.ifSelf = true;
     this.ifHovered = false;
     this.ifClicked = false;
+    this.ifData = false;
 
     this.colorIndex = ci;
   }
@@ -72,6 +73,67 @@ class Core {
 
   hover() {
     this.ifHovered = true;
+  }
+
+  checkClick() {
+    if (this.ifClicked) {
+      if (this.ifData) {
+        this.readText();
+      } else if (this.ifSelf) {
+        this.writeText();
+      }
+    }
+  }
+
+  writeText() {
+    if (!this.ifWrite) {
+      let textAreaContainer = document.createElement("div");
+      textAreaContainer.id = "textAreaContainer";
+      let textArea = document.createElement("textarea");
+      textArea.id = "textInputArea";
+      textArea.placeholder =
+        "Write about the characteristics you hope to possess";
+      textArea.style.width = "500px";
+      textArea.style.height = "550px";
+      // Create a submit button
+      let submitButton = document.createElement("button");
+      submitButton.textContent = "Submit";
+      submitButton.addEventListener(
+        "click",
+        function () {
+          let userInput = textArea.value;
+
+          this.data.push(userInput);
+          alert("Your texts: " + userInput);
+          console.log(this.data, this.ifData);
+          this.ifData = true;
+          this.ifClicked = false;
+          this.ifWrite = false;
+          document.getElementById("textAreaContainer").remove();
+        }.bind(this)
+      );
+      textAreaContainer.innerHTML = "";
+      document.body.appendChild(textAreaContainer);
+      textAreaContainer.appendChild(textArea);
+      textAreaContainer.appendChild(submitButton);
+      this.ifWrite = true;
+    }
+  }
+
+  readText() {
+    if (!this.ifRead) {
+      let textAreaContainer = document.createElement("div");
+      textAreaContainer.id = "textAreaContainer";
+      let newContent = document.createTextNode(this.data);
+      textAreaContainer.appendChild(newContent);
+      let submitButton = document.createElement("button");
+      submitButton.textContent = "Back";
+      submitButton.addEventListener("click", function () {
+        this.ifClicked = false;
+        this.ifRead = false;
+      });
+      this.ifRead = true;
+    }
   }
 
   assignColor(fluct) {

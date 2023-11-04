@@ -29,7 +29,7 @@ class Seed {
     );
     this.hideX = 0;
     this.hideY = 0;
-    
+
     this.ifFriend = false;
     this.ifSelf = true;
 
@@ -168,10 +168,12 @@ class Seed {
         0,
         0,
         0,
-        dist(this.lastCoreX,
+        dist(
+          this.lastCoreX,
           this.lastCoreY,
           this.lastSeedX + this.lastCoreX,
-          this.lastSeedY + this.lastCoreY)
+          this.lastSeedY + this.lastCoreY
+        )
       );
     } else {
       line(
@@ -239,12 +241,12 @@ class Seed {
 
   checkClick() {
     if (this.ifClicked) {
-    console.log("1");
       if (this.data.length != 0) {
         this.readText();
         console.log(this.isReading);
       } else if (this.ifSelf) {
         this.writeText();
+        console.log(this.isWriting);
       }
     }
   }
@@ -267,33 +269,32 @@ class Seed {
         function () {
           let userInput = textArea.value;
           this.data.push(userInput);
-          
+
           this.isWriting = false;
+
           this.ifClicked = false;
 
           let divToRemove = document.getElementById("writeAreaContainer");
           if (divToRemove) {
-            
             this.removedWriteDiv = divToRemove;
             divToRemove.parentNode.removeChild(divToRemove);
           }
         }.bind(this)
       );
-      
+
       if (this.removedWriteDiv) {
         this.removedWriteDiv.innerHTML = "";
         this.removedWriteDiv.appendChild(textArea);
         this.removedWriteDiv.appendChild(submitButton);
         document.body.appendChild(this.removedWriteDiv);
         this.removedWriteDiv = null;
-      }else{
+      } else {
         writeAreaContainer.innerHTML = "";
         writeAreaContainer.appendChild(textArea);
         writeAreaContainer.appendChild(submitButton);
         document.body.appendChild(writeAreaContainer);
       }
-      
-      
+
       this.isWriting = true;
     }
   }
@@ -307,34 +308,34 @@ class Seed {
       userInputContent.id = "userInput";
       let backButton = document.createElement("button");
       backButton.textContent = "Back";
-      backButton.addEventListener("click", function () {
-        this.isReading = false;
-        this.ifClicked = false;
-        let divToRemove = document.getElementById("readAreaContainer");
-        if (divToRemove) {
-          
-          this.removedReadDiv = divToRemove;
-          divToRemove.parentNode.removeChild(divToRemove);
-        }
-        console.log(this.ifClicked);
+      backButton.addEventListener(
+        "click",
+        function () {
+          this.isReading = false;
+          this.ifClicked = false;
+          let divToRemove = document.getElementById("readAreaContainer");
+          if (divToRemove) {
+            this.removedReadDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
+          console.log(this.ifClicked);
+        }.bind(this)
+      );
 
-      }.bind(this));
-      
       if (this.removedReadDiv) {
         this.removedReadDiv.innerHTML = "";
         this.removedReadDiv.appendChild(userInputContent);
         this.removedReadDiv.appendChild(backButton);
         document.body.appendChild(this.removedReadDiv);
         this.removedReadDiv = null;
-      }else{
+      } else {
         readAreaContainer.innerHTML = "";
-      document.body.appendChild(readAreaContainer);
-      readAreaContainer.appendChild(userInputContent);
-      readAreaContainer.appendChild(backButton);
+        document.body.appendChild(readAreaContainer);
+        readAreaContainer.appendChild(userInputContent);
+        readAreaContainer.appendChild(backButton);
       }
-      
+
       this.isReading = true;
-      
     }
   }
 
@@ -345,9 +346,9 @@ class Seed {
       this.y + this.seedY + this.lastCoreY > windowHeight + 50 ||
       this.y + this.seedY + this.lastCoreY < -50
     ) {
-      if(this.ifFly){
+      if (this.ifFly) {
         this.flyDone = true;
-      } 
+      }
     }
   }
 
@@ -357,6 +358,3 @@ class Seed {
     this.flyAngle = map(noise(sin(frameCount * 0.01)), 0, 1, -PI / 30, PI / 30);
   }
 }
-
-
-

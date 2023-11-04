@@ -24,13 +24,18 @@ h1{
 
 #readAreaContainer{
   text-align: center;
-  width: 600;
+  width: 600px;
   height: 550px;
-  margin-top: 10%;
-  padding: 20px;
-  border: 1px solid #cccccc66;
-  background-color: #f0f0f08a;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  padding: 5%;
+  background-color: #cccccc66;
+  border: white;
   border-radius: 20px;
+  color: white;
+  font-size: 18px;
+  font-family: 'IM Fell DW Pica', serif;
 
 }
 

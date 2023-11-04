@@ -29,7 +29,6 @@ let cores = [];
 let dataNum = 0;
 let stopHover = false;
 
-
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);
@@ -81,7 +80,7 @@ function draw() {
 
   prince.update();
   prince.display();
-  
+
   if (seeds.length == 0) {
     currentLayer = 1;
     dataNum = 0;
@@ -99,19 +98,26 @@ function draw() {
       );
     }
   } else {
-    for(let i = 0; i < seeds.length; i ++){
+    for (let i = 0; i < seeds.length; i++) {
       dataNum += seeds[i].data.length;
-      stopHover = seeds[i].isWriting || seeds[i].isReading;
+      if (!stopHover) {
+        if (seeds[i].isWriting || seeds[i].isReading) {
+          stopHover = true;
+        }
+      } else {
+        console.log(document.getElementById("writeAreaContainer"));
+        if (document.getElementById("writeAreaContainer") == null) {
+          stopHover = false;
+        }
+      }
     }
-  
-    if(dataNum == seeds.length){
-      if(currentLayer == maxLayerNum){
+    if (dataNum == seeds.length) {
+      if (currentLayer == maxLayerNum) {
         for (let i = 0; i < seeds.length; i++) {
           seeds[i].ifFly = true;
         }
-        
-      } else{
-        currentLayer ++;
+      } else {
+        currentLayer++;
         for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + currentLayer * 3)) {
           seeds.push(
             new Seed(
@@ -127,7 +133,7 @@ function draw() {
         }
       }
     }
-    dataNum= 0;
+    dataNum = 0;
   }
   for (let i = 0; i < seeds.length; i++) {
     seeds[i].update(stopHover);
@@ -143,7 +149,7 @@ function draw() {
     }
   }
   for (let i = 0; i < cores.length; i++) {
-    cores[i].update();
+    cores[i].update(stopHover);
     cores[i].display();
   }
 }
@@ -185,7 +191,7 @@ function keyPressed() {
       cores[i].ifFriend = true;
     }
   }
-  
+
   if (keyCode == 66) {
     //b
     for (let i = 0; i < seeds.length; i++) {
@@ -198,7 +204,7 @@ function keyPressed() {
     }
   }
   // if (key === "s") {
-    // saveGif("prince-1.1", 3);
+  // saveGif("prince-1.1", 3);
   // }
 }
 
