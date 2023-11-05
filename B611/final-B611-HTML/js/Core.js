@@ -32,7 +32,7 @@ class Core {
     pop();
   }
 
-  update(stopHover) {
+  update(stopHover, achieveData) {
     this.dmouse = dist(
       this.x + this.coreX,
       this.y + this.coreY,
@@ -44,6 +44,7 @@ class Core {
     }
     this.coreX = map(sin(frameCount * 0.01), -1, 1, -60, 60);
     this.coreY = map(cos(frameCount * 0.01), -1, 1, -10, 0);
+    this.checkAchieve(achieveData);
     this.checkClick();
   }
   drawCore() {
@@ -86,6 +87,14 @@ class Core {
     }
   }
 
+  checkAchieve(achieveData) {
+    if (achieveData) {
+      for (let i = 0; i < achieveData.length; i++) {
+        this.data[0] += achieveData[i];
+      }
+    }
+  }
+
   writeText() {
     if (!this.isWriting) {
       let writeAreaContainer = document.createElement("div");
@@ -93,8 +102,11 @@ class Core {
       let textArea = document.createElement("textarea");
       textArea.id = "textInputArea";
       // console.log(textArea);
-      textArea.placeholder =
-        "Write about the characteristics you hope to possess";
+      if (this.data.length != 0) {
+        textArea.value = this.data[0];
+      } else {
+        textArea.placeholder = "Write about the characteristics you possess";
+      }
       textArea.style.width = "500px";
       textArea.style.height = "550px";
       // Create a submit button
@@ -144,7 +156,7 @@ class Core {
       userInputContent.id = "userInput";
       let backButton = document.createElement("button");
       backButton.textContent = "Back";
-      backButton.id = "button-submit";
+      backButton.id = "button-back";
       backButton.addEventListener(
         "click",
         function () {
@@ -155,7 +167,38 @@ class Core {
             this.removedReadDiv = divToRemove;
             divToRemove.parentNode.removeChild(divToRemove);
           }
-          // console.log(this.ifClicked);
+        }.bind(this)
+      );
+      let reviseButton = document.createElement("button");
+      reviseButton.textContent = "Revise";
+      reviseButton.id = "button-revise";
+      reviseButton.addEventListener(
+        "click",
+        function () {
+          this.isReading = false;
+          this.ifClicked = false;
+          let divToRemove = document.getElementById("readAreaContainer");
+          if (divToRemove) {
+            this.removedReadDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
+          this.writeText();
+        }.bind(this)
+      );
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.id = "button-delete";
+      deleteButton.addEventListener(
+        "click",
+        function () {
+          this.isReading = false;
+          this.ifClicked = false;
+          this.data.splice(0, 1);
+          let divToRemove = document.getElementById("readAreaContainer");
+          if (divToRemove) {
+            this.removedReadDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
         }.bind(this)
       );
 
@@ -163,15 +206,18 @@ class Core {
         this.removedReadDiv.innerHTML = "";
         this.removedReadDiv.appendChild(userInputContent);
         this.removedReadDiv.appendChild(backButton);
+        this.removedReadDiv.appendChild(reviseButton);
+        this.removedReadDiv.appendChild(deleteButton);
         document.body.appendChild(this.removedReadDiv);
         this.removedReadDiv = null;
       } else {
         readAreaContainer.innerHTML = "";
         document.body.appendChild(readAreaContainer);
         readAreaContainer.appendChild(userInputContent);
-        document.body.appendChild(backButton);
+        readAreaContainer.appendChild(backButton);
+        readAreaContainer.appendChild(reviseButton);
+        readAreaContainer.appendChild(deleteButton);
       }
-
       this.isReading = true;
     }
   }

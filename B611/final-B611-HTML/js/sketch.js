@@ -28,6 +28,7 @@ let cores = [];
 
 let dataNum = 0;
 let stopHover = false;
+let achieveData = [];
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -100,7 +101,6 @@ function draw() {
   } else {
     for (let i = 0; i < seeds.length; i++) {
       dataNum += seeds[i].data.length;
-      console.log(seeds[i].isReading);
       if (!stopHover) {
         if (seeds[i].isWriting || seeds[i].isReading) {
           stopHover = true;
@@ -114,6 +114,10 @@ function draw() {
         ) {
           stopHover = false;
         }
+      }
+      if (seeds[i].achievedData.length != 0) {
+        achieveData.push(seeds[i].achievedData[0]);
+        seeds[i].achievedData.splice(0, 1);
       }
     }
 
@@ -168,9 +172,10 @@ function draw() {
     }
   }
   for (let i = 0; i < cores.length; i++) {
-    cores[i].update(stopHover);
+    cores[i].update(stopHover, achieveData);
     cores[i].display();
   }
+  achieveData = [];
 }
 
 function drawStem(x, y, transX, transY, colorIndex) {

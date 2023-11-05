@@ -368,7 +368,7 @@ class Seed {
         function () {
           this.isReading = false;
           this.ifClicked = false;
-          this.achievedData.push(this.data[0]);
+          this.achievedData[0] = "\n" + this.data[0];
           this.data.splice(0, 1);
           let divToRemove = document.getElementById("readAreaContainer");
           if (divToRemove) {
@@ -383,6 +383,7 @@ class Seed {
         this.removedReadDiv.appendChild(backButton);
         this.removedReadDiv.appendChild(reviseButton);
         this.removedReadDiv.appendChild(deleteButton);
+        this.removedReadDiv.appendChild(achieveButton);
         document.body.appendChild(this.removedReadDiv);
         this.removedReadDiv = null;
       } else {
