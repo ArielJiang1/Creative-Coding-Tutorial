@@ -38,6 +38,7 @@ class Seed {
     this.isWriting = false;
     this.isReading = false;
     this.data = [];
+    this.achievedData = [];
     this.removedWriteDiv = null;
     this.removedReadDiv = null;
 
@@ -258,8 +259,12 @@ class Seed {
       let textArea = document.createElement("textarea");
       textArea.id = "textInputArea";
       let br = document.createElement("br");
-      textArea.placeholder =
-        "Write about the characteristics you hope to possess";
+      if (this.data.length != 0) {
+        textArea.value = this.data[0];
+      } else {
+        textArea.placeholder =
+          "Write about the characteristics you hope to possess";
+      }
       textArea.style.width = "500px";
       textArea.style.height = "550px";
       // Create a submit button
@@ -270,10 +275,9 @@ class Seed {
         "click",
         function () {
           let userInput = textArea.value;
-          this.data.push(userInput);
+          this.data[0] = userInput;
 
           this.isWriting = false;
-
           this.ifClicked = false;
 
           let divToRemove = document.getElementById("writeAreaContainer");
@@ -337,6 +341,7 @@ class Seed {
             this.removedReadDiv = divToRemove;
             divToRemove.parentNode.removeChild(divToRemove);
           }
+          this.writeText();
         }.bind(this)
       );
       let deleteButton = document.createElement("button");
@@ -347,6 +352,23 @@ class Seed {
         function () {
           this.isReading = false;
           this.ifClicked = false;
+          this.data.splice(0, 1);
+          let divToRemove = document.getElementById("readAreaContainer");
+          if (divToRemove) {
+            this.removedReadDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
+        }.bind(this)
+      );
+      let achieveButton = document.createElement("button");
+      achieveButton.textContent = "Achieved";
+      achieveButton.id = "button-achieve";
+      achieveButton.addEventListener(
+        "click",
+        function () {
+          this.isReading = false;
+          this.ifClicked = false;
+          this.achievedData.push(this.data[0]);
           this.data.splice(0, 1);
           let divToRemove = document.getElementById("readAreaContainer");
           if (divToRemove) {
@@ -370,8 +392,8 @@ class Seed {
         readAreaContainer.appendChild(backButton);
         readAreaContainer.appendChild(reviseButton);
         readAreaContainer.appendChild(deleteButton);
+        readAreaContainer.appendChild(achieveButton);
       }
-
       this.isReading = true;
     }
   }

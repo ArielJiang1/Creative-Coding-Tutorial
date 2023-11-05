@@ -1,13 +1,19 @@
 # B611
+
 ## F23 Creative Coding Lab Final
 
 - [Final-HTML](https://carrotliu.github.io/Creative-Coding-Tutorial/B611/final-B611-HTML/).
+
 ### MagicDande in OOP
+
 #### Basic OOP Structure
-There are three basic methods inside a class: 
+
+There are three basic methods inside a class:
+
 1. the constructor, which only runs for once (similar to our setup
- function) when a new instance of the class is constructed. In the constructor, we define all the variables that we want to use globally in all the methods. We write this.variableName omit the let when defining in the constructor.
+   function) when a new instance of the class is constructed. In the constructor, we define all the variables that we want to use globally in all the methods. We write this.variableName omit the let when defining in the constructor.
 2. the display ()
+
 ```JavaScript
 class Seed {
     constructor() {
@@ -18,23 +24,29 @@ class Seed {
     }
 }
 ```
+
 ### The Little Prince
+
 #### Luminous
+
 ```JavaScript
 function draw() {
   background(0);
   translate(width / 2, height / 2);
-  
+
   noStroke();
   for(i = 0; i < 100; i++){
     fill(255,13-floor(map(i, 0, 99, 5, 0)));
-    ellipse(0,0, 25+i); 
+    ellipse(0,0, 25+i);
   }
 }
 ```
+
 #### Floating Scarf
-The Little Prince has a long, yellow scarf. 
+
+The Little Prince has a long, yellow scarf.
 It wraps around his neck:
+
 ```JavaScript
 noStroke();
 fill(244,206,10);
@@ -45,7 +57,9 @@ vertex(55, 53);
 bezierVertex(15, 65, -15, 65, -55, 53);
 endShape();
 ```
+
 But it's so long so that it leaves a long tail behind the little Prince:
+
 ```JavaScript
 push();
 noStroke();
@@ -58,7 +72,9 @@ bezierVertex(85, 45, 85, 45, 50, 45);
 endShape();
 pop();
 ```
+
 It's floating in the wind:
+
 ```JavaScript
 beginShape();
 vertex(55, 28);
@@ -67,7 +83,8 @@ vertex(138, 60+ scarfFluctY);
 bezierVertex(85, 45 + scarfFluctY, 85, 45 + scarfFluctY, 50,45);
 endShape();
 ```
-Looks unnatural... The frequency of the fluctuation for each control point/anchor point remains the same. It needs more variation. 
+
+Looks unnatural... The frequency of the fluctuation for each control point/anchor point remains the same. It needs more variation.
 Since the fluctuation is getting more complex, I'll make a function for it.
 
 ```JavaScript
@@ -76,6 +93,7 @@ function floatRate(f, min, max){
   return scarfFluctY;
 }
 ```
+
 ```JavaScript
 beginShape();
 vertex(53, 28);
@@ -84,7 +102,9 @@ vertex(138, 60+ floatRate(0.02, -50, 48));
 bezierVertex(85, 45 + floatRate(0.03, -50, 40), 85, 45 + floatRate(0.04, -50, 40), 50,45);
 endShape();
 ```
+
 cloth
+
 ```JavaScript
 push();
 noStroke();
@@ -109,13 +129,19 @@ endShape();
   endShape();
   pop();
 ```
-Seems good. Now let's think about how to animate the eyes. 
+
+Seems good. Now let's think about how to animate the eyes.
 
 ```JavaScript
+
 ```
+
 ```JavaScript
+
 ```
+
 ```JavaScript
+
 ```
 
 ```JavaScript
@@ -145,7 +171,9 @@ fill(255, 0, 0);
 ```
 
 #### The Little Prince is Winking!
+
 Let's first try to switch the open and close eye using keyPressed:
+
 ```JavaScript
 function draw(){
     if(openEye == 1){
@@ -185,6 +213,7 @@ this.angle = PI / 2 + atan(this.seedY/this.seedX);
 ```
 
 fly
+
 ```JavaScript
 if(this.seedX > 0){
   this.angle = PI / 2 + atan(this.seedY/this.seedX);
@@ -192,22 +221,82 @@ if(this.seedX > 0){
   this.angle = -PI / 2 + atan(this.seedY/this.seedX);
 }
 ```
+
 ### HTML + Javascript?
 
 ### Text Input
 
+```JavaScript
+writeText() {
+    if (!this.isWriting) {
+      let writeAreaContainer = document.createElement("div");
+      writeAreaContainer.id = "writeAreaContainer";
+      let textArea = document.createElement("textarea");
+      textArea.id = "textInputArea";
+      let br = document.createElement("br");
+      if (this.data.length != 0) {
+        textArea.value = this.data[0];
+      } else {
+        textArea.placeholder =
+          "Write about the characteristics you hope to possess";
+      }
+      textArea.style.width = "500px";
+      textArea.style.height = "550px";
+      // Create a submit button
+      let submitButton = document.createElement("button");
+      submitButton.id = "button-submit";
+      submitButton.textContent = "Submit";
+      submitButton.addEventListener(
+        "click",
+        function () {
+          let userInput = textArea.value;
+          this.data.push(userInput);
+
+          this.isWriting = false;
+          this.ifClicked = false;
+
+          let divToRemove = document.getElementById("writeAreaContainer");
+          if (divToRemove) {
+            this.removedWriteDiv = divToRemove;
+            divToRemove.parentNode.removeChild(divToRemove);
+          }
+        }.bind(this)
+      );
+
+      if (this.removedWriteDiv) {
+        this.removedWriteDiv.innerHTML = "";
+        this.removedWriteDiv.appendChild(textArea);
+        this.removedWriteDiv.appendChild(submitButton);
+        document.body.appendChild(this.removedWriteDiv);
+        this.removedWriteDiv = null;
+      } else {
+        writeAreaContainer.innerHTML = "";
+        writeAreaContainer.appendChild(textArea);
+        writeAreaContainer.appendChild(br);
+        writeAreaContainer.appendChild(submitButton);
+        document.body.appendChild(writeAreaContainer);
+      }
+
+      this.isWriting = true;
+    }
+  }
+```
+
 ### BGM & Sound Effect
 
 ### Knowledge Covered:
-(The topics with "**" cover advanced techniques. Think twice if your project really need the techniques before diving into these topics)
+
+(The topics with "\*\*" cover advanced techniques. Think twice if your project really need the techniques before diving into these topics)
+
 - structure: Objected Oriented Programming
 - transform: rotate(); scale()
 - sound: loadSound(); isPlaying(); play(); stop()
-- interaction:  keyboard interaction
+- interaction: keyboard interaction
 - HTML: html element above canvas; accessing html element in p5js
-- ** JSON structure
-- ** database: asynchronous Javascript; firebase register; firebase storage
-- ** web socket
+- \*\* JSON structure
+- \*\* database: asynchronous Javascript; firebase register; firebase storage
+- \*\* web socket
 
 ## Live Site Links
+
 -

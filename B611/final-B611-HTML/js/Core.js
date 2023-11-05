@@ -108,7 +108,6 @@ class Core {
           this.data.push(userInput);
 
           this.isWriting = false;
-
           this.ifClicked = false;
 
           let divToRemove = document.getElementById("writeAreaContainer");

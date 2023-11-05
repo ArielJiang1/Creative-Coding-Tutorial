@@ -76,7 +76,7 @@ h1{
   border: 1px solid rgba(255, 255, 255, 0.85);
 }
 
-#button-back, #button-revise, #button-delete {
+#button-back, #button-revise, #button-delete, #button-achieve {
   display: inline;
   font-family: 'IM Fell DW Pica', serif;
   font-size: 20px;
@@ -84,7 +84,7 @@ h1{
   padding: 15px;
   position: relative;
   top: 580px;
-  margin:20px;
+  margin:10px;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -112,6 +112,12 @@ h1{
 }
 
 #button-delete:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 0px 35px 0 #fff, 15px 15px 30px 0 #1d0dca17;
+  color: #fff;
+}
+
+#button-achieve:hover {
   background: rgba(255, 255, 255, 0.3);
   box-shadow: 0px 0px 35px 0 #fff, 15px 15px 30px 0 #1d0dca17;
   color: #fff;
