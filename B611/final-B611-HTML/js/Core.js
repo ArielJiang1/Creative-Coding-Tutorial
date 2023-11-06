@@ -101,6 +101,7 @@ class Core {
       writeAreaContainer.id = "writeAreaContainer";
       let textArea = document.createElement("textarea");
       textArea.id = "textInputArea";
+      let br = document.createElement("br");
       // console.log(textArea);
       if (this.data.length != 0) {
         textArea.value = this.data[0];
@@ -108,7 +109,7 @@ class Core {
         textArea.placeholder = "Write about the characteristics you possess";
       }
       textArea.style.width = "500px";
-      textArea.style.height = "550px";
+      textArea.style.height = "300px";
       // Create a submit button
       let submitButton = document.createElement("button");
       submitButton.textContent = "Submit";
@@ -117,7 +118,7 @@ class Core {
         "click",
         function () {
           let userInput = textArea.value;
-          this.data.push(userInput);
+          this.data[0] = userInput;
 
           this.isWriting = false;
           this.ifClicked = false;
@@ -133,12 +134,14 @@ class Core {
       if (this.removedWriteDiv) {
         this.removedWriteDiv.innerHTML = "";
         this.removedWriteDiv.appendChild(textArea);
+        this.removedWriteDiv.appendChild(br);
         this.removedWriteDiv.appendChild(submitButton);
         document.body.appendChild(this.removedWriteDiv);
         this.removedWriteDiv = null;
       } else {
         writeAreaContainer.innerHTML = "";
         writeAreaContainer.appendChild(textArea);
+        writeAreaContainer.appendChild(br);
         writeAreaContainer.appendChild(submitButton);
         document.body.appendChild(writeAreaContainer);
       }
@@ -154,6 +157,8 @@ class Core {
       readAreaContainer.id = "readAreaContainer";
       let userInputContent = document.createTextNode(this.data[0]);
       userInputContent.id = "userInput";
+      let buttonContainer = document.createElement("div");
+      buttonContainer.id = "buttonContainer";
       let backButton = document.createElement("button");
       backButton.textContent = "Back";
       backButton.id = "button-back";
@@ -205,18 +210,20 @@ class Core {
       if (this.removedReadDiv) {
         this.removedReadDiv.innerHTML = "";
         this.removedReadDiv.appendChild(userInputContent);
-        this.removedReadDiv.appendChild(backButton);
-        this.removedReadDiv.appendChild(reviseButton);
-        this.removedReadDiv.appendChild(deleteButton);
+        buttonContainer.appendChild(backButton);
+        buttonContainer.appendChild(reviseButton);
+        buttonContainer.appendChild(deleteButton);
+        this.removedReadDiv.appendChild(buttonContainer);
         document.body.appendChild(this.removedReadDiv);
         this.removedReadDiv = null;
       } else {
         readAreaContainer.innerHTML = "";
         document.body.appendChild(readAreaContainer);
         readAreaContainer.appendChild(userInputContent);
-        readAreaContainer.appendChild(backButton);
-        readAreaContainer.appendChild(reviseButton);
-        readAreaContainer.appendChild(deleteButton);
+        buttonContainer.appendChild(backButton);
+        buttonContainer.appendChild(reviseButton);
+        buttonContainer.appendChild(deleteButton);
+        readAreaContainer.appendChild(buttonContainer);
       }
       this.isReading = true;
     }

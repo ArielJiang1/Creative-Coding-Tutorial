@@ -266,7 +266,7 @@ class Seed {
           "Write about the characteristics you hope to possess";
       }
       textArea.style.width = "500px";
-      textArea.style.height = "550px";
+      textArea.style.height = "300px";
       // Create a submit button
       let submitButton = document.createElement("button");
       submitButton.id = "button-submit";
@@ -274,7 +274,8 @@ class Seed {
       submitButton.addEventListener(
         "click",
         function () {
-          let userInput = textArea.value;
+          // console.log("textArea.value", textArea.value)
+          let userInput = textArea.value;//.replace(/\r?\n/g, "\n");
           this.data[0] = userInput;
 
           this.isWriting = false;
@@ -291,6 +292,7 @@ class Seed {
       if (this.removedWriteDiv) {
         this.removedWriteDiv.innerHTML = "";
         this.removedWriteDiv.appendChild(textArea);
+        this.removedWriteDiv.appendChild(br);
         this.removedWriteDiv.appendChild(submitButton);
         document.body.appendChild(this.removedWriteDiv);
         this.removedWriteDiv = null;
@@ -312,7 +314,10 @@ class Seed {
       let readAreaContainer = document.createElement("div");
       readAreaContainer.id = "readAreaContainer";
       let userInputContent = document.createTextNode(this.data[0]);
+      // console.log("userInputContent", userInputContent)
       userInputContent.id = "userInput";
+      let buttonContainer = document.createElement("div");
+      buttonContainer.id = "buttonContainer";
       let backButton = document.createElement("button");
       backButton.textContent = "Back";
       backButton.id = "button-back";
@@ -380,20 +385,22 @@ class Seed {
       if (this.removedReadDiv) {
         this.removedReadDiv.innerHTML = "";
         this.removedReadDiv.appendChild(userInputContent);
-        this.removedReadDiv.appendChild(backButton);
-        this.removedReadDiv.appendChild(reviseButton);
-        this.removedReadDiv.appendChild(deleteButton);
-        this.removedReadDiv.appendChild(achieveButton);
+        buttonContainer.appendChild(backButton);
+        buttonContainer.appendChild(reviseButton);
+        buttonContainer.appendChild(deleteButton);
+        buttonContainer.appendChild(achieveButton);
+        this.removedReadDiv.appendChild(buttonContainer);
         document.body.appendChild(this.removedReadDiv);
         this.removedReadDiv = null;
       } else {
         readAreaContainer.innerHTML = "";
         document.body.appendChild(readAreaContainer);
         readAreaContainer.appendChild(userInputContent);
-        readAreaContainer.appendChild(backButton);
-        readAreaContainer.appendChild(reviseButton);
-        readAreaContainer.appendChild(deleteButton);
-        readAreaContainer.appendChild(achieveButton);
+        buttonContainer.appendChild(backButton);
+        buttonContainer.appendChild(reviseButton);
+        buttonContainer.appendChild(deleteButton);
+        buttonContainer.appendChild(achieveButton);
+        readAreaContainer.appendChild(buttonContainer);
       }
       this.isReading = true;
     }
