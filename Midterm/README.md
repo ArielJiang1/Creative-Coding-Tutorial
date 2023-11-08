@@ -673,10 +673,10 @@ function draw(){
 
 ## Live Site Links
 
-- [Midterm Step1 - pattern](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step1-pattern/).
-- [Midterm Step2 - motion](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step2-motion/).
-- [Midterm Step3 - swaying effect](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step3-swaying-effect/).
-- [Midterm Step4 - interaction](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step4-interaction/).
-- [Midterm Step5 - function](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step5-function/).
-- [Midterm Step6 - gradient-color](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-step6-gradient-color/).
-- [Midterm Complete Demo](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-complete/).
+- [Midterm Step1 - pattern](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-step1-pattern/).
+- [Midterm Step2 - motion](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-step2-motion/).
+- [Midterm Step3 - swaying effect](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-step3-swaying-effect/).
+- [Midterm Step4 - interaction](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-step4-interaction/).
+- [Midterm Step5 - function](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-step5-function/).
+- [Midterm Step6 - gradient-color](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-step6-gradient-color/).
+- [Midterm Complete Demo](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-complete/).
