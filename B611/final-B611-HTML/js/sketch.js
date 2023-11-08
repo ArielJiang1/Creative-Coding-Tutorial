@@ -22,7 +22,6 @@ let canvas;
 let currentLayer = 1;
 let maxLayerNum = 2;
 
-let prince;
 let seeds = [];
 let cores = [];
 
@@ -35,7 +34,7 @@ function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);
   canvas.style("z-index", "-1");
-  prince = new Prince(width / 2 + 150, height / 2 + 120);
+  
   for (let r = currentLayer; r > 0; r--) {
     for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + r * 3)) {
       seeds.push(
@@ -63,25 +62,6 @@ function draw() {
     height / 2,
     0
   );
-  if (keyIsPressed) {
-    if (keyCode == 39 || keyCode == 37) {
-      //ArrowRight / ArrowLeft
-      prince.ifIdle = false;
-      prince.ifWalk = true; // => this.ifWalk
-
-      if (prince.walkCount <= 60) {
-        prince.walkCount++;
-      }
-    }
-  } else {
-    prince.ifWalk = false;
-    prince.ifIdle = true;
-    prince.walkCount = 0;
-    prince.clothX = 0;
-  }
-
-  prince.update();
-  prince.display();
   
   if (seeds.length == 0) {
     currentLayer = 1;
@@ -217,9 +197,7 @@ function keyPressed() {
       cores[i].isHovering = false;
     }
   }
-  // if (key === "s") {
-    // saveGif("prince-1.1", 3);
-  // }
+
 }
 
 function mousePressed() {
