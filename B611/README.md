@@ -2,7 +2,7 @@
 
 ## F23 Creative Coding Lab Final
 
-- [Final-HTML](https://carrotliu.github.io/Creative-Coding-Tutorial/B611/final-B611-HTML/).
+- [Live Site](https://carrotliu.github.io/Creative-Coding-Tutorial/B611/final-B611-HTML/).
 
 ### MagicDande in OOP
 
