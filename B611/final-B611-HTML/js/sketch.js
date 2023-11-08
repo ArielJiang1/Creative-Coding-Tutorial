@@ -28,7 +28,7 @@ let cores = [];
 
 let dataNum = 0;
 let stopHover = false;
-let achieveData = [];
+
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -81,7 +81,7 @@ function draw() {
 
   prince.update();
   prince.display();
-
+  
   if (seeds.length == 0) {
     currentLayer = 1;
     dataNum = 0;
@@ -99,48 +99,19 @@ function draw() {
       );
     }
   } else {
-    for (let i = 0; i < seeds.length; i++) {
+    for(let i = 0; i < seeds.length; i ++){
       dataNum += seeds[i].data.length;
-      if (!stopHover) {
-        if (seeds[i].isWriting || seeds[i].isReading) {
-          stopHover = true;
-          console.log("stop!");
-        }
-      } else {
-        // console.log(document.getElementById("writeAreaContainer"));
-        if (
-          document.getElementById("writeAreaContainer") == null &&
-          document.getElementById("readAreaContainer") == null
-        ) {
-          stopHover = false;
-        }
-      }
-      if (seeds[i].achievedData.length != 0) {
-        achieveData.push(seeds[i].achievedData[0]);
-        seeds[i].achievedData.splice(0, 1);
-      }
+      stopHover *= seeds[i].isWriting || seeds[i].isReading;
     }
-
-    for (let i = 0; i < cores.length; i++) {
-      // console.log(cores[i].isWriting);
-      if (!stopHover) {
-        if (cores[i].isWriting || cores[i].isReading) {
-          stopHover = true;
-        }
-      } else {
-        // console.log(document.getElementById("writeAreaContainer"));
-        if (document.getElementById("writeAreaContainer") == null) {
-          stopHover = false;
-        }
-      }
-    }
-    if (dataNum == seeds.length) {
-      if (currentLayer == maxLayerNum) {
+  
+    if(dataNum == seeds.length){
+      if(currentLayer == maxLayerNum){
         for (let i = 0; i < seeds.length; i++) {
           seeds[i].ifFly = true;
         }
-      } else {
-        currentLayer++;
+        
+      } else{
+        currentLayer ++;
         for (let i = 0; i < 2 * PI; i += (2 * PI) / (11 + currentLayer * 3)) {
           seeds.push(
             new Seed(
@@ -156,7 +127,7 @@ function draw() {
         }
       }
     }
-    dataNum = 0;
+    dataNum= 0;
   }
   for (let i = 0; i < seeds.length; i++) {
     seeds[i].update(stopHover);
@@ -172,10 +143,9 @@ function draw() {
     }
   }
   for (let i = 0; i < cores.length; i++) {
-    cores[i].update(stopHover, achieveData);
+    cores[i].update();
     cores[i].display();
   }
-  achieveData = [];
 }
 
 function drawStem(x, y, transX, transY, colorIndex) {
@@ -215,7 +185,7 @@ function keyPressed() {
       cores[i].ifFriend = true;
     }
   }
-
+  
   if (keyCode == 66) {
     //b
     for (let i = 0; i < seeds.length; i++) {
@@ -228,7 +198,7 @@ function keyPressed() {
     }
   }
   // if (key === "s") {
-  // saveGif("prince-1.1", 3);
+    // saveGif("prince-1.1", 3);
   // }
 }
 
