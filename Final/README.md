@@ -1,6 +1,13 @@
-# B611
+# :white_flower: MagicDande Tutorial - Part2 :white_flower:
 
 ## F23 Creative Coding Lab Final
+Hello again from Dande!
+
+### Knowledge Covered:
+- structure: Objected Oriented Programming
+- transform: rotate(); scale()
+- HTML: html element above canvas; accessing html element in p5js
+
 
 ## Live Site Links
 - [final-step1-OOP](https://carrotliu.github.io/Creative-Coding-Tutorial/Final/final-step1-OOP/).
@@ -28,7 +35,6 @@ class Seed {
     }
 }
 ```
-
 
 
 ### Making the seeds fly
@@ -123,16 +129,5 @@ writeText() {
     }
   }
 ```
-
-### BGM & Sound Effect
-
-### Knowledge Covered:
-
-
-- structure: Objected Oriented Programming
-- transform: rotate(); scale()
-- sound: loadSound(); isPlaying(); play(); stop()
-- HTML: html element above canvas; accessing html element in p5js
-
 
 

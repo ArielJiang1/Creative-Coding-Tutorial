@@ -1,4 +1,4 @@
-# :white_flower: MagicDande Tutorial :white_flower:
+# :white_flower: MagicDande Tutorial - Part1 :white_flower:
 
 ## F23 Creative Coding Lab Midterm
 
