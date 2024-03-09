@@ -25,7 +25,6 @@ function draw() {
   circle(width / 2, height / 2, 100)
   pop();
   
-  
   // Here we reset the blendMode to "BLEND" for all the shapes drawn below
   blendMode(BLEND);
   

@@ -1,17 +1,63 @@
 # Common Questions from  CCLab 2024
 ## Table of Content
 1. [Q1:Lifespan](#Q1-Lifespan)
-2. [Q2:Partially-BlendMode](#Q2-Partially-BlendMode)
-3. [Q3:Pattern-Background](#Q3-Pattern-Background)
-4. [Q4:Gradient-Color](#Q4-Gradient-Color)
+2. [Q2:Partially BlendMode](#Q2-Partially-BlendMode)
+3. [Q3:Pattern Background](#Q3-Pattern-Background)
+4. [Q4:Scene Switch](#Q4-Scene-Switch)
 
 ## Step-by-step Explanation
 ### Q1-Lifespan
-How to create a lifespan for my creature?
+How to add and modify lifespan for my creatures based on interactions?
 [p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
+Let's borrow some smiling faces from [Marcela's in-class demo](https://editor.p5js.org/mg3273/sketches/E7B4fLMKb). Besides the x, y position and size, we also send an "a" variable into the function to change the transparency of the faces:
+```JavaScript
+function drawFace(x, y, s, a) {
+  push();
+  translate(x, y);
+  //face
+  fill(220, 80, 50, a);
+  stroke(255);
+  circle(0, 0, s);
+  //eyes and mouth
+  fill(255);
+  circle(-s * 0.3, 0, s * 0.05);
+  circle(s * 0.3, 0, s * 0.05);
+  arc(0, 0, s * 0.3, s * 0.3, 0, PI);
+  pop();
+}
+```
+To create multiple faces, we need to store the x, y, a, and lifespan in arrays. 
+```JavaScript
+let x = [], y = [], a=[], lifespan = [];
+let n = 5; // the number of faces you want to create
+function setup(){
+  createCanvas(windowWidth, windowHeight);
+  for (let i = 0; i < n; i++) {
+    x[i] = random(width);
+    y[i] = random(height);
+    a[i] = 255;
+    lifespan[i] = 6;
+  }
+}
+```
+The arrays are 
+```JavaScript
+function attack(){
+  for(let i = 0; i < x.length; i ++){
+    if(dist(x[i],y[i], mouseX, mouseY) < s[i]){
+      lifespan[i] --;
+      a[i] = map(lifespan[i], 0, 6, 0, 255);
+    }
+  }
+}
+```
+The lifespan will be decreased when user clicks within the face. `dist(x[i],y[i], mouseX, mouseY) < s[i]` will measure the distance between the mouse and the face's position, and return `true` if the distance is smaller than the size of the current face.
+using `a[i] = map(lifespan[i], 0, 6, 0, 255);`, we map the lifespan value (with it's current range from 0 to 6) to the range of face alpha value (0 to 255). In this way, the current
 
 ```JavaScript
-
+function mousePressed(){
+  attack();
+}
 ```
 
 ### Q2-Partially-BlendMode
@@ -124,7 +170,7 @@ for(let i = 0; i < patternX.length; i ++){
 ```
 Now, if we put this for loop in the draw(), the pattern would stay still because the angle, x, and h stay the same every frame as long as the arrays are not updated.
 
-### Q4-Gradient-Color
+### Q4-Scene-Switch
 How to make gradient color transition with a specific color palette?
 [p5-web-editor]()
 ```JavaScript

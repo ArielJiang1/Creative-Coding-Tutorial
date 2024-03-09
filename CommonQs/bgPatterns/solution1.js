@@ -25,7 +25,6 @@ function draw() {
   noStroke();
   fill(255, 0, 0);
   circle(frameCount * 2, height / 2, 100)
-    
 }
 
 function drawPattern(){
