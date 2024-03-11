@@ -131,7 +131,11 @@ $${\color{orange}Solution One: Using Graphic}$$
 <img align="right" src="assets/Q3.2.1.jpg" width="250" >
 
 [createGraphics()](https://p5js.org/reference/#/p5/createGraphics) creates a p5.Graphics object. You can think of it as a "layer" in a design software like Adobe Photoshop. 
+<br />
+
 We can assign to it the same width and height as canvas in `setup()` with `bg = createGraphics(width, height);`. In this way, the p5.Graphics object is stored into the variable "bg". 
+<br />
+
 To draw things on "bg", we need to add a `bg.` before every p5 function. For example, if we want to draw a partially transparent red background on "bg", we need to write `bg.background(255, 0, 0,100)`. After we have done writing our "bg", we can display this layer with `image(bg, 0, 0)`, where `0, 0` indicates the coordinates from which we draw the "bg".  
 
 <br />
