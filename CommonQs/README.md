@@ -86,7 +86,7 @@ pop();
 ### Q3-Pattern-Background
 How to keep the landscape patterns as background while drawing animated creatures on top?
 
-<img align="right" src="assets/Q3.2.1.jpg" width="360" >
+<img align="right" src="assets/Q3.1.1.jpg" width="300" >
 
 [p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/JJtUjvEjJ)
 Let's steal a [pattern from Moon](https://editor.p5js.org/MOQN/sketches/bGi5ZmoKq). First, put it into a for loop and runs it in `setup()`.
@@ -111,7 +111,7 @@ function setup(){
 }
 ```
 
-<img align="right" src="assets/Q3.1.2.jpg" width="360" >
+<img align="right" src="assets/Q3.1.2.jpg" width="300" >
 
 Now we have a background with pattern. But if we try to animate a circle in `draw()`, it will leave a trace without a background in `draw()`:
 ```JavaScript
@@ -123,6 +123,7 @@ function draw(){
 ```
 We cannot draw background in the `draw()` because it will cover the pattern.
 
+<img align="right" src="assets/Q3.1.1.jpg" width="300" >
 $${\color{orange}Solution One: Using Graphic}$$
 [createGraphics()](https://p5js.org/reference/#/p5/createGraphics) creates a p5.Graphics object. You can think of it as a "layer" in a design software like Adobe Photoshop. To display it, you can assign to it the same width and height as canvas in `setup()` with `bg = createGraphics(width, height);`. In this way, the p5.Graphics object is stored into the variable "bg". To draw things on "bg", we need to add a `bg.` before every p5 function. For example, if we want to draw a red background on "bg", we need to write `bg.background(255, 0, 0)`. After we have done writing our "bg", we can display this layer with `image(bg, 0, 0)`, where `0, 0` indicates the coordinates from which we draw the "bg".  
 ```JavaScript
