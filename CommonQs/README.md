@@ -6,10 +6,12 @@
 4. [Q4:Scene Switch](#Q4-Scene-Switch)
 5. [Q5:Flipping Through Scale](#Q5-Flipping-Through-Scale())
 
+<br />
+
 ## Step-by-step Explanation
 ### Q1-Lifespan
 How to add and modify lifespan for my creatures based on interactions?
-[p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
+[link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
 Let's borrow some [smiling faces from Marcela](https://editor.p5js.org/mg3273/sketches/E7B4fLMKb). Besides the x, y position and size, we also send an "a" variable into the function to change the transparency of the faces:
 ```JavaScript
 function drawFace(x, y, s, a) {
@@ -61,9 +63,11 @@ function mousePressed(){
 }
 ```
 
+<br />
+
 ### Q2-Gradient-Color-Animation
-How can I apply gradient color animation to my shape?
-[p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
+How to make gradient color transition with a specific color palette?
+[link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
 By defalt, the blendMode is "BLEND". Let's draw a normal rectangle and fill it with red
 ```JavaScript
 noStroke();
@@ -82,10 +86,11 @@ vertex(200, 280);
 endShape(CLOSE);
 pop();
 ```
+<br />
 
 ### Q3-Pattern-Background
 How to keep the landscape patterns as background while drawing animated creatures on top?
-[p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/JJtUjvEjJ)
+[link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/JJtUjvEjJ)
 
 <img align="right" src="assets/Q3.1.1.jpg" width="250" >
 
@@ -118,12 +123,16 @@ function draw(){
 }
 ```
 We cannot draw background in the `draw()` because it will cover the pattern.
-
+<br />
 $${\color{orange}Solution One: Using Graphic}$$
 
 <img align="right" src="assets/Q3.2.1.jpg" width="250" >
 
-[createGraphics()](https://p5js.org/reference/#/p5/createGraphics) creates a p5.Graphics object. You can think of it as a "layer" in a design software like Adobe Photoshop. To display it, you can assign to it the same width and height as canvas in `setup()` with `bg = createGraphics(width, height);`. In this way, the p5.Graphics object is stored into the variable "bg". To draw things on "bg", we need to add a `bg.` before every p5 function. For example, if we want to draw a partially transparent red background on "bg", we need to write `bg.background(255, 0, 0,100)`. After we have done writing our "bg", we can display this layer with `image(bg, 0, 0)`, where `0, 0` indicates the coordinates from which we draw the "bg".  
+[createGraphics()](https://p5js.org/reference/#/p5/createGraphics) creates a p5.Graphics object. You can think of it as a "layer" in a design software like Adobe Photoshop. 
+We can assign to it the same width and height as canvas in `setup()` with `bg = createGraphics(width, height);`. In this way, the p5.Graphics object is stored into the variable "bg". 
+To draw things on "bg", we need to add a `bg.` before every p5 function. For example, if we want to draw a partially transparent red background on "bg", we need to write `bg.background(255, 0, 0,100)`. After we have done writing our "bg", we can display this layer with `image(bg, 0, 0)`, where `0, 0` indicates the coordinates from which we draw the "bg".  
+<br />
+
 ```JavaScript
 let bg;
 function setup(){
@@ -159,6 +168,7 @@ bg.stroke(255, 120, 10, 100);
 bg.rect(x, 0, 120, h);
 bg.pop();
 ```
+<br />
 
 $${\color{orange}Solution Two: Using Array}$$
 Now, let's apply "Array"! Still, our aim is to have all the rectangles generated before the draw loop and then rendered as an "image" in the draw loop.
@@ -201,52 +211,25 @@ for(let i = 0; i < patternX.length; i ++){
 }
 ```
 Now, if we put this for loop in the draw(), the pattern would stay still because the angle, x, and h stay the same every frame as long as the arrays are not updated.
+<br />
 
 ### Q4-Scene-Switch
-
+How to add life stages to my creatures?
+[link-to-p5-web-editor]()
+<br />
 
 ### Q5-Flipping-Through-Scale()
-How to make gradient color transition with a specific color palette?
-[p5-web-editor]()
+How to make my asymmetric creature flip when it hits a border and turns?
+[link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/yVVZDbJAR)
 
+<img align="right" src="assets/Q3.5.1.jpg" width="350" >
+
+Let's get a car and a driver from [Leon](https://editor.p5js.org/leon-eckert/sketches/8k4Y87h1o) and slightly modify the car's shape so that it's asymmetric. 
 ```JavaScript
-let x = 0;
-let y = 195;
-let xSpd = 1;
-// defining a function
 function drawCar(carColor, driver){
   push()
   translate(x, y)
-  scale(s,1)
-  translate(offsetX, 0);
-  // light
-  fill("blue");
-  ellipse(40, -40, 10, 20)
-  
-  // body
-  fill(carColor);
-  rect(30, -40, 40, 40);
-  rect(0, 0, 120, 40);
-  
-  // window
-  fill(198,238,255);
-  rect(33, -37, 34, 37, 5);
-  
-  // driver
-  textSize(30);
-  
-  text(driver, 35, -5);
-  
-  // decoration
-  fill("red");
-  rect(0, 20, 120, 5);
-  fill("blue");
-  rect(0, 25, 120, 5);
-
-  // wheels
-  fill(0);
-  circle(25, 40, 30);
-  circle(95, 40, 30);
+  //----- Leon's code for drawing the car & driver-----//
   pop()
 }
 ```
