@@ -11,6 +11,8 @@
 ## Step-by-step Explanation
 ### Q1-Lifespan
 How to add and modify lifespan for my creatures based on interactions?
+<br />
+
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
 Let's borrow some [smiling faces from Marcela](https://editor.p5js.org/mg3273/sketches/E7B4fLMKb). Besides the x, y position and size, we also send an "a" variable into the function to change the transparency of the faces:
 ```JavaScript
@@ -67,6 +69,8 @@ function mousePressed(){
 
 ### Q2-Gradient-Color-Animation
 How to make gradient color transition with a specific color palette?
+<br />
+
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
 By defalt, the blendMode is "BLEND". Let's draw a normal rectangle and fill it with red
 ```JavaScript
@@ -90,6 +94,8 @@ pop();
 
 ### Q3-Pattern-Background
 How to keep the landscape patterns as background while drawing animated creatures on top?
+<br />
+
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/JJtUjvEjJ)
 
 <img align="right" src="assets/Q3.1.1.jpg" width="250" >
@@ -145,31 +151,20 @@ let bg;
 function setup(){
   createCanvas(400, 400);
   background(0);
-  
   bg = createGraphics(width, height);
   bg.background(255, 0, 0, 100);
-  for (let i = 0; i < 200; i++) {
-        angle += 72+0.2;
-        x += -1;
-        h += 0.2;
-        push();
-        translate(width/2, height/2);
-        rotate( radians(angle) );
-        noFill();
-        stroke(255, 120, 10, 100);
-        rect(x, 0, 120, h);
-        pop();
-    }
+  //----- Moon's code for drawing the pattern -----//
   image(bg, 0, 0);
 }
 ```
+
+Therefore, we need to keep the animated shapes (codes that need to run in the `draw()`) on the canvas, while the 
 
 ```JavaScript
 bg.background(0);
 bg.push();
 bg.translate(width / 2, height / 2);
 bg.rotate(radians(angle));
-//blendMode(ADD);
 bg.noFill();
 bg.stroke(255, 120, 10, 100);
 bg.rect(x, 0, 120, h);
@@ -189,7 +184,6 @@ let patternA = [];
 function setup() {
   createCanvas(400, 400);
   background(0);
-  // here we take Moon's in-class demo as the pattern
   for (let i = 0; i < 200; i++) {
     angle += 72 + 0.2;
     x += -1;
@@ -224,17 +218,22 @@ Now, if we put this for loop in the draw(), the pattern would stay still because
 
 ### Q4-Scene-Switch
 How to add life stages to my creatures?
+<br />
+
 [link-to-p5-web-editor]()
 
 <br />
 
 ### Q5-Flipping-Through-Scale()
 How to make my asymmetric creature flip when it hits a border and turns?
+<br />
+
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/yVVZDbJAR)
 
-<img align="right" src="assets/Q3.5.1.jpg" width="350" >
+<img align="right" src="assets/Q5.1.jpg" width="350" >
 
 Let's get a car and a driver from [Leon](https://editor.p5js.org/leon-eckert/sketches/8k4Y87h1o) and slightly modify the car's shape so that it's asymmetric. 
+
 ```JavaScript
 function drawCar(carColor, driver){
   push()
@@ -245,10 +244,20 @@ function drawCar(carColor, driver){
 ```
 
 ```JavaScript
+function drawCar(carColor, driver){
+  push()
+  translate(x, y)
+  scale(-1);
+  //----- Leon's code for drawing the car & driver-----//
+  pop()
+}
 
 ```
-Ooops, the car disappears! Why?
+Ooops, the car disappears! Why? This problem is caused by the flipping of the whole coordination system. When we put only one value in `scale()`, both x and y (and z if you are working in 3D) are affected. Putting a positive number will scale the shape propotionally, while a negative numbers flip the shape on both axises.
 
+<br />
+
+If we put two numbers in `scale(a, b)`, `a` will scale the x axis and `b` will scale the y axis. e.g. If we use `scale(-1,1)` in our sketch, we will flip the car vertically but not horizontally. 
 
 ```JavaScript
 if(x >= width - 120 || x < 0){
@@ -262,6 +271,11 @@ if(x >= width - 120 || x < 0){
 }
 ```
 
+<img align="right" src="assets/Q5.final.gif" width="350" >
+
+```JavaScript
+
+```
 
 
 

@@ -48,6 +48,7 @@ function drawFace(x, y, s, a) {
   arc(0, 0, s * 0.3, s * 0.3, 0, PI);
   pop();
 }
+
 function checkIfAlive() {
   for (let i = 0; i < lifespan.length; i++) {
     if (lifespan[i] <= 0) {
@@ -59,6 +60,7 @@ function checkIfAlive() {
     }
   }
 }
+
 function attack() {
   for (let i = 0; i < x.length; i++) {
     if (dist(x[i], y[i], mouseX, mouseY) < s[i] - 10) {
@@ -68,6 +70,7 @@ function attack() {
   }
   checkIfAlive();
 }
+
 function mousePressed() {
   attack();
 }

@@ -4,7 +4,6 @@ function setup() {
 
 function draw() {
   background(230);
-  
   // By defalt, the blendmode is "BLEND". Let's draw a normal rectangle
   noStroke();
   fill(255, 0, 0); // red color 
