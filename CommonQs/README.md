@@ -12,6 +12,7 @@
 ### Q1-Lifespan
 How to add and modify lifespan for my creatures based on interactions?
 <br />
+
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
 <br />
 
@@ -284,6 +285,7 @@ function drawCar(carColor, driver){
   pop()
 }
 ```
+<br />
 
 Now let's add the condition for the car turning moment in the `draw()`:
 <img align="right" src="assets/Q5.3.gif" width="350" >
