@@ -12,8 +12,9 @@
 ### Q1-Lifespan
 How to add and modify lifespan for my creatures based on interactions?
 <br />
-
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
+<br />
+
 Let's borrow some [smiling faces from Marcela](https://editor.p5js.org/mg3273/sketches/E7B4fLMKb). Besides the x, y position and size, we also send an "a" variable into the function to change the transparency of the faces:
 ```JavaScript
 function drawFace(x, y, s, a) {
@@ -72,6 +73,8 @@ How to make gradient color transition with a specific color palette?
 <br />
 
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/LJwbblAUp)
+<br /> 
+
 By defalt, the blendMode is "BLEND". Let's draw a normal rectangle and fill it with red
 ```JavaScript
 noStroke();
@@ -97,6 +100,8 @@ How to keep the landscape patterns as background while drawing animated creature
 <br />
 
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/JJtUjvEjJ)
+
+<br /> 
 
 <img align="right" src="assets/Q3.1.1.jpg" width="250" >
 
@@ -222,6 +227,8 @@ How to add life stages to my creatures?
 
 [link-to-p5-web-editor]()
 
+<br />
+
 ```JavaScript
 
 ```
@@ -233,6 +240,7 @@ How to make my asymmetric creature flip when it hits a border and turns?
 <br />
 
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/yVVZDbJAR)
+<br />
 
 <img align="right" src="assets/Q5.1.jpg" width="350" >
 
@@ -258,13 +266,14 @@ function drawCar(carColor, driver){
   pop()
 }
 ```
-<img align="right" src="assets/Q5.2.gif" width="350" >
-
-Ooops, the car turns over! Why? This problem is caused by the flipping of the whole coordination system. When we put only one value in `scale()`, both `x` and `y` (and `z` if you are working in 3D) are affected. Putting a positive number will scale the shape propotionally, while a negative numbers flip the shape on both axises.
 
 <br />
 
+Ooops, the car turns over! Why? This problem is caused by the flipping of the whole coordination system. When we put only one value in `scale()`, both `x` and `y` (and `z` if you are working in 3D) are affected. Putting a positive number will scale the shape propotionally, while a negative numbers flip the shape on both axises.
+
 If we put two numbers in `scale(a, b)`, `a` will scale the x axis and `b` will scale the y axis. e.g. If we use `scale(-1,1)` in our sketch, we will flip the car vertically but not horizontally. Now the car is flipping only on the x axis:
+
+<img align="right" src="assets/Q5.2.gif" width="350" >
 
 ```JavaScript
 function drawCar(carColor, driver){
@@ -275,9 +284,10 @@ function drawCar(carColor, driver){
   pop()
 }
 ```
-<img align="right" src="assets/Q5.3.gif" width="350" >
 
 Now let's add the condition for the car turning moment in the `draw()`:
+<img align="right" src="assets/Q5.3.gif" width="350" >
+
 ```JavaScript
 let xSpd = 1;
 let s = 1;
@@ -298,9 +308,9 @@ function drawCar(carColor, driver){
 }
 ```
 
+You may notice that when the car hits the border, it makes a huge jump to the left and moves pass the left border on canvas. This is because the scale origin `(x, y)` is not at the exact center of the car. We can easily fix that by translating the car to `(offsetX, 0)` after scaling: 
 <img align="right" src="assets/Q5.final.gif" width="350" >
 
-You may notice that when the car hits the border, it makes a huge jump to the left and moves pass the left border on canvas. This is because the scale origin `(x, y)` is not at the exact center of the car. We can easily fix that by translating the car to `(offsetX, 0)` after scaling: 
 ```JavaScript
 if(x >= width - 120 || x < 0){
   xSpd *=-1;
