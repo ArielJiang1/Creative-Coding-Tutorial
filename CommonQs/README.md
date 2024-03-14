@@ -266,10 +266,9 @@ function drawCar(carColor, driver){
 <br />
 
 Ooops, the car turns over! Why? This problem is caused by the flipping of the whole coordination system. When we put only one value in `scale()`, both `x` and `y` (and `z` if you are working in 3D) are affected. Putting a positive number will scale the shape propotionally, while a negative numbers flip the shape on both axises.
+<img align="right" src="assets/Q5.2.gif" width="350" >
 
 If we put two numbers in `scale(a, b)`, `a` will scale the x axis and `b` will scale the y axis. e.g. If we use `scale(-1,1)` in our sketch, we will flip the car vertically but not horizontally. Now the car is flipping only on the x axis:
-
-<img align="right" src="assets/Q5.2.gif" width="350" >
 
 ```JavaScript
 function drawCar(carColor, driver){
@@ -283,7 +282,9 @@ function drawCar(carColor, driver){
 <br />
 
 Now let's add the condition for the car turning moment in the `draw()`:
-<img align="center" src="assets/Q5.3.gif" width="350" >
+<p align="center">
+<img src="assets/Q5.3.gif" width="350" >
+</p>
 
 ```JavaScript
 let xSpd = 1;
@@ -328,5 +329,6 @@ function drawCar(carColor, driver){
   pop()
 }
 ```
-
-<img align="center" src="assets/Q5.final.gif" width="350" >
+<p align="center">
+  <img src="assets/Q5.final.gif" width="380">
+</p>
