@@ -175,7 +175,7 @@ bg.pop();
 
 $${\color{orange}Solution Two: Using Array}$$
 Now, let's apply "Array"! Still, our aim is to have all the rectangles generated before the draw loop and then rendered as an "image" in the draw loop.
-When we create rectangles in the for loop, we only have three variables -- $${\color{red} angle, x, h}$$ -- that vary in each loop and set each rectangle different from others. If we want a still pattern, the three variables need to be fixed for each rectangles every frame. To achieve this, we can first store these variables into arrays. 
+When we create rectangles in the for loop, we only have three variables --angle, x, h -- that vary in each loop and set each rectangle different from others. If we want a still pattern, the three variables need to be fixed for each rectangles every frame. To achieve this, we can first store these variables into arrays. 
 
 ```JavaScript
 let patternX = [];
@@ -222,6 +222,10 @@ How to add life stages to my creatures?
 
 [link-to-p5-web-editor]()
 
+```JavaScript
+
+```
+
 <br />
 
 ### Q5-Flipping-Through-Scale()
@@ -243,22 +247,60 @@ function drawCar(carColor, driver){
 }
 ```
 
+Now The driver drives the car across the canvas. He decides to turn back when he reaches the canvas border. To make that happen, we need to apply a flipping effect to both the driver and the car using `scale()`. Notice that putting `scale()` after the `translate()` and before the drawing codes will scale all the shapes from position `(x, y)`:
+
 ```JavaScript
 function drawCar(carColor, driver){
   push()
   translate(x, y)
-  scale(-1);
+  scale(-1); 
   //----- Leon's code for drawing the car & driver-----//
   pop()
 }
-
 ```
-Ooops, the car disappears! Why? This problem is caused by the flipping of the whole coordination system. When we put only one value in `scale()`, both x and y (and z if you are working in 3D) are affected. Putting a positive number will scale the shape propotionally, while a negative numbers flip the shape on both axises.
+<img align="right" src="assets/Q5.2.gif" width="350" >
+
+Ooops, the car turns over! Why? This problem is caused by the flipping of the whole coordination system. When we put only one value in `scale()`, both `x` and `y` (and `z` if you are working in 3D) are affected. Putting a positive number will scale the shape propotionally, while a negative numbers flip the shape on both axises.
 
 <br />
 
-If we put two numbers in `scale(a, b)`, `a` will scale the x axis and `b` will scale the y axis. e.g. If we use `scale(-1,1)` in our sketch, we will flip the car vertically but not horizontally. 
+If we put two numbers in `scale(a, b)`, `a` will scale the x axis and `b` will scale the y axis. e.g. If we use `scale(-1,1)` in our sketch, we will flip the car vertically but not horizontally. Now the car is flipping only on the x axis:
 
+```JavaScript
+function drawCar(carColor, driver){
+  push()
+  translate(x, y)
+  scale(-1, 1); 
+  //----- Leon's code for drawing the car & driver-----//
+  pop()
+}
+```
+<img align="right" src="assets/Q5.3.gif" width="350" >
+
+Now let's add the condition for the car turning moment in the `draw()`:
+```JavaScript
+let xSpd = 1;
+let s = 1;
+function draw(){
+  if(x >= width - 120 || x < 0){
+    xSpd *=-1;
+    s *= -1;
+  }
+  x+=xSpd; // x is added by 1 before turning, and minus by 1 after turning.
+  drawCar("grey", "🕵️‍");
+}
+function drawCar(carColor, driver){
+  push()
+  translate(x, y)
+  scale(s, 1);
+  //----- Leon's code for drawing the car & driver-----//
+  pop()
+}
+```
+
+<img align="right" src="assets/Q5.final.gif" width="350" >
+
+You may notice that when the car hits the border, it makes a huge jump to the left and moves pass the left border on canvas. This is because the scale origin `(x, y)` is not at the exact center of the car. We can easily fix that by translating the car to `(offsetX, 0)` after scaling: 
 ```JavaScript
 if(x >= width - 120 || x < 0){
   xSpd *=-1;
@@ -269,13 +311,14 @@ if(x >= width - 120 || x < 0){
     offsetX = 0;
   }
 }
+function drawCar(carColor, driver){
+  push()
+  translate(x, y)
+  scale(s, 1);
+  translate(offsetX, 0);
+  //----- Leon's code for drawing the car & driver-----//
+  pop()
+}
 ```
-
-<img align="right" src="assets/Q5.final.gif" width="350" >
-
-```JavaScript
-
-```
-
 
 
