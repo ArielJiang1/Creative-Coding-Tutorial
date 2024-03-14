@@ -5,7 +5,6 @@
 3. [Q3:Pattern Background](#Q3-Pattern-Background)
 4. [Q4:Scene Switch](#Q4-Scene-Switch)
 5. [Q5:Flipping Through Scale](#Q5-Flipping-Through-Scale())
-
 <br />
 
 ## Step-by-step Explanation
@@ -101,7 +100,6 @@ How to keep the landscape patterns as background while drawing animated creature
 <br />
 
 [link-to-p5-web-editor](https://editor.p5js.org/CarrotLiu/sketches/JJtUjvEjJ)
-
 <br /> 
 
 <img align="right" src="assets/Q3.1.1.jpg" width="250" >
@@ -135,7 +133,6 @@ function draw(){
 }
 ```
 We cannot draw background in the `draw()` because it will cover the pattern.
-
 <br />
 
 $${\color{orange}Solution One: Using Graphic}$$
@@ -149,7 +146,6 @@ We can assign to it the same width and height as canvas in `setup()` with `bg = 
 <br />
 
 To draw things on "bg", we need to add a `bg.` before every p5 function. For example, if we want to draw a partially transparent red background on "bg", we need to write `bg.background(255, 0, 0,100)`. After we have done writing our "bg", we can display this layer with `image(bg, 0, 0)`, where `0, 0` indicates the coordinates from which we draw the "bg".  
-
 <br />
 
 ```JavaScript
@@ -176,7 +172,6 @@ bg.stroke(255, 120, 10, 100);
 bg.rect(x, 0, 120, h);
 bg.pop();
 ```
-
 <br />
 
 $${\color{orange}Solution Two: Using Array}$$
@@ -323,6 +318,8 @@ if(x >= width - 120 || x < 0){
     offsetX = 0;
   }
 }
+```
+``` JavaScript
 function drawCar(carColor, driver){
   push()
   translate(x, y)
