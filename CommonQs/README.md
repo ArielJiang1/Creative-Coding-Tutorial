@@ -283,7 +283,7 @@ function drawCar(carColor, driver){
 <br />
 
 Now let's add the condition for the car turning moment in the `draw()`:
-<img align="right" src="assets/Q5.3.gif" width="350" >
+<img align="center" src="assets/Q5.3.gif" width="350" >
 
 ```JavaScript
 let xSpd = 1;
@@ -306,7 +306,6 @@ function drawCar(carColor, driver){
 ```
 
 You may notice that when the car hits the border, it makes a huge jump to the left and moves pass the left border on canvas. This is because the scale origin `(x, y)` is not at the exact center of the car. We can easily fix that by translating the car to `(offsetX, 0)` after scaling: 
-<img align="right" src="assets/Q5.final.gif" width="350" >
 
 ```JavaScript
 if(x >= width - 120 || x < 0){
@@ -330,4 +329,4 @@ function drawCar(carColor, driver){
 }
 ```
 
-
+<img align="center" src="assets/Q5.final.gif" width="350" >
