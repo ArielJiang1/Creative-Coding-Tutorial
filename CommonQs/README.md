@@ -269,7 +269,7 @@ Ooops, the car turns over! Why? This problem is caused by the flipping of the wh
 
 If we put two numbers in `scale(a, b)`, `a` will scale the x axis and `b` will scale the y axis. e.g. If we use `scale(-1,1)` in our sketch, we will flip the car vertically but not horizontally. Now the car is flipping only on the x axis:
 <p align="center">
-<img align="right" src="assets/Q5.2.gif" width="350" >
+<img src="assets/Q5.2.gif" width="350" >
 </p>
 
 ```JavaScript
