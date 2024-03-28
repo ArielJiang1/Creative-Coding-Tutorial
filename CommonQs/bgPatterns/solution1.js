@@ -36,7 +36,7 @@ function drawPattern(){
     noFill();
     stroke(255, 120, 10, 100);
     rect(patternX[i], 0, 120, patternH[i]);
-    pop();``
+    pop();
   }
     
 }

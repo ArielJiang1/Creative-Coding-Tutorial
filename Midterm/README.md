@@ -19,7 +19,7 @@
 
 ## :wave: Welcome abroad, traveler from Earth! :wave:
 
-I'm Dandie and I'm part of [the MagicDande family](https://carrotliu.github.io/Creative-Coding-Tutorial/MagicDande/midterm-complete/) living on planet B611.
+I'm Dandie and I'm part of [the MagicDande family](https://carrotliu.github.io/Creative-Coding-Tutorial/Midterm/midterm-complete/) living on planet B611.
 
 Timid and introvert by nature, I shy away from your touch.
 
@@ -33,12 +33,12 @@ Oh dear traveler from Earth, are you ready to become the Little Prince of your o
 
 ### Table of Content
 
-- [step1 pattern](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#pattern-play-with-the-for-loops-and-create-the-pattern)
-- [step2 motion](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#motion-make-the-pattern-move)
-- [step3 swaying-effect](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#swaying-effect-let-there-be-a-swaying-stem)
-- [step4 interaction](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#interaction-dont-touch-me)
-- [step5 function](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#function-become-elegant-and-save-some-labor)
-- [step6 gradient color](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/MagicDande#gradient-color-shine)
+- [step1 pattern](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/Midterm#pattern-play-with-the-for-loops-and-create-the-pattern)
+- [step2 motion](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/Midterm#motion-make-the-pattern-move)
+- [step3 swaying-effect](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/Midterm#swaying-effect-let-there-be-a-swaying-stem)
+- [step4 interaction](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/Midterm#interaction-dont-touch-me)
+- [step5 function](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/Midterm#function-become-elegant-and-save-some-labor)
+- [step6 gradient color](https://github.com/CarrotLiu/Creative-Coding-Tutorial/tree/main/Midterm#gradient-color-shine)
 
 ### Pattern: Play with the For Loops and Create the Pattern!
 

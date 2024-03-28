@@ -214,7 +214,6 @@ for(let i = 0; i < patternX.length; i ++){
 }
 ```
 Now, if we put this for loop in the draw(), the pattern would stay still because the angle, x, and h stay the same every frame as long as the arrays are not updated.
-
 <br />
 
 ### Q4-Scene-Switch

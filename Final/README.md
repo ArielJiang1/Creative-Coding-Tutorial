@@ -1,23 +1,24 @@
 # :white_flower: MagicDande Tutorial - Part2 :white_flower:
 
 ## F23 Creative Coding Lab Final
-Hello again from Dande!
+Hello again from Dande! I'm here to introduce you a new way of reproduction among our species: Object-Oriented Programming.
 
 ### Knowledge Covered:
 - structure: Objected Oriented Programming
-- transform: rotate(); scale()
-- HTML: html element above canvas; accessing html element in p5js
-
 
 ## Live Site Links
 - [final-step1-OOP](https://carrotliu.github.io/Creative-Coding-Tutorial/Final/final-step1-OOP/).
 - [final-step2-reorganize](https://carrotliu.github.io/Creative-Coding-Tutorial/Final/final-step2-Reorganize/).
 - [final-step3-HTML](https://carrotliu.github.io/Creative-Coding-Tutorial/Final/final-step3-HTML/).
 
+### What is Object-Oriented Programming and why?
+Think of a class as a blueprint for a type of family member. For example, there might be a "Parent" class that defines the characteristics and behaviors common to all parents.
+Since we already have "function", why do we need OOP? 
 
-### MagicDande in OOP
+### The Basic Structure
+To define a class, you will use
 
-#### Basic OOP Structure
+
 
 There are three basic methods inside a class:
 
