@@ -1,6 +1,6 @@
 # F23-CCLab-Tutorial
 
-Hi all! Welcome to Carrot's Tutorial for p5.js.
+This repo archives p5.js Tutorials for 2023F - 2024S academic year.
 
 ### Live Site Links
 
