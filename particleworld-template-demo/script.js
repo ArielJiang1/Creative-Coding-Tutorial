@@ -72,7 +72,7 @@ class Particle {
     }
   }
   stop(){
-    if(this.y >= height - 5){
+    if(this.y >= height - 10){
       this.yspd = 0;
       this.xspd = 0;
     }
