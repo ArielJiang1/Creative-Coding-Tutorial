@@ -15,10 +15,10 @@ Hello again from Dande! I'm here to introduce you a new way of reproduction amon
 Think of a class as a blueprint for a type of family member. For example, there might be a "Parent" class that defines the characteristics and behaviors common to all parents.
 Since we already have "function", why do we need OOP? 
 
+An object is like a specific instance of a family member. So, if we have a class called "Seed", an object would be a specific parent, like "seed1" or "Sarah."
+
 ### The Basic Structure
 To define a class, you will use
-
-
 
 There are three basic methods inside a class:
 
