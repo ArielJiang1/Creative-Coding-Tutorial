@@ -26,6 +26,7 @@ function draw() {
     p.display();
     // if(p.y >= height){
     //   particles.splice(i, 1);
+    //   i--;
     //   // p.y = random(-height, 0);
     // }
   }
