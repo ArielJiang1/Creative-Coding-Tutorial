@@ -20,12 +20,14 @@ function draw() {
   // update and display
   for (let i = 0; i < particles.length; i++) {
     let p = particles[i];
+    p.applyWind();
+    p.stop();
     p.update();
     p.display();
-    if(p.y >= height){
-      particles.splice(i, 1);
-      // p.y = random(-height, 0);
-    }
+    // if(p.y >= height){
+    //   particles.splice(i, 1);
+    //   // p.y = random(-height, 0);
+    // }
   }
   if(particles.length ==0){
     for (let i = 0; i < NUM_OF_PARTICLES; i++) {
@@ -50,11 +52,6 @@ class Particle {
   // methods (functions): particle's behaviors
   update() {
     // (add) 
-    if(mouseX < width / 2){
-      this.dir = 1;
-    }else{
-      this.dir = -1;
-    }
     this.x += this.xspd * this.dir;
     this.y += this.yspd;
   }
@@ -66,5 +63,18 @@ class Particle {
     circle(0, 0, this.dia);
 
     pop();
+  }
+  applyWind(){
+    if(mouseX < width / 2){
+      this.dir = 1;
+    }else{
+      this.dir = -1;
+    }
+  }
+  stop(){
+    if(this.y >= height - 5){
+      this.yspd = 0;
+      this.xspd = 0;
+    }
   }
 }
